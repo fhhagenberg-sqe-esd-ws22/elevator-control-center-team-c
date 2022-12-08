@@ -27,10 +27,10 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-    - run: sudo apt-get install xvfb
-    - run: xvfb-run --server-args="-screen 0, 800x600x8" mvn verify
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+    - name: Build with XVFB
+      run: xvfb-run --server-args="-screen 0, 800x600x8" mvn verify
+ #   - name: Build with Maven
+ #     run: mvn -B package --file pom.xml
       
     
 
