@@ -27,10 +27,10 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-    #- run: sudo apt-get update 
-    #- run: sudo apt-get install libgl1-mesa-glx
+    - run: sudo apt-get update 
+    - run: sudo apt-get install libgl1-mesa-glx
     - name: Build with XVFB
-      run: xvfb-run --server-args="-screen 0, 800x600x8" +extension GLX mvn verify 
+      run: xvfb-run --server-args="-screen 0, 800x600x8" mvn verify 
  #   - name: Build with Maven
  #     run: mvn -B package --file pom.xml
       
