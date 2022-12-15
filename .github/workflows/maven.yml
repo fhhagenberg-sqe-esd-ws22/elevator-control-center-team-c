@@ -29,8 +29,9 @@ jobs:
         cache: maven
     - run: sudo apt-get update 
     - run: sudo apt-get install libgl1-mesa-glx
+    - run: sudo apt install -y at-spi2-core
     - name: Build with XVFB
-      run: xvfb-run --server-args="-screen 0, 800x600x8" mvn verify 
+      run: xvfb-run --server-args="-screen 0, 800x600x8" mvn -Dprism.order=sw -B package --file pom.xml
  #   - name: Build with Maven
  #     run: mvn -B package --file pom.xml
       
