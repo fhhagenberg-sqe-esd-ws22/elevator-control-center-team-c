@@ -2,7 +2,7 @@
 
 ### Prerequisites
 
-- [x] Java 11 SDK (e.g. Oracle or OpenJDK).
+- [x] Java 11 SDK (e.g. Oracle  or OpenJDK).
 - [x] Maven 3. (If you use an IDE like Eclipse or IntelliJ, Maven is **already included** :sunglasses:.)
 	- see http://maven.apache.org/install.html
 - [x] An IDE or code editor of your choice.
