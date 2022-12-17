@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 public class ElevatorInfo {
     private Elevator elevatorService = new Elevator();
     private int direction;
+    private boolean[] servicedFloors;
     private int acceleration;
     private boolean mode;
     private boolean[] stopRequests;
@@ -14,7 +15,6 @@ public class ElevatorInfo {
     private int currentSpeedFtPerSec;
     private int weight;
     private final int capacity;
-    private boolean[] servicedFloors;
     private int floorTarget;
     private int floorCnt;
     private final int elevatorNumber;
@@ -37,6 +37,13 @@ public class ElevatorInfo {
             stopRequests[i] = elevatorService.getElevatorButton(elevatorNumber,i);
         }
         setFloorTarget(elevatorService.getTarget(elevatorNumber));
+        boolean[] arr = new boolean[floorCnt];
+        for(int i=0; i<floorCnt; i++)
+        {
+            arr[i] = elevatorService.getServicesFloors(elevatorNumber,i);
+        }
+        setServicedFloors(arr);
+
         //TODO Modus setzen
     }
 
@@ -117,18 +124,15 @@ public class ElevatorInfo {
         return capacity;
     }
 
-    public boolean[] getServicedFloors() {
-        return servicedFloors;
-    }
-
-    public void setServicedFloors(boolean[] servicedFloors) {
-        this.servicedFloors = servicedFloors;
-    }
-
     public int getFloorTarget() {
         return floorTarget;
     }
-
+    public boolean[] getServicedFloors() {
+        return servicedFloors;
+    }
+    public void setServicedFloors(boolean[] servicedFloors) {
+        this.servicedFloors = servicedFloors;
+    }
     public void setFloorTarget(int floorTarget) {
         this.floorTarget = floorTarget;
     }

@@ -7,52 +7,52 @@ public class Elevator implements IElevator{
 
     @Override
     public int getCommittedDirection(int elevatorNumber) throws RemoteException {
-        return 0;
+        return 1;
     }
 
     @Override
     public int getElevatorAccel(int elevatorNumber) throws RemoteException {
-        return 0;
+        return 2;
     }
 
     @Override
     public boolean getElevatorButton(int elevatorNumber, int floor) throws RemoteException {
-        return false;
+        return true;
     }
 
     @Override
     public int getElevatorDoorStatus(int elevatorNumber) throws RemoteException {
-        return 0;
+        return 1;
     }
 
     @Override
     public int getElevatorFloor(int elevatorNumber) throws RemoteException {
-        return 0;
+        return 1;
     }
 
     @Override
     public int getElevatorNum() throws RemoteException {
-        return 0;
+        return 4;
     }
 
     @Override
     public int getElevatorPosition(int elevatorNumber) throws RemoteException {
-        return 0;
+        return 4;
     }
 
     @Override
     public int getElevatorSpeed(int elevatorNumber) throws RemoteException {
-        return 0;
+        return 3;
     }
 
     @Override
     public int getElevatorWeight(int elevatorNumber) throws RemoteException {
-        return 0;
+        return 2;
     }
 
     @Override
     public int getElevatorCapacity(int elevatorNumber) throws RemoteException {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -62,27 +62,27 @@ public class Elevator implements IElevator{
 
     @Override
     public boolean getFloorButtonUp(int floor) throws RemoteException {
-        return false;
+        return true;
     }
 
     @Override
     public int getFloorHeight() throws RemoteException {
-        return 0;
+        return 160;
     }
 
     @Override
     public int getFloorNum() throws RemoteException {
-        return 0;
+        return 30;
     }
 
     @Override
     public boolean getServicesFloors(int elevatorNumber, int floor) throws RemoteException {
-        return false;
+        return true;
     }
 
     @Override
     public int getTarget(int elevatorNumber) throws RemoteException {
-        return 0;
+        return 2;
     }
 
     @Override
@@ -102,6 +102,6 @@ public class Elevator implements IElevator{
 
     @Override
     public long getClockTick() throws RemoteException {
-        return 0;
+        return 140;
     }
 }

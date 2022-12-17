@@ -25,8 +25,46 @@ public class Building {
             floorButtons[i].setButtonDown(elevatorService.getFloorButtonDown(i));
             floorButtons[i].setButtonUp(elevatorService.getFloorButtonUp(i));
         }
+        for(var elem : Elevators)
+        {
+            elem.Update();
+        }
     }
+
+    public Vector<ElevatorInfo> getElevators() {
+        return Elevators;
+    }
+
+    public int getElevatorCnt() {
+        return elevatorCnt;
+    }
+
+    public int getFloorHeight() {
+        return floorHeight;
+    }
+
+    public void setFloorHeight(int floorHeight) {
+        this.floorHeight = floorHeight;
+    }
+
+    public int getFloorCnt() {
+        return floorCnt;
+    }
+
+    public void setFloorCnt(int floorCnt) {
+        this.floorCnt = floorCnt;
+    }
+
+    public FloorButton[] getFloorButtons() {
+        return floorButtons;
+    }
+
+    public void setFloorButtons(FloorButton[] floorButtons) {
+        this.floorButtons = floorButtons;
+    }
+
     private Vector<ElevatorInfo> Elevators;
+
     private int elevatorCnt;
     private int floorHeight;
     private int floorCnt;
