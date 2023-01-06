@@ -69,7 +69,7 @@ public class Elevator {
 
 
 
-    Elevator(int maximumPayload, int elevatorNumber, int floorCnt){
+    public Elevator(int maximumPayload, int elevatorNumber, int floorCnt){
         this.maxPayload = maximumPayload;
         this.elevatorNumber = elevatorNumber;
         button = new boolean[floorCnt];
