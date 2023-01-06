@@ -1,14 +1,32 @@
 package at.fhhagenberg.sqe.model;
 
-import java.rmi.RemoteException;
 import java.util.Vector;
 
 public class Building {
-    public Building() throws RemoteException {
-        Elevators = new Vector<>();
-        Init();
+
+    /**
+     * List of all elevators in the building.
+     */
+    private Vector<Elevator> elevators;
+
+    /**
+     * Height of one floor.
+     */
+    private int floorHeight;
+
+    /**
+     * Status of the floor buttons.
+     */
+    private Vector<FloorButton> floorButtons;     // TODO may create a vector
+
+
+
+    public Building() {
+        elevators = new Vector<>();
+        floorButtons = new Vector<>();
     }
-    private final Elevator elevatorService = new Elevator();
+
+    /*
     private void Init() throws RemoteException
     {
         elevatorCnt = elevatorService.getElevatorNum();
@@ -16,7 +34,7 @@ public class Building {
         floorCnt = elevatorService.getFloorNum();
         for (int i = 0; i < elevatorCnt; i++)
         {
-            Elevators.add(new ElevatorInfo(elevatorService.getElevatorCapacity(i),i,floorCnt));
+            elevators.add(new Elevator(elevatorService.getElevatorCapacity(i),i,floorCnt));
         }
     }
     public void Update() throws RemoteException {
@@ -25,48 +43,26 @@ public class Building {
             floorButtons[i].setButtonDown(elevatorService.getFloorButtonDown(i));
             floorButtons[i].setButtonUp(elevatorService.getFloorButtonUp(i));
         }
-        for(var elem : Elevators)
+        for(var elem : elevators)
         {
             elem.Update();
         }
     }
+    */
 
-    public Vector<ElevatorInfo> getElevators() {
-        return Elevators;
-    }
+    public Vector<Elevator> getElevators() { return elevators; }
 
-    public int getElevatorCnt() {
-        return elevatorCnt;
-    }
 
-    public int getFloorHeight() {
-        return floorHeight;
-    }
+    public int getElevatorNum() { return elevators.size(); }
 
-    public void setFloorHeight(int floorHeight) {
-        this.floorHeight = floorHeight;
-    }
 
-    public int getFloorCnt() {
-        return floorCnt;
-    }
+    public Vector<FloorButton> getFloorButtons() { return floorButtons; }
+    public void setFloorButtons(Vector<FloorButton> floorButtons) { this.floorButtons = floorButtons; }
 
-    public void setFloorCnt(int floorCnt) {
-        this.floorCnt = floorCnt;
-    }
 
-    public FloorButton[] getFloorButtons() {
-        return floorButtons;
-    }
+    public int getFloorHeight() { return floorHeight; }
+    public void setFloorHeight(int floorHeight) { this.floorHeight = floorHeight; }
 
-    public void setFloorButtons(FloorButton[] floorButtons) {
-        this.floorButtons = floorButtons;
-    }
 
-    private Vector<ElevatorInfo> Elevators;
-
-    private int elevatorCnt;
-    private int floorHeight;
-    private int floorCnt;
-    private FloorButton[] floorButtons;
+    public int getFloorNum() { return floorButtons.size(); }
 }

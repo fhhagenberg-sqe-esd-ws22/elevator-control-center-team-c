@@ -1,4 +1,4 @@
-package at.fhhagenberg.sqe.interfaces;
+package at.fhhagenberg.sqe;
 
 /**
  * High-level interface to access and control the elevator system.

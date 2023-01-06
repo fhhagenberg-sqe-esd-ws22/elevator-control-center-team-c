@@ -1,107 +1,190 @@
 package at.fhhagenberg.sqe.model;
-import at.fhhagenberg.sqe.interfaces.IElevator;
 
-import java.rmi.RemoteException;
+public class Elevator {
 
-public class Elevator implements IElevator{
+    /**
+     * Committed Direction.
+     */
+    private int direction;
 
-    @Override
-    public int getCommittedDirection(int elevatorNumber) throws RemoteException {
-        return 1;
+    /**
+     * Elevator Acceleration.
+     */
+    private int acceleration;
+
+    /**
+     * Stop request button in the elevator.
+     */
+    private boolean[] button;
+
+    /**
+     * Current door status.
+     */
+    private int doorStatus;
+
+    /**
+     * Nearest floor.
+     */
+    private int currentFloor;
+
+    /**
+     * Position in feet from the bottom.
+     */
+    private int currentPositionFt;
+
+    /**
+     * Current speed in feet per second.
+     */
+    private int currentSpeedFtPerSec;
+
+    /**
+     * Weight in the elevator.
+     */
+    private int weight;
+
+    /**
+     * Defines if a floor is serviced by the elevator.
+     */
+    private boolean[] servicedFloors;
+
+    /**
+     * Target floor of this elevator.
+     */
+    private int floorTarget;
+
+    /**
+     * Number of the current elevator.
+     */
+    private final int elevatorNumber;
+
+    /**
+     * Maximum maxPayload of the elevator.
+     */
+    private final int maxPayload;
+
+    /**
+     * Define if automatic mode is enabled.
+     */
+    private boolean automaticMode;
+
+
+
+    Elevator(int maximumPayload, int elevatorNumber, int floorCnt){
+        this.maxPayload = maximumPayload;
+        this.elevatorNumber = elevatorNumber;
+        button = new boolean[floorCnt];
     }
 
-    @Override
-    public int getElevatorAccel(int elevatorNumber) throws RemoteException {
-        return 2;
+    /*
+    public void Update() throws RemoteException {
+        setDirection(elevatorService.getCommittedDirection(elevatorNumber));
+        setAcceleration(elevatorService.getElevatorAccel(elevatorNumber));
+        setDoorStatus(elevatorService.getElevatorDoorStatus(elevatorNumber));
+        setCurrentFloor(elevatorService.getElevatorFloor(elevatorNumber));
+        setCurrentPositionFt(elevatorService.getElevatorPosition(elevatorNumber));
+        setCurrentSpeedFtPerSec(elevatorService.getElevatorSpeed(elevatorNumber));
+        setWeight(elevatorService.getElevatorWeight(elevatorNumber));
+        for(int i=0; i < floorCnt; i++)
+        {
+            button[i] = elevatorService.getButton(elevatorNumber,i);
+        }
+        setFloorTarget(elevatorService.getTarget(elevatorNumber));
+        boolean[] arr = new boolean[floorCnt];
+        for(int i=0; i<floorCnt; i++)
+        {
+            arr[i] = elevatorService.getServicesFloors(elevatorNumber,i);
+        }
+        setServicedFloors(arr);
+
+        //TODO Modus setzen
+    }
+    */
+
+    public int getDirection() {
+        return direction;
+    }
+    public void setDirection(int direction) {
+        this.direction = direction;
     }
 
-    @Override
-    public boolean getElevatorButton(int elevatorNumber, int floor) throws RemoteException {
-        return true;
+
+    public int getAcceleration() {
+        return acceleration;
+    }
+    public void setAcceleration(int acceleration) {
+        this.acceleration = acceleration;
     }
 
-    @Override
-    public int getElevatorDoorStatus(int elevatorNumber) throws RemoteException {
-        return 1;
+
+    public boolean[] getButton() {
+        return button;
+    }
+    public void setButton(boolean[] button) {
+        this.button = button;
     }
 
-    @Override
-    public int getElevatorFloor(int elevatorNumber) throws RemoteException {
-        return 1;
+
+    public int getDoorStatus() {
+        return doorStatus;
+    }
+    public void setDoorStatus(int doorStatus) {
+        this.doorStatus = doorStatus;
     }
 
-    @Override
-    public int getElevatorNum() throws RemoteException {
-        return 4;
+
+    public int getCurrentFloor() {
+        return currentFloor;
+    }
+    public void setCurrentFloor(int currentFloor) {
+        this.currentFloor = currentFloor;
     }
 
-    @Override
-    public int getElevatorPosition(int elevatorNumber) throws RemoteException {
-        return 4;
+
+    public int getCurrentPositionFt() {
+        return currentPositionFt;
+    }
+    public void setCurrentPositionFt(int currentPositionFt) {
+        this.currentPositionFt = currentPositionFt;
     }
 
-    @Override
-    public int getElevatorSpeed(int elevatorNumber) throws RemoteException {
-        return 3;
+
+    public int getCurrentSpeedFtPerSec() {
+        return currentSpeedFtPerSec;
+    }
+    public void setCurrentSpeedFtPerSec(int currentSpeedFtPerSec) {
+        this.currentSpeedFtPerSec = currentSpeedFtPerSec;
     }
 
-    @Override
-    public int getElevatorWeight(int elevatorNumber) throws RemoteException {
-        return 2;
+
+    public int getWeight() {
+        return weight;
+    }
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
-    @Override
-    public int getElevatorCapacity(int elevatorNumber) throws RemoteException {
-        return 1;
+
+    public boolean[] getServicedFloors() {
+        return servicedFloors;
+    }
+    public void setServicedFloors(boolean[] servicedFloors) {
+        this.servicedFloors = servicedFloors;
     }
 
-    @Override
-    public boolean getFloorButtonDown(int floor) throws RemoteException {
-        return false;
+
+    public int getFloorTarget() {
+        return floorTarget;
+    }
+    public void setFloorTarget(int floorTarget) {
+        this.floorTarget = floorTarget;
     }
 
-    @Override
-    public boolean getFloorButtonUp(int floor) throws RemoteException {
-        return true;
+
+    public int getMaxPayload() {
+        return maxPayload;
     }
 
-    @Override
-    public int getFloorHeight() throws RemoteException {
-        return 160;
-    }
 
-    @Override
-    public int getFloorNum() throws RemoteException {
-        return 30;
-    }
-
-    @Override
-    public boolean getServicesFloors(int elevatorNumber, int floor) throws RemoteException {
-        return true;
-    }
-
-    @Override
-    public int getTarget(int elevatorNumber) throws RemoteException {
-        return 2;
-    }
-
-    @Override
-    public void setCommittedDirection(int elevatorNumber, int direction) throws RemoteException {
-
-    }
-
-    @Override
-    public void setServicesFloors(int elevatorNumber, int floor, boolean service) throws RemoteException {
-
-    }
-
-    @Override
-    public void setTarget(int elevatorNumber, int target) throws RemoteException {
-
-    }
-
-    @Override
-    public long getClockTick() throws RemoteException {
-        return 140;
-    }
+    public boolean getAutomaticMode() { return automaticMode; }
+    public void setAutomaticMode(boolean automaticMode) { this.automaticMode = automaticMode; }
 }
