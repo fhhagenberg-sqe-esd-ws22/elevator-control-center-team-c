@@ -3,16 +3,11 @@ package at.fhhagenberg.sqe.viewmodel;
 import at.fhhagenberg.sqe.model.Elevator;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.Vector;
 
 public class ECCAppController {
 
@@ -23,6 +18,9 @@ public class ECCAppController {
     private Button btnAutomaticMode;
 
     @FXML
+    private Label labTest;
+
+    @FXML
     private ComboBox<Elevator> cbSelectElevator;
 
     private ObservableList<Elevator> elevators;
@@ -30,8 +28,8 @@ public class ECCAppController {
     public void init(ECCViewModel eccViewModel) {
         this.viewModel = eccViewModel;
 
-        // TODO do the binding here
-        //x.ValueProperty().bind(viewModel.xProperty());    // *example!
+        // TODO do the bindings here
+        labTest.textProperty().bind(viewModel.getTestLabel());
     }
 
     // TODO on combo box selection change the binding to the selected elevator

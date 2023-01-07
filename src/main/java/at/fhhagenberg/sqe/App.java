@@ -3,6 +3,7 @@ package at.fhhagenberg.sqe;
 import at.fhhagenberg.sqe.factories.ModelFactory;
 import at.fhhagenberg.sqe.factories.ViewHandler;
 import at.fhhagenberg.sqe.factories.ViewModelFactory;
+import at.fhhagenberg.sqe.viewmodel.ECCViewModel;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -19,7 +20,23 @@ public class App extends Application {
         ViewHandler vh = new ViewHandler(stage, vmf);
         vh.start();
 
-        // TODO start thread that updates the data structure
-        //      the thread has to update data in the ECCViewModel because that is the model that is bind to the view
+        // start thread to update all data
+        //runAutoUpdate(vmf.getEccViewModel());    // TODO make this thread work
+    }
+
+    private void runAutoUpdate(ECCViewModel eccViewModel) {
+
+        Thread thread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(5000);
+                    eccViewModel.update();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        thread.setDaemon(true);
+        thread.start();
     }
 }
