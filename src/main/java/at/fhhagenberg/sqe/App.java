@@ -1,61 +1,25 @@
 package at.fhhagenberg.sqe;
 
+import at.fhhagenberg.sqe.factories.ModelFactory;
+import at.fhhagenberg.sqe.factories.ViewHandler;
+import at.fhhagenberg.sqe.factories.ViewModelFactory;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 /**
  * JavaFX App
  */
 public class App extends Application {
 
-    /*
     @Override
-    public void start(Stage stage) {
-        var javaVersion = SystemInfo.javaVersion();
-        var javafxVersion = SystemInfo.javafxVersion();
+    public void start(Stage stage) throws Exception {
 
-        var label = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        var layout = new BorderPane(label);
-        var button = new Button("Click me!");
-        button.setOnAction(evt -> button.setText("Clicked!"));
-        layout.setBottom(button);
+        ModelFactory mf = new ModelFactory();
+        ViewModelFactory vmf = new ViewModelFactory(mf);
+        ViewHandler vh = new ViewHandler(stage, vmf);
+        vh.start();
 
-        var scene = new Scene(layout, 640, 480);
-
-        stage.setScene(scene);
-        stage.show();
+        // TODO start thread that updates the data structure
+        //      the thread has to update data in the ECCViewModel because that is the model that is bind to the view
     }
-
-     */
-
-    @Override
-    public void start(Stage stage) {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/ECCAppView.fxml"));
-
-        var heigth = 160;
-        var width = 430;
-        Scene scene = null;
-        try {
-            scene = new Scene(fxmlLoader.load(), width, heigth);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        stage.setMinHeight(heigth);
-        stage.setMinWidth(width);
-        stage.setTitle("project");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public static void main(String[] args) {
-        launch();
-    }
-
 }

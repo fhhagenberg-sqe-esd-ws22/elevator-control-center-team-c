@@ -14,7 +14,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-public class ECCAppController implements Initializable {
+public class ECCAppController {
+
+    private ECCViewModel viewModel;
+
 
     @FXML
     private Button btnAutomaticMode;
@@ -24,16 +27,18 @@ public class ECCAppController implements Initializable {
 
     private ObservableList<Elevator> elevators;
 
+    public void init(ECCViewModel eccViewModel) {
+        this.viewModel = eccViewModel;
+
+        // TODO do the binding here
+        //x.ValueProperty().bind(viewModel.xProperty());    // *example!
+    }
+
+    // TODO on combo box selection change the binding to the selected elevator
+    //      but maybe in the viewModel and not here
+
     @FXML
     public void handleButtonClick(MouseEvent mouseEvent) {
         System.out.print("Automatic Mode Button\n");
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        //elevators.add(new Elevator(10,10,10));
-
-        //cbSelectElevator.setItems(elevators);
     }
 }
