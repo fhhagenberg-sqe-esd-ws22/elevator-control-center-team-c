@@ -24,9 +24,9 @@ public class App extends Application {
     }
 
     /**
-     * Interval to update all information of one building.
+     * Interval to update all information of one building [milliseconds].
      */
-    private final int updateInterval = 2000;
+    private final int updateIntervalMillis = 2000;
 
     /**
      * Thread to update all information of one building.
@@ -34,11 +34,16 @@ public class App extends Application {
      */
     private void runAutoUpdate(ECCViewModel eccViewModel) {
         Thread thread = new Thread(() -> {
+
+            // TODO set up connection to RMI
+            // TODO initialize the view model once
+
             while (true) {
                 try {
-                    Thread.sleep(updateInterval);
+                    Thread.sleep(updateIntervalMillis);
                     eccViewModel.update();
-                } catch (InterruptedException e) {
+                } catch (InterruptedException e) {      // TODO make useful error handling
+                    e.printStackTrace(System.err);
                     throw new RuntimeException(e);
                 }
             }
