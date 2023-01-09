@@ -18,7 +18,7 @@ public class ECCViewModel {
      * Reference of the data structure.
      */
     private Building building;
-    private IElevatorService elevatorService;
+    protected IElevatorService elevatorService;
 
 
     /**
