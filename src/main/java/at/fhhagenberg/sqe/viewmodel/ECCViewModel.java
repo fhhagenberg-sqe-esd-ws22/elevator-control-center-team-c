@@ -1,6 +1,7 @@
 package at.fhhagenberg.sqe.viewmodel;
 
 import at.fhhagenberg.sqe.model.Building;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -30,10 +31,22 @@ public class ECCViewModel {
     public StringProperty getTestLabel() { return testLabel; }
 
     public void init() {
-
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                // TODO do the initialization of the structure
+            }
+        });
     }
 
+    private int cnt = 0;    // TODO delete (just for testing
+
     public void update() {
-        testLabel.setValue("changed to this");
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                testLabel.setValue("called: " + cnt++);
+            }
+        });
     }
 }

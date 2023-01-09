@@ -14,22 +14,29 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
         ModelFactory mf = new ModelFactory();
         ViewModelFactory vmf = new ViewModelFactory(mf);
         ViewHandler vh = new ViewHandler(stage, vmf);
         vh.start();
 
         // start thread to update all data
-        //runAutoUpdate(vmf.getEccViewModel());    // TODO make this thread work
+        runAutoUpdate(vmf.getEccViewModel());
     }
 
-    private void runAutoUpdate(ECCViewModel eccViewModel) {
+    /**
+     * Interval to update all information of one building.
+     */
+    private final int updateInterval = 2000;
 
+    /**
+     * Thread to update all information of one building.
+     * @param eccViewModel: The ViewModel that is updated.
+     */
+    private void runAutoUpdate(ECCViewModel eccViewModel) {
         Thread thread = new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(updateInterval);
                     eccViewModel.update();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
