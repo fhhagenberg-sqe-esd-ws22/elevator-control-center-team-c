@@ -1,5 +1,10 @@
 package at.fhhagenberg.sqe.model;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.util.Vector;
 
 public class Elevator {
@@ -17,7 +22,7 @@ public class Elevator {
     /**
      * Stop request button in the elevator.
      */
-    private Vector<Boolean> button;
+    private Vector<BooleanProperty> button;
 
     /**
      * Current door status.
@@ -27,7 +32,7 @@ public class Elevator {
     /**
      * Nearest floor.
      */
-    private int currentFloor;
+    private StringProperty currentFloor;
 
     /**
      * Position in feet from the bottom.
@@ -52,7 +57,7 @@ public class Elevator {
     /**
      * Target floor of this elevator.
      */
-    private int floorTarget;
+    private Vector<BooleanProperty> floorTarget;
 
     /**
      * Maximum maxPayload of the elevator.
@@ -68,17 +73,16 @@ public class Elevator {
 
     public Elevator(int maximumPayload, int floorCnt){
         this.maxPayload = maximumPayload;
-        if (floorCnt > 0) {
-            button = new Vector<>(floorCnt);
-            servicedFloor = new Vector<>(floorCnt);
-        }
-        else {
-            button = new Vector<>();
-            servicedFloor = new Vector<>();
+        currentFloor = new SimpleStringProperty();
+        button = new Vector<>();
+        servicedFloor = new Vector<>();
+        floorTarget = new Vector<>();
+        for (int idx = 0; idx < floorCnt; idx++) {
+            button.add(new SimpleBooleanProperty(Boolean.FALSE));
+            servicedFloor.add(Boolean.FALSE);
+            floorTarget.add(new SimpleBooleanProperty(Boolean.FALSE));
         }
     }
-
-
     public int getDirection() {
         return direction;
     }
@@ -95,15 +99,15 @@ public class Elevator {
     }
 
 
-    public Boolean getButton(int number) {
-        if (number > 0 && number < button.size()) {
+    public BooleanProperty getButton(int number) {
+        if (number >= 0 && number < button.size()) {
             return button.get(number);
         }
-        return Boolean.FALSE;
+        return new SimpleBooleanProperty(Boolean.FALSE);
     }
     public void setButton(int number, Boolean state) {
-        if (number > 0 && number < button.size()) {
-            button.set(number, state);
+        if (number >= 0 && number < button.size()) {
+            button.get(number).setValue(state);
         }
     }
 
@@ -116,11 +120,11 @@ public class Elevator {
     }
 
 
-    public int getCurrentFloor() {
+    public StringProperty getCurrentFloor() {
         return currentFloor;
     }
     public void setCurrentFloor(int currentFloor) {
-        this.currentFloor = currentFloor;
+        this.currentFloor.setValue(Integer.toString(currentFloor));
     }
 
 
@@ -161,11 +165,27 @@ public class Elevator {
     }
 
 
-    public int getFloorTarget() {
-        return floorTarget;
+    public BooleanProperty getFloorTarget(int number) {
+        if (number > 0 && number < servicedFloor.size())
+        {
+            return floorTarget.elementAt(number);
+        }
+        return new SimpleBooleanProperty(Boolean.FALSE);
+
     }
     public void setFloorTarget(int floorTarget) {
-        this.floorTarget = floorTarget;
+
+        for(int i=0; i<this.floorTarget.size(); i++)
+        {
+            if(i==floorTarget)
+            {
+                this.floorTarget.get(i).setValue(true);
+            }
+            else
+            {
+                this.floorTarget.get(i).setValue(false);
+            }
+        }
     }
 
 
