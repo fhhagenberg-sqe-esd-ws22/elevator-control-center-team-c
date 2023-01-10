@@ -1,6 +1,9 @@
 package at.fhhagenberg.sqe.viewmodel;
 
 import at.fhhagenberg.sqe.model.Elevator;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -17,6 +20,11 @@ import javafx.scene.text.Text;
 
 public class ECCAppController {
 
+    private final int FLOORBUTTONUP = 3;
+    private final int FLOORBUTTONDOWN = 4;
+    private final int STOPREQUEST = 1;
+    private final int TARGETFLOOR = 6;
+
     public GridPane board;
     private ECCViewModel viewModel;
 
@@ -27,6 +35,7 @@ public class ECCAppController {
     @FXML
     private AnchorPane anchorPane;
 
+    private int selectedElevator = 2;
     @FXML
     private Label labTest;
 
@@ -51,15 +60,20 @@ public class ECCAppController {
                 board.add(createGridPane(i),1,i-4);
         }
         board.add(new Rectangle(100,100, Color.WHITE),1,4,2,1);
-        for(int i = 0; i< 8;i++)
+        for(int i = 0; i<viewModel.getFloors(); i++)
         {
-            //((GridPane) board.getChildren().get(0)).getChildren().get(3)
-            //        .styleProperty().bind(viewModel.getFloorButtonsDownColorStringProp().elementAt(i));
+            ((GridPane) board.getChildren().get(i)).getChildren().get(FLOORBUTTONDOWN)
+                    .visibleProperty().bind(viewModel.getBuilding().getFloorButton(i).isButtonDown());
+            ((GridPane) board.getChildren().get(i)).getChildren().get(FLOORBUTTONUP)
+                    .visibleProperty().bind(viewModel.getBuilding().getFloorButton(i).isButtonUp());
+            ((GridPane) board.getChildren().get(i)).getChildren().get(STOPREQUEST)
+                    .visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getButton(i));
+            ((GridPane) board.getChildren().get(i)).getChildren().get(TARGETFLOOR)
+                    .visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTarget(i));
         }
 
 
     }
-
     // TODO on combo box selection change the binding to the selected elevator
     //      but maybe in the viewModel and not here
 
@@ -72,11 +86,19 @@ public class ECCAppController {
     {
         var innerGrid = new GridPane();
         innerGrid.setId("gridPane_"+Integer.toString(floor));
+
         Circle outerCircleFirstRow = new Circle();
         outerCircleFirstRow.setRadius(35);
         outerCircleFirstRow.setFill(Color.WHITE);
         outerCircleFirstRow.setStroke(Color.BLACK);
         outerCircleFirstRow.setStrokeWidth(1);
+
+        Circle outerCircleFirstRow_Pressed = new Circle();
+        outerCircleFirstRow_Pressed.setRadius(30);
+        outerCircleFirstRow_Pressed.setVisible(false);
+        outerCircleFirstRow_Pressed.setFill(Color.GREEN);
+        outerCircleFirstRow_Pressed.setStroke(Color.BLACK);
+        outerCircleFirstRow_Pressed.setStrokeWidth(1);
 
         Circle outerCircleThirdColumn = new Circle();
         outerCircleThirdColumn.setRadius(35);
@@ -106,22 +128,25 @@ public class ECCAppController {
         Polygon triangleUp = new Polygon();
         triangleUp.getPoints().addAll(-30.0, 27.0, 30.0, 27.0, 0.0, -30.0
         );
-        triangleUp.setFill(Color.WHITE);
+        triangleUp.setFill(Color.GREEN);
         triangleUp.setStroke(Color.BLACK);
+        triangleUp.setVisible(false);
         GridPane.setValignment(triangleUp,VPos.TOP);
         triangleUp.setId("callRequest_Up_" + Integer.toString(floor));
 
         Polygon triangleDown = new Polygon();
         triangleDown.getPoints().addAll(-30.0, 27.0, 30.0, 27.0, 0.0, -30.0
         );
-        triangleDown.setFill(Color.WHITE);
+        triangleDown.setFill(Color.GREEN);
         triangleDown.setStroke(Color.BLACK);
+        triangleDown.setVisible(false);
         GridPane.setValignment(triangleDown,VPos.BOTTOM);
         triangleDown.setScaleY(-1);
         triangleDown.setId("callRequest_Down_" + Integer.toString(floor));
 
 
         innerGrid.add(outerCircleFirstRow,0,0);
+        innerGrid.add(outerCircleFirstRow_Pressed,0,0);
         innerGrid.add(text,0,0);
         innerGrid.add(triangleUp,1,0);
         innerGrid.add(triangleDown,1,0);

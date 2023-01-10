@@ -1,22 +1,25 @@
 package at.fhhagenberg.sqe.model;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 public class FloorButton {
 
     /**
      * Upwards call request.
      */
-    private boolean buttonUp;
+    private BooleanProperty buttonUp = new SimpleBooleanProperty();
 
     /**
      * Downwards call request.
      */
-    private boolean buttonDown;
+    private BooleanProperty buttonDown = new SimpleBooleanProperty();
 
 
-    public boolean isButtonUp() { return buttonUp; }
-    public void setButtonUp(boolean buttonUp) { this.buttonUp = buttonUp; }
+    public BooleanProperty isButtonUp() { return buttonUp; }
+    public void setButtonUp(boolean buttonUp) { this.buttonUp.setValue(buttonUp); }
 
 
-    public boolean isButtonDown() { return buttonDown; }
-    public void setButtonDown(boolean buttonDown) { this.buttonDown = buttonDown; }
+    public BooleanProperty isButtonDown() { return buttonDown; }
+    public void setButtonDown(boolean buttonDown) { this.buttonDown.setValue(buttonDown); }
 }
