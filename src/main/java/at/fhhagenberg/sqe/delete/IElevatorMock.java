@@ -9,29 +9,45 @@ public class IElevatorMock implements IElevator {
 
     public IElevatorMock(int maxElevatorsCnt, int maxElevatorFloorsCnt)
     {
+        //maxElevatorFloorsCnt= maxElevatorFloorsCnt + 1;
+        //maxElevatorsCnt = maxElevatorsCnt +1;
+
+        mElevatorNum = maxElevatorsCnt;
+        mFloorNum = maxElevatorFloorsCnt;
+
         mCommittedDirection = new int[maxElevatorsCnt];
-        mTarget = new int[maxElevatorsCnt];
+        mElevatorAccel = new int[maxElevatorsCnt];
+        mElevatorButton = new boolean[maxElevatorsCnt][maxElevatorFloorsCnt];
+        mElevatorDoorStatus = new int[maxElevatorsCnt];
+        mElevatorFloor = new int[maxElevatorsCnt];
+        mElevatorPosition = new int[maxElevatorsCnt];
+        mElevatorSpeed = new int[maxElevatorsCnt];
+        mElevatorWeight = new int[maxElevatorsCnt];
+        mElevatorCapacity = new int[maxElevatorsCnt];
+        mFloorButtonDown = new boolean[maxElevatorFloorsCnt];
+        mFloorButtonUp = new boolean[maxElevatorFloorsCnt];
         mServicesFloors = new boolean[maxElevatorsCnt][maxElevatorFloorsCnt];
+        mTarget = new int[maxElevatorsCnt];
     }
 
 
-    private int[] mCommittedDirection;
-    private int mElevatorAccel;
-    private boolean mElevatorButton;
-    private int mElevatorDoorStatus;
-    private int mElevatorFloor;
+    private final int[] mCommittedDirection;
+    private final int[] mElevatorAccel;
+    private final boolean[][] mElevatorButton;
+    private final int[] mElevatorDoorStatus;
+    private final int[] mElevatorFloor;
     private int mElevatorNum;
-    private int mElevatorPosition;
-    private int mElevatorSpeed;
-    private int mElevatorWeight;
-    private int mElevatorCapacity;
-    private boolean mFloorButtonDown;
-    private boolean mFloorButtonUp;
+    private final int[] mElevatorPosition;
+    private final int[] mElevatorSpeed;
+    private final int[] mElevatorWeight;
+    private final int[] mElevatorCapacity;
+    private final boolean[] mFloorButtonDown;
+    private final boolean[] mFloorButtonUp;
     private int mFloorHeight;
     private int mFloorNum;
-    private boolean[][] mServicesFloors;
+    private final boolean[][] mServicesFloors;
 
-    private int[] mTarget;
+    private final int[] mTarget;
 
     private long mClockTick;
 
@@ -46,38 +62,38 @@ public class IElevatorMock implements IElevator {
 
     @Override
     public int getElevatorAccel(int elevatorNumber) throws RemoteException {
-        return mElevatorAccel;
+        return mElevatorAccel[elevatorNumber];
     }
-    public void setElevatorAccel (int elevatorAccel)
+    public void setElevatorAccel (int elevatorNumber, int elevatorAccel)
     {
-        mElevatorAccel = elevatorAccel;
+        mElevatorAccel[elevatorNumber] = elevatorAccel;
     }
 
     @Override
     public boolean getElevatorButton(int elevatorNumber, int floor) throws RemoteException {
-        return mElevatorButton;
+        return mElevatorButton[elevatorNumber][floor];
     }
-    public void setElevatorButton (boolean elevatorButton)
+    public void setElevatorButton (int elevatorNumber, int floor, boolean elevatorButton)
     {
-        mElevatorButton = elevatorButton;
+        mElevatorButton[elevatorNumber][floor] = elevatorButton;
     }
 
     @Override
     public int getElevatorDoorStatus(int elevatorNumber) throws RemoteException {
-        return mElevatorDoorStatus;
+        return mElevatorDoorStatus[elevatorNumber];
     }
-    public void setElevatorDoorStatus(int elevatorDoorStatus)
+    public void setElevatorDoorStatus(int elevatorNumber, int elevatorDoorStatus)
     {
-        mElevatorDoorStatus = elevatorDoorStatus;
+        mElevatorDoorStatus[elevatorNumber] = elevatorDoorStatus;
     }
 
     @Override
     public int getElevatorFloor(int elevatorNumber) throws RemoteException {
-        return mElevatorFloor;
+        return mElevatorFloor[elevatorNumber];
     }
-    public void setElevatorFloor(int elevatorFloor)
+    public void setElevatorFloor(int elevatorNumber, int elevatorFloor)
     {
-        mElevatorFloor = elevatorFloor;
+        mElevatorFloor[elevatorNumber] = elevatorFloor;
     }
 
     @Override
@@ -91,56 +107,56 @@ public class IElevatorMock implements IElevator {
 
     @Override
     public int getElevatorPosition(int elevatorNumber) throws RemoteException {
-        return mElevatorPosition;
+        return mElevatorPosition[elevatorNumber];
     }
-    public void setElevatorPosition(int elevatorPosition)
+    public void setElevatorPosition(int elevatorNumber, int elevatorPosition)
     {
-        mElevatorPosition = elevatorPosition;
+        mElevatorPosition[elevatorNumber] = elevatorPosition;
     }
 
     @Override
     public int getElevatorSpeed(int elevatorNumber) throws RemoteException {
-        return mElevatorSpeed;
+        return mElevatorSpeed[elevatorNumber];
     }
-    public void setElevatorSpeed(int elevatorSpeed)
+    public void setElevatorSpeed(int elevatorNumber, int elevatorSpeed)
     {
-        mElevatorSpeed = elevatorSpeed;
+        mElevatorSpeed[elevatorNumber] = elevatorSpeed;
     }
 
     @Override
     public int getElevatorWeight(int elevatorNumber) throws RemoteException {
-        return mElevatorWeight;
+        return mElevatorWeight[elevatorNumber];
     }
-    public void setElevatorWeight(int elevatorWeight)
+    public void setElevatorWeight(int elevatorNumber, int elevatorWeight)
     {
-        mElevatorWeight = elevatorWeight;
+        mElevatorWeight[elevatorNumber] = elevatorWeight;
     }
 
     @Override
     public int getElevatorCapacity(int elevatorNumber) throws RemoteException {
-        return mElevatorCapacity;
+        return mElevatorCapacity[elevatorNumber];
     }
-    public void setElevatorCapacity(int elevatorCapacity)
+    public void setElevatorCapacity(int elevatorNumber, int elevatorCapacity)
     {
-        mElevatorCapacity = elevatorCapacity;
+        mElevatorCapacity[elevatorNumber] = elevatorCapacity;
     }
 
     @Override
     public boolean getFloorButtonDown(int floor) throws RemoteException {
-        return mFloorButtonDown;
+        return mFloorButtonDown[floor];
     }
-    public void setFloorButtonDown(boolean floorButtonDown)
+    public void setFloorButtonDown(int floor, boolean floorButtonDown)
     {
-        mFloorButtonDown = floorButtonDown;
+        mFloorButtonDown[floor] = floorButtonDown;
     }
 
     @Override
     public boolean getFloorButtonUp(int floor) throws RemoteException {
-        return mFloorButtonUp;
+        return mFloorButtonUp[floor];
     }
-    public void setFloorButtonUp(boolean floorButtonUp)
+    public void setFloorButtonUp(int floor, boolean floorButtonUp)
     {
-        mFloorButtonUp = floorButtonUp;
+        mFloorButtonUp[floor] = floorButtonUp;
     }
 
     @Override

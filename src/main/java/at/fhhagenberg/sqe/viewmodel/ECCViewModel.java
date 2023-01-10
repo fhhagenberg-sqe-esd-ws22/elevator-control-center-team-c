@@ -29,7 +29,7 @@ public class ECCViewModel {
     public ECCViewModel(Building building) {
         this.building = building;
 
-        createElevatorService(new IElevatorMock(10,10));
+        createElevatorService(new IElevatorMock(10,13));
 
         testLabel = new SimpleStringProperty();
         testLabel.setValue("Testoutput stands here!");
@@ -71,7 +71,7 @@ public class ECCViewModel {
             public void run() {
                 testLabel.setValue("called: " + cnt++);
 
-                boolean elevatorButton = elevatorService.getElevatorButton(10,10);
+                boolean elevatorButton = elevatorService.getElevatorButton(9,9);
 
                 // update in Elevator
                 /*
