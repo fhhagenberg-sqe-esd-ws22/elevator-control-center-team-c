@@ -1,5 +1,7 @@
 package at.fhhagenberg.sqe.model;
 
+import java.util.Vector;
+
 public class Elevator {
 
     /**
@@ -15,7 +17,7 @@ public class Elevator {
     /**
      * Stop request button in the elevator.
      */
-    private boolean[] button;
+    private Vector<Boolean> button;
 
     /**
      * Current door status.
@@ -45,17 +47,12 @@ public class Elevator {
     /**
      * Defines if a floor is serviced by the elevator.
      */
-    private boolean[] servicedFloors;
+    private Vector<Boolean> servicedFloor;
 
     /**
      * Target floor of this elevator.
      */
     private int floorTarget;
-
-    /**
-     * Number of the current elevator.
-     */
-    private final int elevatorNumber;
 
     /**
      * Maximum maxPayload of the elevator.
@@ -69,36 +66,18 @@ public class Elevator {
 
 
 
-    public Elevator(int maximumPayload, int elevatorNumber, int floorCnt){
+    public Elevator(int maximumPayload, int floorCnt){
         this.maxPayload = maximumPayload;
-        this.elevatorNumber = elevatorNumber;
-        button = new boolean[floorCnt];
+        if (floorCnt > 0) {
+            button = new Vector<>(floorCnt);
+            servicedFloor = new Vector<>(floorCnt);
+        }
+        else {
+            button = new Vector<>();
+            servicedFloor = new Vector<>();
+        }
     }
 
-    /*
-    public void Update() throws RemoteException {
-        setDirection(elevatorService.getCommittedDirection(elevatorNumber));
-        setAcceleration(elevatorService.getElevatorAccel(elevatorNumber));
-        setDoorStatus(elevatorService.getElevatorDoorStatus(elevatorNumber));
-        setCurrentFloor(elevatorService.getElevatorFloor(elevatorNumber));
-        setCurrentPositionFt(elevatorService.getElevatorPosition(elevatorNumber));
-        setCurrentSpeedFtPerSec(elevatorService.getElevatorSpeed(elevatorNumber));
-        setWeight(elevatorService.getElevatorWeight(elevatorNumber));
-        for(int i=0; i < floorCnt; i++)
-        {
-            button[i] = elevatorService.getButton(elevatorNumber,i);
-        }
-        setFloorTarget(elevatorService.getTarget(elevatorNumber));
-        boolean[] arr = new boolean[floorCnt];
-        for(int i=0; i<floorCnt; i++)
-        {
-            arr[i] = elevatorService.getServicesFloors(elevatorNumber,i);
-        }
-        setServicedFloors(arr);
-
-        //TODO Modus setzen
-    }
-    */
 
     public int getDirection() {
         return direction;
@@ -116,11 +95,16 @@ public class Elevator {
     }
 
 
-    public boolean[] getButton() {
-        return button;
+    public Boolean getButton(int number) {
+        if (number > 0 && number < button.size()) {
+            return button.get(number);
+        }
+        return Boolean.FALSE;
     }
-    public void setButton(boolean[] button) {
-        this.button = button;
+    public void setButton(int number, Boolean state) {
+        if (number > 0 && number < button.size()) {
+            button.set(number, state);
+        }
     }
 
 
@@ -164,11 +148,16 @@ public class Elevator {
     }
 
 
-    public boolean[] getServicedFloors() {
-        return servicedFloors;
+    public Boolean getServicedFloor(int number) {
+        if (number > 0 && number < servicedFloor.size()) {
+            return servicedFloor.get(number);
+        }
+        return Boolean.FALSE;
     }
-    public void setServicedFloors(boolean[] servicedFloors) {
-        this.servicedFloors = servicedFloors;
+    public void setServicedFloor(int number, Boolean state) {
+        if (number > 0 && number < servicedFloor.size()) {
+            servicedFloor.set(number, state);
+        }
     }
 
 

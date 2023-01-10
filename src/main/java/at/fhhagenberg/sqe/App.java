@@ -38,6 +38,7 @@ public class App extends Application {
 
             // TODO set up connection to RMI
             // TODO initialize the view model once
+            eccViewModel.init();
 
             while (true) {
                 try {
