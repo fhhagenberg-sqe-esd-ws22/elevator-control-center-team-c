@@ -1,18 +1,33 @@
 package at.fhhagenberg.sqe.viewmodel;
 
-import at.fhhagenberg.sqe.IElevator;
 import at.fhhagenberg.sqe.delete.IElevatorMock;
 import at.fhhagenberg.sqe.interfaces.IElevatorService;
 import at.fhhagenberg.sqe.model.Building;
 import at.fhhagenberg.sqe.model.RMIElevatorService;
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+
+import java.util.Vector;
 
 public class ECCViewModel {
 
     // TODO create all properties you need to show
     private StringProperty testLabel;
+
+    public GridPane getGridInput() {
+        return gridInput;
+    }
+
+    public void setGridInput(GridPane gridInput) {
+        this.gridInput = gridInput;
+    }
+
+    private GridPane gridInput;
 
     /**
      * Reference of the data structure.
@@ -52,7 +67,21 @@ public class ECCViewModel {
             }
         });
     }
-
+    private Vector<StringProperty> vector = new Vector<>();
+    public Vector<StringProperty> getFloorButtonsDownColorStringProp (){
+        /*for (var floor : building.getFloorButtons())
+        {
+            vector.add(boolToColorStringProperty(floor.isButtonDown()));
+        }*/
+        return vector;
+    };
+    private StringProperty boolToColorStringProperty(boolean val)
+    {
+        return val ? new SimpleStringProperty("-fx-fill: green;") : new SimpleStringProperty("-fx-fill: white;");
+    }
+    public String getStopRequestColorString (){
+        return "-fx-background-color:blue;";
+    };
     private int cnt = 0;    // TODO delete (just for testing
 
     public void update() {
