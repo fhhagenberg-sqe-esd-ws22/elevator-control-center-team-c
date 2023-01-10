@@ -7,7 +7,7 @@ public class Building {
     /**
      * List of all elevators in the building.
      */
-    private Vector<Elevator> elevators;
+    private final Vector<Elevator> elevators;
 
     /**
      * Height of one floor.
@@ -17,7 +17,7 @@ public class Building {
     /**
      * Status of the floor buttons.
      */
-    private Vector<FloorButton> floorButtons;     // TODO may create a vector
+    private final Vector<FloorButton> floorButtons;
 
 
 
@@ -26,38 +26,30 @@ public class Building {
         floorButtons = new Vector<>();
     }
 
-    /*
-    private void Init() throws RemoteException
-    {
-        elevatorCnt = elevatorService.getElevatorNum();
-        floorHeight = elevatorService.getFloorHeight();
-        floorCnt = elevatorService.getFloorNum();
-        for (int i = 0; i < elevatorCnt; i++)
-        {
-            elevators.add(new Elevator(elevatorService.getElevatorCapacity(i),i,floorCnt));
-        }
-    }
-    public void Update() throws RemoteException {
-        for(int i = 0; i < floorCnt; i++)
-        {
-            floorButtons[i].setButtonDown(elevatorService.getFloorButtonDown(i));
-            floorButtons[i].setButtonUp(elevatorService.getFloorButtonUp(i));
-        }
-        for(var elem : elevators)
-        {
-            elem.Update();
-        }
-    }
-    */
 
-    public Vector<Elevator> getElevators() { return elevators; }
+    public Elevator getElevator(int number) {
+        if (number >= 0 && number < elevators.size()) {
+            return elevators.get(number);
+        }
+        return null;
+    }
+    public void addElevator(Elevator elevator) {
+        elevators.add(elevator);
+    }
 
 
     public int getElevatorNum() { return elevators.size(); }
 
 
-    public Vector<FloorButton> getFloorButtons() { return floorButtons; }
-    public void setFloorButtons(Vector<FloorButton> floorButtons) { this.floorButtons = floorButtons; }
+    public FloorButton getFloorButton(int floor) {
+        if (floor >= 0 && floor < floorButtons.size()) {
+            return floorButtons.get(floor);
+        }
+        return null;
+    }
+    public void addFloorButton(FloorButton button) {
+        floorButtons.add(button);
+    }
 
 
     public int getFloorHeight() { return floorHeight; }
