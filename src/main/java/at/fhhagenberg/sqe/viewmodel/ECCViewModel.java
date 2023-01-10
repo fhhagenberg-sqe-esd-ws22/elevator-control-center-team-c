@@ -29,7 +29,7 @@ public class ECCViewModel {
     public ECCViewModel(Building building) {
         this.building = building;
 
-        createElevatorService();
+        createElevatorService(new IElevatorMock());
 
         testLabel = new SimpleStringProperty();
         testLabel.setValue("Testoutput stands here!");
@@ -40,9 +40,8 @@ public class ECCViewModel {
     public StringProperty getTestLabel() { return testLabel; }
 
 
-    public void createElevatorService() {
-        IElevatorMock deleteElevatorMock = new IElevatorMock();
-        this.elevatorService = new RMIElevatorService(deleteElevatorMock);
+    protected void createElevatorService(IElevator elevator) {
+        this.elevatorService = new RMIElevatorService(elevator);
     }
 
     public void init() {
