@@ -52,14 +52,29 @@ public class ECCAppController {
 
         // TODO do the bindings here
         labTest.textProperty().bind(viewModel.getTestLabel());
-        for(int i = 0; i < 8; i++)
+        for(int i = 0; i < viewModel.getFloors(); i++)
         {
-            if(i<4)
+            if(i<viewModel.getFloors()/2)
                 board.add(createGridPane(i),0,i);
             else
                 board.add(createGridPane(i),1,i-4);
         }
-        board.add(new Rectangle(100,100, Color.WHITE),1,4,2,1);
+        var rectangle = new Rectangle(100,100,Color.WHITE);
+        rectangle.setStroke(Color.BLACK);
+
+
+        board.add(rectangle,0,viewModel.getFloors()/2,2,1);
+        GridPane.setValignment(rectangle,VPos.CENTER);
+        GridPane.setHalignment(rectangle,HPos.CENTER);
+
+        Label currentFloor = new Label();
+        currentFloor.setStyle("-fx-font-size:50px;");
+        currentFloor.setText("test");
+        board.add(currentFloor,0,viewModel.getFloors()/2,2,1);
+
+        GridPane.setValignment(currentFloor,VPos.CENTER);
+        GridPane.setHalignment(currentFloor,HPos.CENTER);
+        ((Label)board.getChildren().get(9)).textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentFloor());
         for(int i = 0; i<viewModel.getFloors(); i++)
         {
             ((GridPane) board.getChildren().get(i)).getChildren().get(FLOORBUTTONDOWN)
@@ -70,6 +85,7 @@ public class ECCAppController {
                     .visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getButton(i));
             ((GridPane) board.getChildren().get(i)).getChildren().get(TARGETFLOOR)
                     .visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTarget(i));
+
         }
 
 

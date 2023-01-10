@@ -3,6 +3,7 @@ package at.fhhagenberg.sqe.model;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import java.util.Vector;
 
@@ -31,7 +32,7 @@ public class Elevator {
     /**
      * Nearest floor.
      */
-    private int currentFloor;
+    private StringProperty currentFloor;
 
     /**
      * Position in feet from the bottom.
@@ -72,6 +73,7 @@ public class Elevator {
 
     public Elevator(int maximumPayload, int floorCnt){
         this.maxPayload = maximumPayload;
+        currentFloor = new SimpleStringProperty();
         button = new Vector<>();
         servicedFloor = new Vector<>();
         floorTarget = new Vector<>();
@@ -118,11 +120,11 @@ public class Elevator {
     }
 
 
-    public int getCurrentFloor() {
+    public StringProperty getCurrentFloor() {
         return currentFloor;
     }
     public void setCurrentFloor(int currentFloor) {
-        this.currentFloor = currentFloor;
+        this.currentFloor.setValue(Integer.toString(currentFloor));
     }
 
 

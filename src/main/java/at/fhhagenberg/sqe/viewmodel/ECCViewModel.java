@@ -142,6 +142,7 @@ public class ECCViewModel {
                 }
                 var rand = new Random();
                 building.getElevator(2).setFloorTarget(rand.nextInt(getFloors()));
+                building.getElevator(2).setCurrentFloor(rand.nextInt(getFloors()));
                 var test = "test";
                 // update in Elevator
                 /*
