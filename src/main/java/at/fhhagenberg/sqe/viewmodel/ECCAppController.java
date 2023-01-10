@@ -53,8 +53,8 @@ public class ECCAppController {
         board.add(new Rectangle(100,100, Color.WHITE),1,4,2,1);
         for(int i = 0; i< 8;i++)
         {
-            ((GridPane) board.getChildren().get(0)).getChildren().get(3)
-                    .styleProperty().bind(viewModel.getFloorButtonsDownColorStringProp().elementAt(i));
+            //((GridPane) board.getChildren().get(0)).getChildren().get(3)
+            //        .styleProperty().bind(viewModel.getFloorButtonsDownColorStringProp().elementAt(i));
         }
 
 
