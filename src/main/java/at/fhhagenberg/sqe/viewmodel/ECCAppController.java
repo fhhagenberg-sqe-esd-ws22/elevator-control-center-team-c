@@ -7,6 +7,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -26,6 +27,11 @@ public class ECCAppController {
     private final int TARGETFLOOR = 6;
 
     public GridPane board;
+    public Polygon elevator_upwards;
+    public Polygon elevator_downwards;
+    public Label speed;
+    public Label weight;
+    public Label position;
     private ECCViewModel viewModel;
 
 
@@ -64,6 +70,7 @@ public class ECCAppController {
 
 
         board.add(rectangle,0,viewModel.getFloors()/2,2,1);
+
         GridPane.setValignment(rectangle,VPos.CENTER);
         GridPane.setHalignment(rectangle,HPos.CENTER);
 
@@ -85,7 +92,6 @@ public class ECCAppController {
                     .visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getButton(i));
             ((GridPane) board.getChildren().get(i)).getChildren().get(TARGETFLOOR)
                     .visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTarget(i));
-
         }
 
 
@@ -168,7 +174,8 @@ public class ECCAppController {
         innerGrid.add(triangleDown,1,0);
         innerGrid.add(outerCircleThirdColumn,2,0);
         innerGrid.add(innerCircleThirdColum,2,0);
-        innerGrid.setGridLinesVisible(true);
+        //innerGrid.setGridLinesVisible(true);
+        GridPane.setMargin(innerGrid,new Insets(10,10,10,10));
 
         return innerGrid;
     }
