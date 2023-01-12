@@ -37,17 +37,17 @@ public class Elevator {
     /**
      * Position in feet from the bottom.
      */
-    private int currentPositionFt;
+    private StringProperty currentPositionFt;
 
     /**
      * Current speed in feet per second.
      */
-    private int currentSpeedFtPerSec;
+    private StringProperty currentSpeedFtPerSec;
 
     /**
      * Weight in the elevator.
      */
-    private int weight;
+    private StringProperty weight;
 
     /**
      * Defines if a floor is serviced by the elevator.
@@ -74,6 +74,9 @@ public class Elevator {
     public Elevator(int maximumPayload, int floorCnt){
         this.maxPayload = maximumPayload;
         currentFloor = new SimpleStringProperty();
+        currentPositionFt = new SimpleStringProperty();
+        currentSpeedFtPerSec = new SimpleStringProperty();
+        weight = new SimpleStringProperty();
         button = new Vector<>();
         servicedFloor = new Vector<>();
         floorTarget = new Vector<>();
@@ -128,38 +131,38 @@ public class Elevator {
     }
 
 
-    public int getCurrentPositionFt() {
+    public StringProperty getCurrentPositionFt() {
         return currentPositionFt;
     }
     public void setCurrentPositionFt(int currentPositionFt) {
-        this.currentPositionFt = currentPositionFt;
+        this.currentPositionFt.setValue(currentPositionFt +" ft");
     }
 
 
-    public int getCurrentSpeedFtPerSec() {
+    public StringProperty getCurrentSpeedFtPerSec() {
         return currentSpeedFtPerSec;
     }
     public void setCurrentSpeedFtPerSec(int currentSpeedFtPerSec) {
-        this.currentSpeedFtPerSec = currentSpeedFtPerSec;
+        this.currentSpeedFtPerSec.setValue(currentSpeedFtPerSec +" ft/s");
     }
 
 
-    public int getWeight() {
+    public StringProperty getWeight() {
         return weight;
     }
     public void setWeight(int weight) {
-        this.weight = weight;
+        this.weight.setValue(weight +" lbs");
     }
 
 
     public Boolean getServicedFloor(int number) {
-        if (number > 0 && number < servicedFloor.size()) {
+        if (number >= 0 && number < servicedFloor.size()) {
             return servicedFloor.get(number);
         }
         return Boolean.FALSE;
     }
     public void setServicedFloor(int number, Boolean state) {
-        if (number > 0 && number < servicedFloor.size()) {
+        if (number >= 0 && number < servicedFloor.size()) {
             servicedFloor.set(number, state);
         }
     }

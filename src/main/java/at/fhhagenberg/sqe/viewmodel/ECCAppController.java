@@ -7,6 +7,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -26,6 +27,14 @@ public class ECCAppController {
     private final int TARGETFLOOR = 6;
 
     public GridPane board;
+    public Polygon elevator_upwards;
+    public Polygon elevator_downwards;
+    public Label speed;
+    public Label weight;
+    public Label position;
+    public Label elevator_count;
+    public Label floor_height;
+    public Label services_floors;
     private ECCViewModel viewModel;
 
 
@@ -64,6 +73,7 @@ public class ECCAppController {
 
 
         board.add(rectangle,0,viewModel.getFloors()/2,2,1);
+
         GridPane.setValignment(rectangle,VPos.CENTER);
         GridPane.setHalignment(rectangle,HPos.CENTER);
 
@@ -85,10 +95,16 @@ public class ECCAppController {
                     .visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getButton(i));
             ((GridPane) board.getChildren().get(i)).getChildren().get(TARGETFLOOR)
                     .visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTarget(i));
-
         }
-
-
+        position.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentPositionFt());
+        speed.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentSpeedFtPerSec());
+        weight.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getWeight());
+        elevator_count.textProperty().bind(viewModel.getBuilding().getElevatorNum());
+        floor_height.textProperty().bind(viewModel.getBuilding().getFloorHeight());
+        // TODO bind services floors
+        // TODO choose elevator
+        // TODO bind upwards, downwards, nothing
+        // TODO switch between automatic and manual mode
     }
     // TODO on combo box selection change the binding to the selected elevator
     //      but maybe in the viewModel and not here
@@ -168,7 +184,8 @@ public class ECCAppController {
         innerGrid.add(triangleDown,1,0);
         innerGrid.add(outerCircleThirdColumn,2,0);
         innerGrid.add(innerCircleThirdColum,2,0);
-        innerGrid.setGridLinesVisible(true);
+        //innerGrid.setGridLinesVisible(true);
+        GridPane.setMargin(innerGrid,new Insets(10,10,10,10));
 
         return innerGrid;
     }

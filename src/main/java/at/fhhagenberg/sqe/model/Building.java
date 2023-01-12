@@ -1,5 +1,8 @@
 package at.fhhagenberg.sqe.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.util.Vector;
 
 public class Building {
@@ -12,18 +15,21 @@ public class Building {
     /**
      * Height of one floor.
      */
-    private int floorHeight;
+    private StringProperty floorHeight;
 
     /**
      * Status of the floor buttons.
      */
     private final Vector<FloorButton> floorButtons;
 
+    private StringProperty elevatorCnt;
 
 
     public Building() {
         elevators = new Vector<>();
         floorButtons = new Vector<>();
+        floorHeight = new SimpleStringProperty();
+        elevatorCnt = new SimpleStringProperty();
     }
 
 
@@ -35,10 +41,11 @@ public class Building {
     }
     public void addElevator(Elevator elevator) {
         elevators.add(elevator);
+        elevatorCnt.setValue(Integer.toString(elevators.size()));
     }
 
 
-    public int getElevatorNum() { return elevators.size(); }
+    public StringProperty getElevatorNum() { return elevatorCnt; }
 
 
     public FloorButton getFloorButton(int floor) {
@@ -52,8 +59,8 @@ public class Building {
     }
 
 
-    public int getFloorHeight() { return floorHeight; }
-    public void setFloorHeight(int floorHeight) { this.floorHeight = floorHeight; }
+    public StringProperty getFloorHeight() { return floorHeight; }
+    public void setFloorHeight(int floorHeight) { this.floorHeight.setValue(floorHeight + " ft"); }
 
 
     public int getFloorNum() { return floorButtons.size(); }
