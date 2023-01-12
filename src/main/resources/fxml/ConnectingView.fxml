@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhhagenberg.sqe.viewmodel.ConnectingViewController">
+   <children>
+      <Label fx:id="lbConnecting" layoutX="286.0" layoutY="192.0" text="Connecting ..." />
+   </children>
+</AnchorPane>

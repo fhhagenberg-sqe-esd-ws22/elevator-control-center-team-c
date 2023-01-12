@@ -39,31 +39,22 @@ public class ECCAppController {
 
 
     @FXML
-    private Button btnAutomaticMode;
-
-    @FXML
     private AnchorPane anchorPane;
 
     private int selectedElevator = 2;
-    @FXML
-    private Label labTest;
 
     @FXML
     private GridPane gridPane;
 
-    @FXML
-    private ComboBox<Elevator> cbSelectElevator;
 
     private ObservableList<Elevator> elevators;
 
     public void init(ECCViewModel eccViewModel) {
         this.viewModel = eccViewModel;
 
-        // TODO do the bindings here
-        labTest.textProperty().bind(viewModel.getTestLabel());
-        for(int i = 0; i < viewModel.getFloors(); i++)
+        for(int i = 0; i < viewModel.getBuilding().getFloorNum(); i++)
         {
-            if(i<viewModel.getFloors()/2)
+            if(i<viewModel.getBuilding().getFloorNum()/2)
                 board.add(createGridPane(i),0,i);
             else
                 board.add(createGridPane(i),1,i-4);
@@ -72,7 +63,7 @@ public class ECCAppController {
         rectangle.setStroke(Color.BLACK);
 
 
-        board.add(rectangle,0,viewModel.getFloors()/2,2,1);
+        board.add(rectangle,0,viewModel.getBuilding().getFloorNum()/2,2,1);
 
         GridPane.setValignment(rectangle,VPos.CENTER);
         GridPane.setHalignment(rectangle,HPos.CENTER);
@@ -80,12 +71,12 @@ public class ECCAppController {
         Label currentFloor = new Label();
         currentFloor.setStyle("-fx-font-size:50px;");
         currentFloor.setText("test");
-        board.add(currentFloor,0,viewModel.getFloors()/2,2,1);
+        board.add(currentFloor,0,viewModel.getBuilding().getFloorNum()/2,2,1);
 
         GridPane.setValignment(currentFloor,VPos.CENTER);
         GridPane.setHalignment(currentFloor,HPos.CENTER);
-        ((Label)board.getChildren().get(9)).textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentFloor());
-        for(int i = 0; i<viewModel.getFloors(); i++)
+        //((Label)board.getChildren().get(9)).textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentFloor());
+        for(int i = 0; i<viewModel.getBuilding().getFloorNum(); i++)
         {
             ((GridPane) board.getChildren().get(i)).getChildren().get(FLOORBUTTONDOWN)
                     .visibleProperty().bind(viewModel.getBuilding().getFloorButton(i).isButtonDown());
@@ -108,11 +99,6 @@ public class ECCAppController {
     }
     // TODO on combo box selection change the binding to the selected elevator
     //      but maybe in the viewModel and not here
-
-    @FXML
-    public void handleButtonClick(MouseEvent mouseEvent) {
-        System.out.print("Automatic Mode Button\n");
-    }
 
     private GridPane createGridPane(int floor)
     {

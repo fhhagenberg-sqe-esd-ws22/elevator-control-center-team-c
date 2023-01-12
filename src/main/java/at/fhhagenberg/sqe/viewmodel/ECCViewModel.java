@@ -20,8 +20,6 @@ import java.util.Vector;
 
 public class ECCViewModel {
 
-    // TODO create all properties you need to show
-    private StringProperty testLabel;
     private int currentSelectedElevator = 3;
 
     public GridPane getGridInput() {
@@ -38,6 +36,7 @@ public class ECCViewModel {
      * Reference of the data structure.
      */
     private Building building;
+    private Boolean initialized;
     protected IElevatorService elevatorService;
 
 
@@ -48,18 +47,20 @@ public class ECCViewModel {
     public ECCViewModel(Building building) {
 
         this.building = building;
-        /**/
-        this.building = new Building();
-        this.building.setFloorHeight(10);
+        this.initialized = Boolean.FALSE;
+
+        //this.building = new Building();
+        //this.building.setFloorHeight(10);
         int floorCnt = 8;
-        for(int i =0; i<floorCnt;i++)
+        int elevatorCnt = 3;
+        /*for(int i =0; i<floorCnt;i++)
         {
             var button = new FloorButton();
             button.setButtonUp(false);
             button.setButtonDown(true);
             this.building.addFloorButton(button);
         }
-        for (int i = 0; i< 3; i++)
+        for (int i = 0; i< elevatorCnt; i++)
         {
             Elevator elevator = new Elevator(1000,floorCnt);
             elevator.setDirection(1);
@@ -79,28 +80,13 @@ public class ECCViewModel {
             elevator.setDoorStatus(0);
             elevator.setFloorTarget(5);
             this.building.addElevator(elevator);
-        }
+        }*/
 
-
-
-        createElevatorService(new IElevatorMock(10,13));
-
-        testLabel = new SimpleStringProperty();
-        testLabel.setValue("Testoutput stands here!");
+        createElevatorService(new IElevatorMock(elevatorCnt,floorCnt));
     }
-
-
-
-    public StringProperty getTestLabel() { return testLabel; }
-
 
     protected void createElevatorService(IElevator elevator) {
         this.elevatorService = new RMIElevatorService(elevator);
-    }
-
-    public int getFloors()
-    {
-        return this.building.getFloorNum();
     }
 
 
@@ -115,78 +101,63 @@ public class ECCViewModel {
                 int maxPayload = 10;    // TODO find correct payload
                 long clockTick = elevatorService.getClockTick();
 
+                building.setFloorHeight(floorHeight);
+
                 for (int idx = 0; idx < elevatorNum; idx++) {
                     Elevator elevator = new Elevator(maxPayload,floorNum);
                     building.addElevator(elevator);
                 }
+                for (int idx = 0; idx < floorNum; idx++) {
+                    FloorButton floorButton = new FloorButton();
+                    building.addFloorButton(floorButton);
+                }
+
+                initialized = Boolean.TRUE;
             }
         });
     }
-    private int cnt = 0;    // TODO delete (just for testing
-    private boolean flag = true;
+
     public void update() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                testLabel.setValue("called: " + cnt++);
+                int elevatorNum = building.getElevatorNumINT();
+                int floorNum = building.getFloorNum();
 
-                boolean elevatorButton = elevatorService.getElevatorButton(9,9);
-                //building.getFloorButton(2).setButtonDown(!building.getFloorButton(2).isButtonDown());
-                //floorButtonDownVector.setElementAt(new SimpleStringProperty("-fx-fill: white;"),2);
-                flag = !flag;
-                for (int i=0; i<getFloors(); i++)
-                {
-                    building.getFloorButton(i).setButtonDown(flag);
-                    building.getFloorButton(i).setButtonUp(!flag);
-                    building.getElevator(2).setButton(i,flag);
+                for (int idxFloor = 0; idxFloor < floorNum; idxFloor++) {
+                    building.getFloorButton(idxFloor).setButtonUp(elevatorService.getFloorButtonUp(idxFloor));
+                    building.getFloorButton(idxFloor).setButtonDown(elevatorService.getFloorButtonDown(idxFloor));
                 }
-                var rand = new Random();
-                building.getElevator(2).setFloorTarget(rand.nextInt(getFloors()));
-                building.getElevator(2).setCurrentFloor(rand.nextInt(getFloors()));
-                var test = "test";
 
-                // update in Elevator
-                /*
-                setDirection(elevatorService.getCommittedDirection(elevatorNumber));
-                setAcceleration(elevatorService.getElevatorAccel(elevatorNumber));
-                setDoorStatus(elevatorService.getElevatorDoorStatus(elevatorNumber));
-                setCurrentFloor(elevatorService.getElevatorFloor(elevatorNumber));
-                setCurrentPositionFt(elevatorService.getElevatorPosition(elevatorNumber));
-                setCurrentSpeedFtPerSec(elevatorService.getElevatorSpeed(elevatorNumber));
-                setWeight(elevatorService.getElevatorWeight(elevatorNumber));
-                for(int i=0; i < floorCnt; i++)
-                {
-                    button[i] = elevatorService.getButton(elevatorNumber,i);
-                }
-                setFloorTarget(elevatorService.getTarget(elevatorNumber));
-                boolean[] arr = new boolean[floorCnt];
-                for(int i=0; i<floorCnt; i++)
-                {
-                    arr[i] = elevatorService.getServicesFloors(elevatorNumber,i);
-                }
-                setServicedFloors(arr);
+                for (int idxElevator = 0; idxElevator < elevatorNum; idxElevator++) {
+                    Elevator elevator = building.getElevator(idxElevator);
+                    elevator.setAcceleration(elevatorService.getElevatorAccel(idxElevator));
+                    elevator.setCurrentFloor(elevatorService.getElevatorFloor(idxElevator));
+                    elevator.setCurrentPositionFt(elevatorService.getElevatorPosition(idxElevator));
+                    elevator.setCurrentSpeedFtPerSec(elevatorService.getElevatorSpeed(idxElevator));
+                    elevator.setDirection(elevatorService.getCommittedDirection(idxElevator));
+                    elevator.setDoorStatus(elevatorService.getElevatorDoorStatus(idxElevator));
+                    elevator.setFloorTarget(elevatorService.getTarget(idxElevator));
+                    elevator.setWeight(elevatorService.getElevatorWeight(idxElevator));
 
-                //TODO Modus setzen
-                 */
+                    for (int idxFloor = 0; idxFloor < floorNum; idxFloor++) {
+                        elevator.setButton(idxFloor, elevatorService.getElevatorButton(idxElevator, idxFloor));
+                        elevator.setServicedFloor(idxFloor, elevatorService.getElevatorButton(idxElevator, idxFloor));
+                    }
+                }
 
-                // update in Building
-                /*
-                for(int i = 0; i < floorCnt; i++)
-                {
-                    floorButtons[i].setButtonDown(elevatorService.getFloorButtonDown(i));
-                    floorButtons[i].setButtonUp(elevatorService.getFloorButtonUp(i));
-                }
-                for(var elem : elevators)
-                {
-                    elem.Update();
-                }
-                 */
+                //elevator.setAutomaticMode();  // TODO set the automatic mode
             }
         });
 
     }
+
     public Building getBuilding()
     {
         return this.building;
+    }
+
+    public Boolean isInitialized() {
+        return this.initialized;
     }
 }

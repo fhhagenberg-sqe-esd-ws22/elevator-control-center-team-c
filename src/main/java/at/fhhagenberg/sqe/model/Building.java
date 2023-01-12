@@ -46,6 +46,7 @@ public class Building {
 
 
     public StringProperty getElevatorNum() { return elevatorCnt; }
+    public int getElevatorNumINT() { return elevators.size(); }
 
 
     public FloorButton getFloorButton(int floor) {

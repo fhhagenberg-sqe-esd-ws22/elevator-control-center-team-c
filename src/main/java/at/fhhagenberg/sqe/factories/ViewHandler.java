@@ -1,10 +1,15 @@
 package at.fhhagenberg.sqe.factories;
 
+import at.fhhagenberg.sqe.viewmodel.ConnectingViewController;
 import at.fhhagenberg.sqe.viewmodel.ECCAppController;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import javax.swing.text.View;
+import java.io.IOException;
 
 public class ViewHandler {
 
@@ -33,7 +38,7 @@ public class ViewHandler {
      * @throws Exception
      */
     public void start() throws Exception {
-        openView("/fxml/ECCAppView.fxml");
+        openView("/fxml/ConnectingView.fxml");
     }
 
     /**
@@ -42,23 +47,43 @@ public class ViewHandler {
      * @throws Exception
      */
     public void openView(String viewToOpen) throws Exception {
-        Scene scene;
-        FXMLLoader loader = new FXMLLoader();
-        Parent root;
 
-        loader.setLocation(getClass().getResource(viewToOpen));
-        root = loader.load();
+        class OneShotTask implements Runnable {
+            ViewHandler viewHandler;
+            OneShotTask(ViewHandler vh) { this.viewHandler = vh; }
+            public void run() {
+                try {
 
-        if ("/fxml/ECCAppView.fxml".equals(viewToOpen)) {
-            ECCAppController view = loader.getController();
-            view.init(viewModelFactory.getEccViewModel());
-            stage.setTitle("ECC Application");
-        } else {
-            // TODO error handling
+                    Scene scene;
+                    FXMLLoader loader = new FXMLLoader();
+                    Parent root;
+
+                    loader.setLocation(getClass().getResource(viewToOpen));
+                        root = loader.load();
+
+
+                    if ("/fxml/ECCAppView.fxml".equals(viewToOpen)) {
+                        ECCAppController view = loader.getController();
+                        view.init(viewModelFactory.getEccViewModel());
+                        stage.setTitle("ECC Application");
+                    } else if ("/fxml/ConnectingView.fxml".equals(viewToOpen)) {
+                        ConnectingViewController view = loader.getController();
+                        view.init(viewModelFactory.getEccViewModel(), this.viewHandler);
+                        stage.setTitle("ECC Connecting");
+                    } else {
+                        // TODO error handling
+                    }
+
+                    scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
 
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Platform.runLater(new OneShotTask(this));
     }
 }
