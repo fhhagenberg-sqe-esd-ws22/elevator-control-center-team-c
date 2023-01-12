@@ -55,14 +55,14 @@ public class ECCViewModel {
         for(int i =0; i<floorCnt;i++)
         {
             var button = new FloorButton();
-            button.setButtonUp(false);
-            button.setButtonDown(true);
+            button.setButtonUp(true);
+            button.setButtonDown(false);
             this.building.addFloorButton(button);
         }
         for (int i = 0; i< 3; i++)
         {
             Elevator elevator = new Elevator(1000,floorCnt);
-            elevator.setDirection(1);
+            elevator.setDirection(i);
             elevator.setAcceleration(100);
             boolean val = true;
             for(int k=0; k<floorCnt; k++)
@@ -72,12 +72,12 @@ public class ECCViewModel {
                 elevator.setServicedFloor(k,true);
             }
             elevator.setAutomaticMode(true);
-            elevator.setCurrentFloor(2);
+            elevator.setCurrentFloor(i);
             elevator.setWeight(700);
             elevator.setCurrentPositionFt(167);
             elevator.setCurrentSpeedFtPerSec(23);
-            elevator.setDoorStatus(0);
-            elevator.setFloorTarget(5);
+            elevator.setDoorStatus(i+1);
+            elevator.setFloorTarget(i+3);
             this.building.addElevator(elevator);
         }
 
@@ -133,7 +133,7 @@ public class ECCViewModel {
                 boolean elevatorButton = elevatorService.getElevatorButton(10,10);
                 //building.getFloorButton(2).setButtonDown(!building.getFloorButton(2).isButtonDown());
                 //floorButtonDownVector.setElementAt(new SimpleStringProperty("-fx-fill: white;"),2);
-                flag = !flag;
+                /*flag = !flag;
                 for (int i=0; i<getFloors(); i++)
                 {
                     building.getFloorButton(i).setButtonDown(flag);
@@ -143,6 +143,8 @@ public class ECCViewModel {
                 var rand = new Random();
                 building.getElevator(2).setFloorTarget(rand.nextInt(getFloors()));
                 building.getElevator(2).setCurrentFloor(rand.nextInt(getFloors()));
+
+                 */
                 var test = "test";
                 // update in Elevator
                 /*
