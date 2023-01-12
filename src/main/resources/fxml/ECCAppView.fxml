@@ -6,7 +6,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -75,9 +74,7 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints maxHeight="373.0" minHeight="10.0" prefHeight="331.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="373.0" minHeight="10.0" prefHeight="100.0" vgrow="NEVER" />
                 <RowConstraints maxHeight="461.0" minHeight="10.0" prefHeight="277.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="461.0" minHeight="10.0" prefHeight="100.0" vgrow="NEVER" />
               </rowConstraints>
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -99,32 +96,11 @@
                      <rowConstraints>
                         <RowConstraints maxHeight="332.0" minHeight="10.0" prefHeight="325.0" vgrow="SOMETIMES" />
                      </rowConstraints>
-                     <children>
-                        <TextArea editable="false" mouseTransparent="true" prefHeight="334.0" prefWidth="367.0" text="No planned route">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </TextArea>
-                     </children>
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
-                  </GridPane>
-                  <GridPane GridPane.rowIndex="2">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="182.0" minHeight="10.0" prefHeight="70.0" vgrow="NEVER" />
-                      <RowConstraints maxHeight="363.0" minHeight="10.0" prefHeight="212.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
                      <children>
-                        <Label text="General Info">
-                           <font>
-                              <Font size="36.0" />
-                           </font>
-                        </Label>
-                        <GridPane prefHeight="225.0" prefWidth="367.0" GridPane.rowIndex="1">
+                        <GridPane prefHeight="225.0" prefWidth="367.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -133,6 +109,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
                             <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
                             <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
                           </rowConstraints>
                            <children>
                               <Label text="Elevator Count">
@@ -165,6 +142,16 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
+                              <Label text="Target Floor" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="target_floor" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
                            </children>
                            <GridPane.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -172,16 +159,13 @@
                         </GridPane>
                      </children>
                   </GridPane>
+                  <GridPane GridPane.rowIndex="1">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                  </GridPane>
                </children>
             </GridPane>
-            <Label text="Planned Route" GridPane.columnIndex="2">
-               <font>
-                  <Font size="36.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-            </Label>
             <RadioButton mnemonicParsing="false" text="Auto OFF">
                <font>
                   <Font size="36.0" />
@@ -234,29 +218,9 @@
                         <Insets bottom="273.0" left="293.0" top="60.0" />
                      </GridPane.margin>
                   </Line>
-                  <Line fx:id="elevator_closed" endY="271.0" stroke="#2d8a47" strokeWidth="3.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Line fx:id="closed_elevator" endY="271.0" stroke="#2d8a47" strokeWidth="3.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets top="84.0" />
-                     </GridPane.margin>
-                  </Line>
-                  <Line fx:id="elevator_closing_opening_right_side" endY="271.0" stroke="#2d8a47" strokeWidth="3.0" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <GridPane.margin>
-                        <Insets left="145.0" top="84.0" />
-                     </GridPane.margin>
-                  </Line>
-                  <Line fx:id="elevator_closing_opening_left_side" endY="271.0" stroke="#2d8a47" strokeWidth="3.0" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <GridPane.margin>
-                        <Insets right="145.0" top="84.0" />
-                     </GridPane.margin>
-                  </Line>
-                  <Line fx:id="elevator_open_left_side" endY="271.0" stroke="#2d8a47" strokeWidth="3.0" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <GridPane.margin>
-                        <Insets right="250.0" top="84.0" />
-                     </GridPane.margin>
-                  </Line>
-                  <Line fx:id="elevator_open_right_side" endY="271.0" stroke="#2d8a47" strokeWidth="3.0" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <GridPane.margin>
-                        <Insets left="247.0" top="84.0" />
                      </GridPane.margin>
                   </Line>
                   <Polygon fx:id="elevator_upwards" fill="#2d8a47" stroke="BLACK" strokeType="INSIDE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -285,6 +249,16 @@
                         <Insets left="125.0" top="10.0" />
                      </GridPane.margin>
                   </Polygon>
+                  <Rectangle fx:id="opening_closing_elevator" arcHeight="5.0" arcWidth="5.0" fill="#2d8a47" height="275.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="125.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets top="85.0" />
+                     </GridPane.margin>
+                  </Rectangle>
+                  <Rectangle fx:id="open_elevator" arcHeight="5.0" arcWidth="5.0" fill="#2d8a47" height="275.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="250.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets top="85.0" />
+                     </GridPane.margin>
+                  </Rectangle>
                   <GridPane GridPane.rowIndex="3">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="105.0" />
@@ -339,6 +313,14 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </GridPane>
+            <Label text="General Info" GridPane.columnIndex="2">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
          </children>
       </GridPane>
    </children>
