@@ -1,6 +1,6 @@
 package at.fhhagenberg.sqe;
 
-import at.fhhagenberg.sqe.delete.IElevatorMock;
+import at.fhhagenberg.sqe.mockobjects.IElevatorMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

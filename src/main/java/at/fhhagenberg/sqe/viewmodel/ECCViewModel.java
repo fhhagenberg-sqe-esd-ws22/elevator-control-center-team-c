@@ -1,7 +1,7 @@
 package at.fhhagenberg.sqe.viewmodel;
 
 import at.fhhagenberg.sqe.IElevator;
-import at.fhhagenberg.sqe.delete.IElevatorMock;
+import at.fhhagenberg.sqe.mockobjects.IElevatorMock;
 import at.fhhagenberg.sqe.interfaces.IElevatorService;
 import at.fhhagenberg.sqe.model.Building;
 import at.fhhagenberg.sqe.model.Elevator;
