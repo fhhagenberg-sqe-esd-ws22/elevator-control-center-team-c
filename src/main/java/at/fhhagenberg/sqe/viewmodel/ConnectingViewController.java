@@ -30,13 +30,13 @@ public class ConnectingViewController {
         runAutoCheck(this.viewModel);
     }
 
-    private final int checkIntervalMillis = 1000;
+    private final int checkIntervalMillis = 500;
 
     private void runAutoCheck(ECCViewModel eccViewModel) {
         Thread thread = new Thread(() -> {
             try {
 
-                Thread.sleep(checkIntervalMillis*3);
+                Thread.sleep(checkIntervalMillis*10);
                 while (!viewModel.isInitialized()) {
                     Thread.sleep(checkIntervalMillis);
                 }

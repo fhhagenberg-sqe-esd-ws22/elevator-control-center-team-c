@@ -18,25 +18,25 @@ import javafx.scene.paint.Color;
 import java.util.Random;
 import java.util.Vector;
 
+/**
+ * Class that handles the communication with the elevator Service
+ * and the update process for the data structure.
+ */
 public class ECCViewModel {
 
-    private int currentSelectedElevator = 3;
-
-    public GridPane getGridInput() {
-        return gridInput;
-    }
-
-    public void setGridInput(GridPane gridInput) {
-        this.gridInput = gridInput;
-    }
-
-    private GridPane gridInput;
+    /**
+     * Reference to the data structure.
+     */
+    private final Building building;
 
     /**
-     * Reference of the data structure.
+     * Flag to indicate if the building is already initialized.
      */
-    private Building building;
     private Boolean initialized;
+
+    /**
+     * Reference to the elevator service where the information is retrieved.
+     */
     protected IElevatorService elevatorService;
 
 
@@ -45,51 +45,25 @@ public class ECCViewModel {
      * @param building
      */
     public ECCViewModel(Building building) {
-
         this.building = building;
         this.initialized = Boolean.FALSE;
 
-        //this.building = new Building();
-        //this.building.setFloorHeight(10);
         int floorCnt = 8;
         int elevatorCnt = 3;
-        /*for(int i =0; i<floorCnt;i++)
-        {
-            var button = new FloorButton();
-            button.setButtonUp(false);
-            button.setButtonDown(true);
-            this.building.addFloorButton(button);
-        }
-        for (int i = 0; i< elevatorCnt; i++)
-        {
-            Elevator elevator = new Elevator(1000,floorCnt);
-            elevator.setDirection(1);
-            elevator.setAcceleration(100);
-            boolean val = true;
-            for(int k=0; k<floorCnt; k++)
-            {
-                val = !val;
-                elevator.setButton(k,val);
-                elevator.setServicedFloor(k,true);
-            }
-            elevator.setAutomaticMode(true);
-            elevator.setCurrentFloor(2);
-            elevator.setWeight(700);
-            elevator.setCurrentPositionFt(167);
-            elevator.setCurrentSpeedFtPerSec(23);
-            elevator.setDoorStatus(0);
-            elevator.setFloorTarget(5);
-            this.building.addElevator(elevator);
-        }*/
-
-        createElevatorService(new IElevatorMock(elevatorCnt,floorCnt));
+        createElevatorService(new IElevatorMock(elevatorCnt,floorCnt));     // TODO change the interface and may the location of initialization
     }
 
-    protected void createElevatorService(IElevator elevator) {
-        this.elevatorService = new RMIElevatorService(elevator);
+    /**
+     * Create an elevator service.
+     * @param service
+     */
+    protected void createElevatorService(IElevator service) {
+        this.elevatorService = new RMIElevatorService(service);
     }
 
-
+    /**
+     * Initialize the structure of one building. Should be called only once.
+     */
     public void init() {
         Platform.runLater(new Runnable() {
             @Override
@@ -117,6 +91,9 @@ public class ECCViewModel {
         });
     }
 
+    /**
+     * Update content of the building.
+     */
     public void update() {
         Platform.runLater(new Runnable() {
             @Override
@@ -152,11 +129,19 @@ public class ECCViewModel {
 
     }
 
+    /**
+     * Retrieve the building.
+     * @return
+     */
     public Building getBuilding()
     {
         return this.building;
     }
 
+    /**
+     * Flag to check if the building is already initialized.
+     * @return
+     */
     public Boolean isInitialized() {
         return this.initialized;
     }
