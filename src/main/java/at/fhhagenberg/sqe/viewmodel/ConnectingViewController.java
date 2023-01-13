@@ -1,12 +1,17 @@
 package at.fhhagenberg.sqe.viewmodel;
 
 import at.fhhagenberg.sqe.factories.ViewHandler;
+import javafx.animation.Interpolator;
+import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+
 
 public class ConnectingViewController {
+
     @FXML
-    public Label lbConnecting;
+    private ImageView imgWaiting;
 
     private ECCViewModel viewModel;
     private ViewHandler viewHandler;
@@ -14,6 +19,13 @@ public class ConnectingViewController {
     public void init(ECCViewModel eccViewModel, ViewHandler vh) {
         this.viewModel = eccViewModel;
         this.viewHandler = vh;
+
+        RotateTransition rotateTransition = new RotateTransition();
+        rotateTransition.setNode(imgWaiting);
+        rotateTransition.setDuration(Duration.millis(2000));
+        rotateTransition.setCycleCount(RotateTransition.INDEFINITE);
+        rotateTransition.setByAngle(360);
+        rotateTransition.play();
 
         runAutoCheck(this.viewModel);
     }
@@ -24,7 +36,7 @@ public class ConnectingViewController {
         Thread thread = new Thread(() -> {
             try {
 
-                Thread.sleep(checkIntervalMillis);
+                Thread.sleep(checkIntervalMillis*3);
                 while (!viewModel.isInitialized()) {
                     Thread.sleep(checkIntervalMillis);
                 }

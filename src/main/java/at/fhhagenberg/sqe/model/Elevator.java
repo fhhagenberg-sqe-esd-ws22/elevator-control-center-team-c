@@ -180,14 +180,7 @@ public class Elevator {
 
         for(int i=0; i<this.floorTarget.size(); i++)
         {
-            if(i==floorTarget)
-            {
-                this.floorTarget.get(i).setValue(true);
-            }
-            else
-            {
-                this.floorTarget.get(i).setValue(false);
-            }
+            this.floorTarget.get(i).setValue(i == floorTarget);
         }
     }
 
