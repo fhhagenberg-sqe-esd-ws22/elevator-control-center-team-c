@@ -8,15 +8,6 @@ import at.fhhagenberg.sqe.model.Elevator;
 import at.fhhagenberg.sqe.model.FloorButton;
 import at.fhhagenberg.sqe.model.RMIElevatorService;
 import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-
-import java.util.Random;
-import java.util.Vector;
 
 /**
  * Class that handles the communication with the elevator Service
