@@ -15,21 +15,21 @@ public class Building {
     /**
      * Height of one floor.
      */
-    private StringProperty floorHeight;
+    private final StringProperty floorHeight;
 
     /**
      * Status of the floor buttons.
      */
     private final Vector<FloorButton> floorButtons;
 
-    private StringProperty elevatorCnt;
+    private final StringProperty elevatorCnt;
 
 
     public Building() {
         elevators = new Vector<>();
         floorButtons = new Vector<>();
-        floorHeight = new SimpleStringProperty();
-        elevatorCnt = new SimpleStringProperty();
+        floorHeight = new SimpleStringProperty("0 ft");
+        elevatorCnt = new SimpleStringProperty("0");
     }
 
 
@@ -46,6 +46,7 @@ public class Building {
 
 
     public StringProperty getElevatorNum() { return elevatorCnt; }
+    public int getElevatorNumINT() { return elevators.size(); }
 
 
     public FloorButton getFloorButton(int floor) {
@@ -60,7 +61,13 @@ public class Building {
 
 
     public StringProperty getFloorHeight() { return floorHeight; }
-    public void setFloorHeight(int floorHeight) { this.floorHeight.setValue(floorHeight + " ft"); }
+    public void setFloorHeight(int floorHeight) {
+        if (floorHeight > 0) {
+            this.floorHeight.setValue(floorHeight + " ft");
+        } else {
+            this.floorHeight.setValue("0 ft");
+        }
+    }
 
 
     public int getFloorNum() { return floorButtons.size(); }

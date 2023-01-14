@@ -1,6 +1,5 @@
 package at.fhhagenberg.sqe;
 
-import at.fhhagenberg.sqe.delete.IElevatorMock;
 import at.fhhagenberg.sqe.factories.ModelFactory;
 import at.fhhagenberg.sqe.factories.ViewHandler;
 import at.fhhagenberg.sqe.factories.ViewModelFactory;

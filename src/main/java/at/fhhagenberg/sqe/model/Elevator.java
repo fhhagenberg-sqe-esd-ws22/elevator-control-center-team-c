@@ -77,7 +77,22 @@ public class Elevator {
     private StringProperty floorTargetStringProp;
 
     public Elevator(int maximumPayload, int floorCnt){
-        this.maxPayload = maximumPayload;
+
+        maxPayload = Math.max(maximumPayload, 0);
+        for(int i=0; i<3; i++)
+        {
+            direction.elementAt(i).setValue(false);
+
+        }
+        for(int i=0; i<4; i++)
+        {
+            doorStatus.elementAt(i).setValue(false);
+        }
+        doorStatus.elementAt(0).setValue(true);
+        currentFloor = new SimpleStringProperty("0");
+        currentPositionFt = new SimpleStringProperty("0 ft");
+        currentSpeedFtPerSec = new SimpleStringProperty("0 ft/s");
+        weight = new SimpleStringProperty("0 lbs");
         currentFloor = new SimpleStringProperty();
         automaticMode_bool = new SimpleBooleanProperty();
         doorStatus = new Vector<>();
@@ -113,9 +128,18 @@ public class Elevator {
         return new SimpleBooleanProperty(Boolean.FALSE);
     }
     public void setDirection(int direction) {
-        for(int i=0; i<3; i++)
-        {
-            this.direction.elementAt(i).setValue(i==direction);
+        if (direction == IElevator.ELEVATOR_DIRECTION_UP ||
+            direction == IElevator.ELEVATOR_DIRECTION_DOWN ||
+            direction == IElevator.ELEVATOR_DIRECTION_UNCOMMITTED) {
+            for(int i=0; i<3; i++)
+            {
+                this.direction.elementAt(i).setValue(i==direction);
+            }
+        } else {
+            for(int i=0; i<3; i++)
+            {
+                this.direction.elementAt(i).setValue(i==direction);
+            }
         }
     }
 
@@ -150,8 +174,10 @@ public class Elevator {
             return new SimpleBooleanProperty(Boolean.FALSE);
     }
     public void setDoorStatus(int doorStatus) {
-        if(doorStatus < 5)
-        {
+        if (doorStatus == IElevator.ELEVATOR_DOORS_OPEN ||
+            doorStatus == IElevator.ELEVATOR_DOORS_CLOSED ||
+            doorStatus == IElevator.ELEVATOR_DOORS_OPENING ||
+            doorStatus == IElevator.ELEVATOR_DOORS_CLOSING) {
             for(int i=0; i<4; i++)
             {
                 this.doorStatus.elementAt(i).setValue((i+1) == doorStatus);
@@ -165,11 +191,13 @@ public class Elevator {
             {
                 opening_closing_doorStatus.setValue(Boolean.FALSE);
             }
+        } else {
+            // TODO Default wert setzen
+            for(int i=0; i<4; i++)
+            {
+                this.doorStatus.elementAt(i).setValue((i+1) == doorStatus);
+            }
         }
-    }
-    public BooleanProperty getOpening_closing_doorStatus()
-    {
-        return opening_closing_doorStatus;
     }
 
 
@@ -177,7 +205,11 @@ public class Elevator {
         return currentFloor;
     }
     public void setCurrentFloor(int currentFloor) {
-        this.currentFloor.setValue(Integer.toString(currentFloor));
+        if (currentFloor >= 0 && currentFloor < button.size()) {
+            this.currentFloor.setValue(Integer.toString(currentFloor));
+        } else {
+            this.currentFloor.setValue(Integer.toString(0));
+        }
     }
 
 
@@ -185,7 +217,11 @@ public class Elevator {
         return currentPositionFt;
     }
     public void setCurrentPositionFt(int currentPositionFt) {
-        this.currentPositionFt.setValue(currentPositionFt +" ft");
+        if (currentPositionFt >= 0) {
+            this.currentPositionFt.setValue(currentPositionFt + " ft");
+        } else {
+            this.currentPositionFt.setValue("0 ft");
+        }
     }
 
 
@@ -193,7 +229,11 @@ public class Elevator {
         return currentSpeedFtPerSec;
     }
     public void setCurrentSpeedFtPerSec(int currentSpeedFtPerSec) {
-        this.currentSpeedFtPerSec.setValue(currentSpeedFtPerSec +" ft/s");
+        if (currentSpeedFtPerSec >= 0) {
+            this.currentSpeedFtPerSec.setValue(currentSpeedFtPerSec + " ft/s");
+        } else {
+            this.currentSpeedFtPerSec.setValue("0 ft/s");
+        }
     }
 
 
@@ -201,7 +241,11 @@ public class Elevator {
         return weight;
     }
     public void setWeight(int weight) {
-        this.weight.setValue(weight +" lbs");
+        if (weight >= 0) {
+            this.weight.setValue(weight + " lbs");
+        } else {
+            this.weight.setValue("0 lbs");
+        }
     }
 
 
@@ -231,16 +275,12 @@ public class Elevator {
     }
     public void setFloorTarget(int floorTarget) {
 
-        for(int i=0; i<this.floorTarget.size(); i++)
+        for(int i = 0; i < this.floorTarget.size(); i++)
         {
+            this.floorTarget.get(i).setValue(i == floorTarget);
             if(i==floorTarget)
             {
-                this.floorTarget.get(i).setValue(true);
                 this.floorTargetStringProp.setValue(Integer.toString(floorTarget));
-            }
-            else
-            {
-                this.floorTarget.get(i).setValue(false);
             }
         }
     }

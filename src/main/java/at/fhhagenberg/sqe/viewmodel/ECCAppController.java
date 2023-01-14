@@ -72,9 +72,10 @@ public class ECCAppController {
         this.viewModel = eccViewModel;
         autoModeStringProp = new SimpleStringProperty("OFF");
 
-        for(int i = 0; i < viewModel.getFloors(); i++)
+
+        for(int i = 0; i < viewModel.getBuilding().getFloorNum(); i++)
         {
-            if(i<viewModel.getFloors()/2)
+            if(i<viewModel.getBuilding().getFloorNum()/2)
                 board.add(createGridPane(i),0,i);
             else
                 board.add(createGridPane(i),1,i-4);
@@ -85,7 +86,7 @@ public class ECCAppController {
         elevator_selection.setItems(FXCollections.observableArrayList(createElevatorSelection(Integer.parseInt(viewModel.getBuilding().getElevatorNum().getValue()))));
 
 
-        board.add(rectangle,0,viewModel.getFloors()/2,2,1);
+        board.add(rectangle,0,viewModel.getBuilding().getFloorNum()/2,2,1);
 
 
 
@@ -95,7 +96,7 @@ public class ECCAppController {
         Label currentFloor = new Label();
         currentFloor.setStyle("-fx-font-size:50px;");
         currentFloor.setText("test");
-        board.add(currentFloor,0,viewModel.getFloors()/2,2,1);
+        board.add(currentFloor,0,viewModel.getBuilding().getFloorNum()/2,2,1);
 
         GridPane.setValignment(currentFloor,VPos.CENTER);
         GridPane.setHalignment(currentFloor,HPos.CENTER);
