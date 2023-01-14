@@ -18,23 +18,35 @@ public class ElevatorTest {
     @Test
     public void testDirection() {
         // test normal use
-        assertEquals(IElevator.ELEVATOR_DIRECTION_UNCOMMITTED, elevator.getDirection());
+        assertFalse(elevator.getDirection().getUpProperty().getValue());
+        assertFalse(elevator.getDirection().getDownProperty().getValue());
+        assertTrue(elevator.getDirection().getUncommittedProperty().getValue());
 
         elevator.setDirection(IElevator.ELEVATOR_DIRECTION_UP);
-        assertEquals(IElevator.ELEVATOR_DIRECTION_UP, elevator.getDirection());
+        assertTrue(elevator.getDirection().getUpProperty().getValue());
+        assertFalse(elevator.getDirection().getDownProperty().getValue());
+        assertFalse(elevator.getDirection().getUncommittedProperty().getValue());
 
         elevator.setDirection(IElevator.ELEVATOR_DIRECTION_DOWN);
-        assertEquals(IElevator.ELEVATOR_DIRECTION_DOWN, elevator.getDirection());
+        assertFalse(elevator.getDirection().getUpProperty().getValue());
+        assertTrue(elevator.getDirection().getDownProperty().getValue());
+        assertFalse(elevator.getDirection().getUncommittedProperty().getValue());
 
         elevator.setDirection(IElevator.ELEVATOR_DIRECTION_UNCOMMITTED);
-        assertEquals(IElevator.ELEVATOR_DIRECTION_UNCOMMITTED, elevator.getDirection());
+        assertFalse(elevator.getDirection().getUpProperty().getValue());
+        assertFalse(elevator.getDirection().getDownProperty().getValue());
+        assertTrue(elevator.getDirection().getUncommittedProperty().getValue());
 
         // test invalid input
         elevator.setDirection(-1);
-        assertEquals(IElevator.ELEVATOR_DIRECTION_UNCOMMITTED, elevator.getDirection());
+        assertFalse(elevator.getDirection().getUpProperty().getValue());
+        assertFalse(elevator.getDirection().getDownProperty().getValue());
+        assertTrue(elevator.getDirection().getUncommittedProperty().getValue());
 
         elevator.setDirection(3);
-        assertEquals(IElevator.ELEVATOR_DIRECTION_UNCOMMITTED, elevator.getDirection());
+        assertFalse(elevator.getDirection().getUpProperty().getValue());
+        assertFalse(elevator.getDirection().getDownProperty().getValue());
+        assertTrue(elevator.getDirection().getUncommittedProperty().getValue());
     }
 
     @Test
@@ -75,26 +87,47 @@ public class ElevatorTest {
     @Test
     public void testDoorStatus() {
         // test normal use
-        assertEquals(IElevator.ELEVATOR_DOORS_OPEN, elevator.getDoorStatus());
+        assertFalse(elevator.getDoorStatus().getOpenedProperty().getValue());
+        assertTrue(elevator.getDoorStatus().getClosedProperty().getValue());
+        assertFalse(elevator.getDoorStatus().getOpeningProperty().getValue());
+        assertFalse(elevator.getDoorStatus().getClosingProperty().getValue());
 
         elevator.setDoorStatus(IElevator.ELEVATOR_DOORS_OPEN);
-        assertEquals(IElevator.ELEVATOR_DOORS_OPEN, elevator.getDoorStatus());
+        assertTrue(elevator.getDoorStatus().getOpenedProperty().getValue());
+        assertFalse(elevator.getDoorStatus().getClosedProperty().getValue());
+        assertFalse(elevator.getDoorStatus().getOpeningProperty().getValue());
+        assertFalse(elevator.getDoorStatus().getClosingProperty().getValue());
 
         elevator.setDoorStatus(IElevator.ELEVATOR_DOORS_CLOSED);
-        assertEquals(IElevator.ELEVATOR_DOORS_CLOSED, elevator.getDoorStatus());
+        assertFalse(elevator.getDoorStatus().getOpenedProperty().getValue());
+        assertTrue(elevator.getDoorStatus().getClosedProperty().getValue());
+        assertFalse(elevator.getDoorStatus().getOpeningProperty().getValue());
+        assertFalse(elevator.getDoorStatus().getClosingProperty().getValue());
 
         elevator.setDoorStatus(IElevator.ELEVATOR_DOORS_OPENING);
-        assertEquals(IElevator.ELEVATOR_DOORS_OPENING, elevator.getDoorStatus());
+        assertFalse(elevator.getDoorStatus().getOpenedProperty().getValue());
+        assertFalse(elevator.getDoorStatus().getClosedProperty().getValue());
+        assertTrue(elevator.getDoorStatus().getOpeningProperty().getValue());
+        assertFalse(elevator.getDoorStatus().getClosingProperty().getValue());
 
         elevator.setDoorStatus(IElevator.ELEVATOR_DOORS_CLOSING);
-        assertEquals(IElevator.ELEVATOR_DOORS_CLOSING, elevator.getDoorStatus());
+        assertFalse(elevator.getDoorStatus().getOpenedProperty().getValue());
+        assertFalse(elevator.getDoorStatus().getClosedProperty().getValue());
+        assertFalse(elevator.getDoorStatus().getOpeningProperty().getValue());
+        assertTrue(elevator.getDoorStatus().getClosingProperty().getValue());
 
         // test invalid input
         elevator.setDoorStatus(0);
-        assertEquals(IElevator.ELEVATOR_DOORS_OPEN, elevator.getDoorStatus());
+        assertFalse(elevator.getDoorStatus().getOpenedProperty().getValue());
+        assertTrue(elevator.getDoorStatus().getClosedProperty().getValue());
+        assertFalse(elevator.getDoorStatus().getOpeningProperty().getValue());
+        assertFalse(elevator.getDoorStatus().getClosingProperty().getValue());
 
         elevator.setDoorStatus(5);
-        assertEquals(IElevator.ELEVATOR_DOORS_OPEN, elevator.getDoorStatus());
+        assertFalse(elevator.getDoorStatus().getOpenedProperty().getValue());
+        assertTrue(elevator.getDoorStatus().getClosedProperty().getValue());
+        assertFalse(elevator.getDoorStatus().getOpeningProperty().getValue());
+        assertFalse(elevator.getDoorStatus().getClosingProperty().getValue());
     }
 
     @Test
@@ -190,27 +223,32 @@ public class ElevatorTest {
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(0).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(1).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(2).getValue());
+        assertEquals("-", elevator.getFloorTargetStringProp().getValue());
 
         elevator.setFloorTarget(0);
         assertEquals(Boolean.TRUE, elevator.getFloorTarget(0).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(1).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(2).getValue());
+        assertEquals("0", elevator.getFloorTargetStringProp().getValue());
 
         elevator.setFloorTarget(2);
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(0).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(1).getValue());
         assertEquals(Boolean.TRUE, elevator.getFloorTarget(2).getValue());
+        assertEquals("2", elevator.getFloorTargetStringProp().getValue());
 
         // test invalid input
         elevator.setFloorTarget(-1);
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(0).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(1).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(2).getValue());
+        assertEquals("-", elevator.getFloorTargetStringProp().getValue());
 
         elevator.setFloorTarget(5);
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(0).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(1).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(2).getValue());
+        assertEquals("-", elevator.getFloorTargetStringProp().getValue());
 
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(-1).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(5).getValue());
@@ -223,12 +261,15 @@ public class ElevatorTest {
 
     @Test
     public void testAutomaticMode() {
-        assertEquals(Boolean.FALSE, elevator.getAutomaticMode());
+        assertEquals("OFF", elevator.getAutomaticMode().getValue());
+        assertFalse(elevator.getAutomaticMode_bool().getValue());
 
         elevator.setAutomaticMode(Boolean.FALSE);
-        assertEquals(Boolean.FALSE, elevator.getAutomaticMode());
+        assertEquals("OFF", elevator.getAutomaticMode().getValue());
+        assertFalse(elevator.getAutomaticMode_bool().getValue());
 
         elevator.setAutomaticMode(Boolean.TRUE);
-        assertEquals(Boolean.TRUE, elevator.getAutomaticMode());
+        assertEquals("ON", elevator.getAutomaticMode().getValue());
+        assertTrue(elevator.getAutomaticMode_bool().getValue());
     }
 }
