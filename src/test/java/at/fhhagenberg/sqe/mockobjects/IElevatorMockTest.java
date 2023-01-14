@@ -1,7 +1,5 @@
-package at.fhhagenberg.sqe;
+package at.fhhagenberg.sqe.mockobjects;
 
-import at.fhhagenberg.sqe.delete.IElevatorMock;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +8,7 @@ import java.rmi.RemoteException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class EECViewModelTest {
+public class IElevatorMockTest {
 
     private IElevatorMock sut;
 

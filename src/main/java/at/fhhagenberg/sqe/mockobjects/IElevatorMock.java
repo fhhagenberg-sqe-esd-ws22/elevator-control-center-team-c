@@ -1,9 +1,8 @@
-package at.fhhagenberg.sqe.delete;
+package at.fhhagenberg.sqe.mockobjects;
 
 import at.fhhagenberg.sqe.IElevator;
 
 import java.rmi.RemoteException;
-import java.util.Vector;
 
 public class IElevatorMock implements IElevator {
 

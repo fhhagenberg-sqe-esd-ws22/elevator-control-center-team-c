@@ -10,7 +10,7 @@ public class SystemInfoTest {
     public void testJavaVersion() {
         String javaVersion = SystemInfo.javaVersion();
 
-        assertEquals("11", javaVersion.split("\\.")[0]);    // TODO 11 for github and 17 on my pc
+        assertEquals("17", javaVersion.split("\\.")[0]);    // TODO 11 for github and 17 on my pc
     }
 
     @Test
