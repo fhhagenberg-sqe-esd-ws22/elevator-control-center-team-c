@@ -59,7 +59,7 @@ public class Elevator {
      * Target floor of this elevator.
      */
     private Vector<BooleanProperty> floorTarget;
-
+    private StringProperty floorTargetStringProp;
 
     /**
      * Maximum maxPayload of the elevator.
@@ -72,7 +72,7 @@ public class Elevator {
     private StringProperty automaticMode;
     private BooleanProperty automaticMode_bool;
 
-    private StringProperty floorTargetStringProp;
+
 
     public Elevator(int maximumPayload, int floorCnt){
         direction = new Vector<>();
@@ -82,7 +82,7 @@ public class Elevator {
         floorTarget = new Vector<>();
         automaticMode = new SimpleStringProperty("OFF");
         automaticMode_bool = new SimpleBooleanProperty(false);
-        floorTargetStringProp = new SimpleStringProperty();
+        floorTargetStringProp = new SimpleStringProperty("-");
         currentFloor = new SimpleStringProperty("0");
         currentPositionFt = new SimpleStringProperty("0 ft");
         currentSpeedFtPerSec = new SimpleStringProperty("0 ft/s");
@@ -229,7 +229,7 @@ public class Elevator {
 
     }
     public void setFloorTarget(int floorTarget) {
-
+        this.floorTargetStringProp.setValue("-");
         for(int i = 0; i < this.floorTarget.size(); i++)
         {
             this.floorTarget.get(i).setValue(i == floorTarget);
