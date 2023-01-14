@@ -1,6 +1,5 @@
 package at.fhhagenberg.sqe.model;
 
-import at.fhhagenberg.sqe.IElevator;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,7 +12,7 @@ public class Elevator {
     /**
      * Committed Direction.
      */
-    private Vector<BooleanProperty> direction;
+    private DirectionStatus direction;
 
     /**
      * Elevator Acceleration.
@@ -75,7 +74,7 @@ public class Elevator {
 
 
     public Elevator(int maximumPayload, int floorCnt){
-        direction = new Vector<>();
+        direction = new DirectionStatus();
         doorStatus = new DoorStatus();
         button = new Vector<>();
         servicedFloor = new Vector<>();
@@ -93,37 +92,14 @@ public class Elevator {
             servicedFloor.add(Boolean.FALSE);
             floorTarget.add(new SimpleBooleanProperty(Boolean.FALSE));
         }
-        for(int i=0; i<3; i++)
-        {
-            direction.add(new SimpleBooleanProperty(Boolean.FALSE));
-        }
-        for(int i=0; i<3; i++)
-        {
-            direction.elementAt(i).setValue(false);
-        }
+    }
 
+
+    public DirectionStatus getDirection() {
+        return direction;
     }
-    public BooleanProperty getDirection(int val) {
-        if(val<3)
-        {
-            return direction.elementAt(val);
-        }
-        return new SimpleBooleanProperty(Boolean.FALSE);
-    }
-    public void setDirection(int direction) {
-        if (direction == IElevator.ELEVATOR_DIRECTION_UP ||
-            direction == IElevator.ELEVATOR_DIRECTION_DOWN ||
-            direction == IElevator.ELEVATOR_DIRECTION_UNCOMMITTED) {
-            for(int i=0; i<3; i++)
-            {
-                this.direction.elementAt(i).setValue(i==direction);
-            }
-        } else {
-            for(int i=0; i<3; i++)
-            {
-                this.direction.elementAt(i).setValue(i==direction);
-            }
-        }
+    public void setDirection(int status) {
+        this.direction.setDirectionStatus(status);
     }
 
 

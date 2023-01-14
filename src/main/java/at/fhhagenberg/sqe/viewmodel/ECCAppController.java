@@ -246,8 +246,8 @@ public class ECCAppController {
                 viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getOpeningProperty(),
                 viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getClosingProperty()
         ));
-        elevator_upwards.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDirection(IElevator.ELEVATOR_DIRECTION_UP));
-        elevator_downwards.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDirection(IElevator.ELEVATOR_DIRECTION_DOWN));
+        elevator_upwards.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDirection().getUpProperty());
+        elevator_downwards.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDirection().getDownProperty());
         target_floor.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTargetStringProp());
         auto_mode_setting.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode());
         //auto_mode_radio.selectedProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode_bool());
