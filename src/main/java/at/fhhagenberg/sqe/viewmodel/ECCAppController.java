@@ -7,6 +7,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -28,7 +29,17 @@ public class ECCAppController {
     private final int FLOORBUTTONDOWN = 6;
     private final int STOPREQUEST = 1;
     private final int TARGETFLOOR = 8;
-
+    //Creating the mouse event handler
+    EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent e) {
+            var position_clicked = Character.getNumericValue(((Circle)e.getSource()).getId().charAt(((Circle)e.getSource()).getId().length()-1));
+            if(!autoMode)
+            {
+                viewModel.getBuilding().getElevator(selectedElevator).setFloorTarget(position_clicked);
+            }
+        }
+    };
     public GridPane board;
     public Polygon elevator_upwards;
     public Polygon elevator_downwards;
@@ -85,10 +96,7 @@ public class ECCAppController {
 
         elevator_selection.setItems(FXCollections.observableArrayList(createElevatorSelection(Integer.parseInt(viewModel.getBuilding().getElevatorNum().getValue()))));
 
-
         board.add(rectangle,0,viewModel.getBuilding().getFloorNum()/2,2,1);
-
-
 
         GridPane.setValignment(rectangle,VPos.CENTER);
         GridPane.setHalignment(rectangle,HPos.CENTER);
@@ -103,13 +111,7 @@ public class ECCAppController {
         ((Label)board.getChildren().get(9)).textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentFloor());
 
         // TODO bind services floors
-        // TODO choose elevator
-        // TODO bind upwards, downwards, nothing
-        // TODO switch between automatic and manual mode
     }
-    // TODO on combo box selection change the binding to the selected elevator
-    //      but maybe in the viewModel and not here
-
     @FXML
     public void handleButtonClick(MouseEvent mouseEvent) {
         System.out.print("Automatic Mode Button\n");
@@ -147,10 +149,12 @@ public class ECCAppController {
         outerCircleThirdColumn.setFill(Color.WHITE);
         outerCircleThirdColumn.setStroke(Color.BLACK);
         outerCircleThirdColumn.setStrokeWidth(1);
+        outerCircleThirdColumn.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+        outerCircleThirdColumn.setId("stopRequest_"+Integer.toString(floor));
+
 
         Circle innerCircleThirdColum = new Circle();
         innerCircleThirdColum.setRadius(15);
-        innerCircleThirdColum.setId("stopRequest_"+Integer.toString(floor));
         innerCircleThirdColum.setFill(Color.RED);
         innerCircleThirdColum.setVisible(false);
 
@@ -203,7 +207,6 @@ public class ECCAppController {
         triangleDown_pressed.setScaleY(-1);
         triangleDown_pressed.setId("callRequest_Down_" + Integer.toString(floor));
 
-
         innerGrid.add(outerCircleFirstRow,0,0);
         innerGrid.add(outerCircleFirstRow_Pressed,0,0);
         innerGrid.add(text,0,0);
@@ -233,6 +236,7 @@ public class ECCAppController {
                     .visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getButton(i));
             ((GridPane) board.getChildren().get(i)).getChildren().get(TARGETFLOOR)
                     .visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTarget(i));
+
         }
         position.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentPositionFt());
         speed.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentSpeedFtPerSec());
@@ -246,10 +250,11 @@ public class ECCAppController {
         elevator_downwards.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDirection(IElevator.ELEVATOR_DIRECTION_DOWN));
         target_floor.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTargetStringProp());
         auto_mode_setting.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode());
-        //auto_mode_radio.selectedProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode_bool());
+        auto_mode_radio.selectedProperty().bindBidirectional(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode_bool());
+
     }
+
     public void elevator_selected(ActionEvent actionEvent) {
-        //System.out.print(elevator_selection.getValue());
         selectedElevator = Character.getNumericValue(elevator_selection.getValue().toString().charAt(elevator_selection.getValue().toString().length()-1));
         setBindings();
     }
@@ -258,4 +263,5 @@ public class ECCAppController {
         autoMode = !autoMode;
         viewModel.getBuilding().getElevator(selectedElevator).setAutomaticMode(autoMode);
     }
+
 }
