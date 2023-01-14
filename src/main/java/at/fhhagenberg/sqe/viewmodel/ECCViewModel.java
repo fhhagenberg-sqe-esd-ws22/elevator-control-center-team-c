@@ -40,7 +40,7 @@ public class ECCViewModel {
         this.initialized = Boolean.FALSE;
 
         int floorCnt = 8;
-        int elevatorCnt = 3;
+        int elevatorCnt = 5;
         createElevatorService(new IElevatorMock(elevatorCnt,floorCnt));     // TODO change the interface and may the location of initialization
     }
 

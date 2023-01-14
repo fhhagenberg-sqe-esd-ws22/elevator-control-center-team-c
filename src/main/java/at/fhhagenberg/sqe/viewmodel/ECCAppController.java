@@ -2,6 +2,7 @@ package at.fhhagenberg.sqe.viewmodel;
 
 import at.fhhagenberg.sqe.IElevator;
 import at.fhhagenberg.sqe.model.Elevator;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -243,11 +244,14 @@ public class ECCAppController {
         weight.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getWeight());
         elevator_count.textProperty().bind(viewModel.getBuilding().getElevatorNum());
         floor_height.textProperty().bind(viewModel.getBuilding().getFloorHeight());
-        open_elevator.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus(IElevator.ELEVATOR_DOORS_OPEN - 1));
-        closed_elevator.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus(IElevator.ELEVATOR_DOORS_CLOSED - 1));
-        opening_closing_elevator.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getOpening_closing_doorStatus());
-        elevator_upwards.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDirection(IElevator.ELEVATOR_DIRECTION_UP));
-        elevator_downwards.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDirection(IElevator.ELEVATOR_DIRECTION_DOWN));
+        open_elevator.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getOpenedProperty());
+        closed_elevator.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getClosedProperty());
+        opening_closing_elevator.visibleProperty().bind(Bindings.or(
+                viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getOpeningProperty(),
+                viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getClosingProperty()
+        ));
+        elevator_upwards.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDirection().getUpProperty());
+        elevator_downwards.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDirection().getDownProperty());
         target_floor.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTargetStringProp());
         auto_mode_setting.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode());
         auto_mode_radio.selectedProperty().bindBidirectional(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode_bool());

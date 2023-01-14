@@ -1,6 +1,5 @@
 package at.fhhagenberg.sqe.model;
 
-import at.fhhagenberg.sqe.IElevator;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,7 +12,7 @@ public class Elevator {
     /**
      * Committed Direction.
      */
-    private Vector<BooleanProperty> direction;
+    private DirectionStatus direction;
 
     /**
      * Elevator Acceleration.
@@ -28,9 +27,7 @@ public class Elevator {
     /**
      * Current door status.
      */
-    private Vector<BooleanProperty> doorStatus;
-
-    private BooleanProperty opening_closing_doorStatus;
+    private DoorStatus doorStatus;
 
     /**
      * Nearest floor.
@@ -61,7 +58,7 @@ public class Elevator {
      * Target floor of this elevator.
      */
     private Vector<BooleanProperty> floorTarget;
-
+    private StringProperty floorTargetStringProp;
 
     /**
      * Maximum maxPayload of the elevator.
@@ -74,18 +71,17 @@ public class Elevator {
     private StringProperty automaticMode;
     private BooleanProperty automaticMode_bool;
 
-    private StringProperty floorTargetStringProp;
+
 
     public Elevator(int maximumPayload, int floorCnt){
-        direction = new Vector<>();
-        doorStatus = new Vector<>();
+        direction = new DirectionStatus();
+        doorStatus = new DoorStatus();
         button = new Vector<>();
         servicedFloor = new Vector<>();
         floorTarget = new Vector<>();
-        automaticMode = new SimpleStringProperty();
-        opening_closing_doorStatus = new SimpleBooleanProperty();
-        floorTargetStringProp = new SimpleStringProperty();
-        automaticMode_bool = new SimpleBooleanProperty();
+        automaticMode = new SimpleStringProperty("OFF");
+        automaticMode_bool = new SimpleBooleanProperty(false);
+        floorTargetStringProp = new SimpleStringProperty("-");
         currentFloor = new SimpleStringProperty("0");
         currentPositionFt = new SimpleStringProperty("0 ft");
         currentSpeedFtPerSec = new SimpleStringProperty("0 ft/s");
@@ -96,46 +92,14 @@ public class Elevator {
             servicedFloor.add(Boolean.FALSE);
             floorTarget.add(new SimpleBooleanProperty(Boolean.FALSE));
         }
-        for(int i=0; i<4; i++)
-        {
-            doorStatus.add(new SimpleBooleanProperty(Boolean.FALSE));
-        }
-        for(int i=0; i<3; i++)
-        {
-            direction.add(new SimpleBooleanProperty(Boolean.FALSE));
-        }
-        for(int i=0; i<3; i++)
-        {
-            direction.elementAt(i).setValue(false);
-        }
-        for(int i=0; i<4; i++)
-        {
-            doorStatus.elementAt(i).setValue(false);
-        }
-        doorStatus.elementAt(0).setValue(true);
+    }
 
+
+    public DirectionStatus getDirection() {
+        return direction;
     }
-    public BooleanProperty getDirection(int val) {
-        if(val<3)
-        {
-            return direction.elementAt(val);
-        }
-        return new SimpleBooleanProperty(Boolean.FALSE);
-    }
-    public void setDirection(int direction) {
-        if (direction == IElevator.ELEVATOR_DIRECTION_UP ||
-            direction == IElevator.ELEVATOR_DIRECTION_DOWN ||
-            direction == IElevator.ELEVATOR_DIRECTION_UNCOMMITTED) {
-            for(int i=0; i<3; i++)
-            {
-                this.direction.elementAt(i).setValue(i==direction);
-            }
-        } else {
-            for(int i=0; i<3; i++)
-            {
-                this.direction.elementAt(i).setValue(i==direction);
-            }
-        }
+    public void setDirection(int status) {
+        this.direction.setDirectionStatus(status);
     }
 
 
@@ -160,39 +124,11 @@ public class Elevator {
     }
 
 
-    public BooleanProperty getDoorStatus(int position) {
-        if(position < 4)
-        {
-            return doorStatus.elementAt(position);
-        }
-        else
-            return new SimpleBooleanProperty(Boolean.FALSE);
+    public DoorStatus getDoorStatus() {
+        return this.doorStatus;
     }
-    public void setDoorStatus(int doorStatus) {
-        if (doorStatus == IElevator.ELEVATOR_DOORS_OPEN ||
-            doorStatus == IElevator.ELEVATOR_DOORS_CLOSED ||
-            doorStatus == IElevator.ELEVATOR_DOORS_OPENING ||
-            doorStatus == IElevator.ELEVATOR_DOORS_CLOSING) {
-            for(int i=0; i<4; i++)
-            {
-                this.doorStatus.elementAt(i).setValue((i+1) == doorStatus);
-            }
-            if(this.doorStatus.elementAt(IElevator.ELEVATOR_DOORS_OPENING - 1).getValue()
-                    || this.doorStatus.elementAt(IElevator.ELEVATOR_DOORS_CLOSING -1).getValue())
-            {
-                opening_closing_doorStatus.setValue(Boolean.TRUE);
-            }
-            else
-            {
-                opening_closing_doorStatus.setValue(Boolean.FALSE);
-            }
-        } else {
-            // TODO Default wert setzen
-            for(int i=0; i<4; i++)
-            {
-                this.doorStatus.elementAt(i).setValue((i+1) == doorStatus);
-            }
-        }
+    public void setDoorStatus(int status) {
+        this.doorStatus.setDoorStatus(status);
     }
 
 
@@ -217,10 +153,6 @@ public class Elevator {
         } else {
             this.currentPositionFt.setValue("0 ft");
         }
-    }
-
-    public BooleanProperty getOpening_closing_doorStatus() {
-        return opening_closing_doorStatus;
     }
 
 
@@ -273,7 +205,7 @@ public class Elevator {
 
     }
     public void setFloorTarget(int floorTarget) {
-
+        this.floorTargetStringProp.setValue("-");
         for(int i = 0; i < this.floorTarget.size(); i++)
         {
             this.floorTarget.get(i).setValue(i == floorTarget);
@@ -289,7 +221,9 @@ public class Elevator {
         return maxPayload;
     }
 
+
     public BooleanProperty getAutomaticMode_bool() { return automaticMode_bool;}
+
 
     public StringProperty getAutomaticMode() { return automaticMode; }
     public void setAutomaticMode(boolean automaticMode) {
