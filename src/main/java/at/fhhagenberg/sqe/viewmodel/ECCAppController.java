@@ -37,7 +37,7 @@ public class ECCAppController {
             var position_clicked = Character.getNumericValue(((Circle)e.getSource()).getId().charAt(((Circle)e.getSource()).getId().length()-1));
             if(!autoMode)
             {
-                viewModel.getBuilding().getElevator(selectedElevator).setFloorTarget(position_clicked);
+                viewModel.setTarget(selectedElevator, position_clicked);
             }
         }
     };
