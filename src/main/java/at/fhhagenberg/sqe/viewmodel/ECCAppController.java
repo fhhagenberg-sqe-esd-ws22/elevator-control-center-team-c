@@ -39,6 +39,10 @@ public class ECCAppController {
             {
                 viewModel.setTarget(selectedElevator, position_clicked);
             }
+            else
+            {
+                viewModel.getBuilding().getElevator(selectedElevator).setFloorTarget(calcBestTargetFloor());
+            }
         }
     };
     public GridPane board;
@@ -254,7 +258,7 @@ public class ECCAppController {
         elevator_downwards.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDirection().getDownProperty());
         target_floor.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTargetStringProp());
         auto_mode_setting.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode());
-        auto_mode_radio.selectedProperty().bindBidirectional(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode_bool());
+        auto_mode_radio.setSelected(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode_bool().getValue());
 
     }
 
@@ -264,8 +268,11 @@ public class ECCAppController {
     }
 
     public void switch_mode(MouseEvent keyEvent) {
-        autoMode = !autoMode;
-        viewModel.getBuilding().getElevator(selectedElevator).setAutomaticMode(autoMode);
+        viewModel.getBuilding().getElevator(selectedElevator).setAutomaticMode(!viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode_bool().getValue());
+    }
+    private int calcBestTargetFloor()
+    {
+        return 3;
     }
 
 }
