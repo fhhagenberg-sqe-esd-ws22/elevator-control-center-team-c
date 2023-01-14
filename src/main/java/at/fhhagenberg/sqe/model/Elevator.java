@@ -77,35 +77,20 @@ public class Elevator {
     private StringProperty floorTargetStringProp;
 
     public Elevator(int maximumPayload, int floorCnt){
-
-        maxPayload = Math.max(maximumPayload, 0);
-        for(int i=0; i<3; i++)
-        {
-            direction.elementAt(i).setValue(false);
-
-        }
-        for(int i=0; i<4; i++)
-        {
-            doorStatus.elementAt(i).setValue(false);
-        }
-        doorStatus.elementAt(0).setValue(true);
+        direction = new Vector<>();
+        doorStatus = new Vector<>();
+        button = new Vector<>();
+        servicedFloor = new Vector<>();
+        floorTarget = new Vector<>();
+        automaticMode = new SimpleStringProperty();
+        opening_closing_doorStatus = new SimpleBooleanProperty();
+        floorTargetStringProp = new SimpleStringProperty();
+        automaticMode_bool = new SimpleBooleanProperty();
         currentFloor = new SimpleStringProperty("0");
         currentPositionFt = new SimpleStringProperty("0 ft");
         currentSpeedFtPerSec = new SimpleStringProperty("0 ft/s");
         weight = new SimpleStringProperty("0 lbs");
-        currentFloor = new SimpleStringProperty();
-        automaticMode_bool = new SimpleBooleanProperty();
-        doorStatus = new Vector<>();
-        automaticMode = new SimpleStringProperty();
-        currentPositionFt = new SimpleStringProperty();
-        currentSpeedFtPerSec = new SimpleStringProperty();
-        opening_closing_doorStatus = new SimpleBooleanProperty();
-        floorTargetStringProp = new SimpleStringProperty();
-        weight = new SimpleStringProperty();
-        button = new Vector<>();
-        servicedFloor = new Vector<>();
-        floorTarget = new Vector<>();
-        direction = new Vector<>();
+        maxPayload = Math.max(maximumPayload, 0);
         for (int idx = 0; idx < floorCnt; idx++) {
             button.add(new SimpleBooleanProperty(Boolean.FALSE));
             servicedFloor.add(Boolean.FALSE);
@@ -119,6 +104,16 @@ public class Elevator {
         {
             direction.add(new SimpleBooleanProperty(Boolean.FALSE));
         }
+        for(int i=0; i<3; i++)
+        {
+            direction.elementAt(i).setValue(false);
+        }
+        for(int i=0; i<4; i++)
+        {
+            doorStatus.elementAt(i).setValue(false);
+        }
+        doorStatus.elementAt(0).setValue(true);
+
     }
     public BooleanProperty getDirection(int val) {
         if(val<3)
@@ -222,6 +217,10 @@ public class Elevator {
         } else {
             this.currentPositionFt.setValue("0 ft");
         }
+    }
+
+    public BooleanProperty getOpening_closing_doorStatus() {
+        return opening_closing_doorStatus;
     }
 
 

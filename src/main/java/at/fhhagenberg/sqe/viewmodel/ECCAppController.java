@@ -223,7 +223,7 @@ public class ECCAppController {
      */
     private void setBindings()
     {
-        for(int i = 0; i<viewModel.getFloors(); i++)
+        for(int i = 0; i<viewModel.getBuilding().getFloorNum(); i++)
         {
             ((GridPane) board.getChildren().get(i)).getChildren().get(FLOORBUTTONDOWN)
                     .visibleProperty().bind(viewModel.getBuilding().getFloorButton(i).isButtonDown());
