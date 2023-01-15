@@ -136,4 +136,44 @@ public class ECCViewModel {
     public Boolean isInitialized() {
         return this.initialized;
     }
+
+    /**
+     * Send a committed direction to the service.
+     * @param elevatorNumber
+     * @param direction
+     */
+    public void setCommittedDirection(int elevatorNumber, int direction) {
+        Elevator elevator = this.building.getElevator(elevatorNumber);
+        if (elevator != null) {
+            elevator.setDirection(direction);
+            elevatorService.setCommittedDirection(elevatorNumber, direction);
+        }
+    }
+
+    /**
+     * Send a serviced floor to the service.
+     * @param elevatorNumber
+     * @param floor
+     * @param service
+     */
+    public void setServicesFloors(int elevatorNumber, int floor, boolean service) {
+        Elevator elevator = this.building.getElevator(elevatorNumber);
+        if (elevator != null) {
+            elevator.setServicedFloor(floor, service);
+            elevatorService.setServicesFloors(elevatorNumber, floor, service);
+        }
+    }
+
+    /**
+     * Send a new target floor to the service.
+     * @param elevatorNumber
+     * @param target
+     */
+    public void setTarget(int elevatorNumber, int target) {
+        Elevator elevator = this.building.getElevator(elevatorNumber);
+        if (elevator != null) {
+            elevator.setFloorTarget(target);
+            elevatorService.setTarget(elevatorNumber, target);
+        }
+    }
 }
