@@ -24,8 +24,6 @@ public class ECCViewModelTest {
         ECCViewModel.initMethod init = eccViewModel.new initMethod();
         init.run();
 
-        //waitForRunLater();
-
         assertTrue(eccViewModel.isInitialized());
     }
 
