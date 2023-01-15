@@ -21,10 +21,14 @@ public class RMIElevatorServiceTest {
     private RMIElevatorService RmiElevatorService;
     private IElevatorMock elevatorMock;
 
+    private IElevatorMock elevatorMockException;
+
     @BeforeEach
     public void Setup() {
         elevatorMock = new IElevatorMock(3,8);
         RmiElevatorService = new RMIElevatorService(elevatorMock);
+
+        elevatorMockException = Mockito.spy(new IElevatorMock(3,8));
     }
 
 
@@ -145,22 +149,127 @@ public class RMIElevatorServiceTest {
     }
 
 
-    //TODO: Test RemoteExceptions
-/*
+
+    @Test
+    public void TestCommittedDirection_Exception() throws RemoteException {
+        elevatorMockException.setCommittedDirection(1,1);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getCommittedDirection(1);
+
+        assertEquals(RmiElevatorServiceException.getCommittedDirection(1), 0);
+    }
+    @Test
+    public void TestElevatorAccel_Exception() throws RemoteException {
+        elevatorMockException.setElevatorAccel(1,10);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getElevatorAccel(1);
+
+        assertEquals(RmiElevatorServiceException.getCommittedDirection(1), 0);
+    }
     @Test
     public void TestElevatorButton_Exception() throws RemoteException {
-        RemoteException e = new RemoteException();
-        elevatorMock.setElevatorButton(2,3,true);
+        elevatorMockException.setElevatorButton(2,3,true);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getElevatorButton(2, 3);
 
-        RMIElevatorService RmiElevatorServiceException = Mockito.spy(new RMIElevatorService(elevatorMock));
+        assertFalse(RmiElevatorServiceException.getElevatorButton(2,3));
+    }
 
-        //Mockito.doThrow(e).when(RmiElevatorServiceException).getElevatorButton(2, 3);
-        Mockito.doAnswer(invocation -> { throw e; }).when(RmiElevatorServiceException).getElevatorButton(2, 3);
-        assertFalse(RmiElevatorService.getElevatorButton(2,3));
+    @Test
+    public void TestElevatorDoorStatus_Exception() throws RemoteException {
+        elevatorMockException.setElevatorDoorStatus(2,2);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getElevatorDoorStatus(2);
+
+        assertEquals(RmiElevatorServiceException.getElevatorDoorStatus(2), 0);
+    }
+    @Test
+    public void TestElevatorFloor_Exception() throws RemoteException {
+        elevatorMockException.setElevatorFloor(0,7);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getElevatorFloor(0);
+
+        assertEquals(RmiElevatorServiceException.getElevatorFloor(0), 0);
+    }
+    @Test
+    public void TestElevatorNum_Exception() throws RemoteException {
+        elevatorMockException.setFloorNum(15);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getElevatorNum();
+
+        assertEquals(RmiElevatorServiceException.getElevatorNum(), 0);
+    }
+    @Test
+    public void TestElevatorPosition_Exception() throws RemoteException {
+        elevatorMockException.setElevatorPosition(2,3);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getElevatorPosition(2);
+
+        assertEquals(RmiElevatorServiceException.getElevatorPosition(2), 0);
+    }
+    @Test
+    public void TestElevatorSpeed_Exception() throws RemoteException {
+        elevatorMockException.setElevatorSpeed(0,42);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getElevatorSpeed(0);
+
+        assertEquals(RmiElevatorServiceException.getElevatorSpeed(0), 0);
+    }
+    @Test
+    public void TestElevatorWeight_Exception() throws RemoteException {
+        elevatorMockException.setElevatorWeight(2,666);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getElevatorWeight(2);
+
+        assertEquals(RmiElevatorServiceException.getElevatorWeight(2), 0);
+    }
+    @Test
+    public void TestElevatorCapacity_Exception() throws RemoteException {
+        elevatorMockException.setElevatorCapacity(1,6);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getElevatorCapacity(1);
+
+        assertEquals(RmiElevatorServiceException.getElevatorCapacity(1), 0);
+    }
+    @Test
+    public void TestFloorButtonDown_Exception() throws RemoteException {
+        elevatorMockException.setFloorButtonDown(2,true);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getFloorButtonDown(2);
+
+        assertFalse(RmiElevatorServiceException.getFloorButtonDown(2));
+    }
+    @Test
+    public void TestFloorButtonUp_Exception() throws RemoteException {
+        elevatorMockException.setFloorButtonUp(2,true);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getFloorButtonUp(2);
+
+        assertFalse(RmiElevatorServiceException.getFloorButtonUp(2));
+    }
+    @Test
+    public void TestFloorHeight_Exception() throws RemoteException {
+        elevatorMockException.setFloorHeight(369);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getFloorHeight();
+
+        assertEquals(RmiElevatorServiceException.getFloorHeight(), 0);
+    }
+    @Test
+    public void TestFloorNum_Exception() throws RemoteException {
+        elevatorMockException.setFloorNum(60);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getFloorNum();
+
+        assertEquals(RmiElevatorServiceException.getFloorHeight(), 0);
+    }
+    @Test
+    public void TestServicesFloors_Exception() throws RemoteException {}
+    @Test
+    public void TestTarget_Exception() throws RemoteException {}
+    @Test
+    public void TestGetClockTick_Exception() throws RemoteException {}
 
 
-        //Mockito.verify(RmiElevatorServiceException, Mockito.times(1)).getElevatorButton(2, 3);
-        //Mockito.verify(RmiElevatorServiceException, Mockito.times(1)).printStackTrace();
 
-    }*/
 }
