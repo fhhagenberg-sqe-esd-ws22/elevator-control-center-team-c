@@ -52,34 +52,37 @@ public class ECCViewModel {
         this.elevatorService = new RMIElevatorService(service);
     }
 
+
+    class initMethod implements Runnable {
+        @Override
+        public void run() {
+            int elevatorNum = elevatorService.getElevatorNum();
+            int floorHeight = elevatorService.getFloorHeight();
+            int floorNum = elevatorService.getFloorNum();
+
+            int maxPayload = 10;    // TODO find correct payload
+            long clockTick = elevatorService.getClockTick();
+
+            building.setFloorHeight(floorHeight);
+
+            for (int idx = 0; idx < elevatorNum; idx++) {
+                Elevator elevator = new Elevator(maxPayload,floorNum);
+                building.addElevator(elevator);
+            }
+            for (int idx = 0; idx < floorNum; idx++) {
+                FloorButton floorButton = new FloorButton();
+                building.addFloorButton(floorButton);
+            }
+
+            initialized = Boolean.TRUE;
+        }
+    }
+
     /**
      * Initialize the structure of one building. Should be called only once.
      */
     public void init() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                int elevatorNum = elevatorService.getElevatorNum();
-                int floorHeight = elevatorService.getFloorHeight();
-                int floorNum = elevatorService.getFloorNum();
-
-                int maxPayload = 10;    // TODO find correct payload
-                long clockTick = elevatorService.getClockTick();
-
-                building.setFloorHeight(floorHeight);
-
-                for (int idx = 0; idx < elevatorNum; idx++) {
-                    Elevator elevator = new Elevator(maxPayload,floorNum);
-                    building.addElevator(elevator);
-                }
-                for (int idx = 0; idx < floorNum; idx++) {
-                    FloorButton floorButton = new FloorButton();
-                    building.addFloorButton(floorButton);
-                }
-
-                initialized = Boolean.TRUE;
-            }
-        });
+        Platform.runLater(new initMethod());
     }
 
     /**

@@ -18,8 +18,7 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
-            return 0;
+            return IElevator.ELEVATOR_DIRECTION_UNCOMMITTED;
         }
     }
 
@@ -29,7 +28,6 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return 0;
         }
     }
@@ -40,7 +38,6 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return false;
         }
     }
@@ -51,7 +48,6 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return 0;
         }
     }
@@ -62,7 +58,6 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return 0;
         }
     }
@@ -73,7 +68,6 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return 0;
         }
     }
@@ -84,7 +78,6 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return 0;
         }
     }
@@ -95,7 +88,6 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return 0;
         }
     }
@@ -106,7 +98,6 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return 0;
         }
     }
@@ -117,7 +108,6 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return 0;
         }
     }
@@ -128,7 +118,6 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return false;
         }
     }
@@ -139,7 +128,6 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return false;
         }
     }
@@ -150,7 +138,6 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return 0;
         }
     }
@@ -161,7 +148,6 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return 0;
         }
     }
@@ -172,7 +158,6 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return false;
         }
     }
@@ -183,11 +168,11 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return 0;
         }
     }
 
+    //TODO: Error handling -> implement own Exception Type?
     public void setCommittedDirection(int elevatorNumber, int direction) {
         try {
             elevatorService.setCommittedDirection(elevatorNumber, direction);
@@ -197,7 +182,7 @@ public class RMIElevatorService implements IElevatorService {
             e.printStackTrace();
         }
     }
-
+    //TODO: Error handling -> implement own Exception Type?
     public void setServicesFloors(int elevatorNumber, int floor, boolean service) {
         try {
             elevatorService.setServicesFloors(elevatorNumber, floor, service);
@@ -207,7 +192,7 @@ public class RMIElevatorService implements IElevatorService {
             e.printStackTrace();
         }
     }
-
+    //TODO: Error handling -> implement own Exception Type?
     public void setTarget(int elevatorNumber, int target) {
         try {
             elevatorService.setTarget(elevatorNumber, target);
@@ -224,7 +209,6 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
             return 0;
         }
     }
