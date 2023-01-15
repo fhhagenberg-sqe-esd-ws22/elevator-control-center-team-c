@@ -60,7 +60,7 @@ public class ConnectingViewController {
         Thread thread = new Thread(() -> {
             try {
 
-                Thread.sleep(checkIntervalMillis*10);
+                Thread.sleep(checkIntervalMillis);
                 while (!viewModel.isInitialized()) {
                     Thread.sleep(checkIntervalMillis);
                 }

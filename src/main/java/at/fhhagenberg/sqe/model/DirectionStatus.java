@@ -1,6 +1,6 @@
 package at.fhhagenberg.sqe.model;
 
-import at.fhhagenberg.sqe.IElevator;
+import sqelevator.IElevator;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
