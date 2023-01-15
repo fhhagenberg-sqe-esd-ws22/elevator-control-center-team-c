@@ -163,7 +163,7 @@ public class RMIElevatorServiceTest {
         RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
         Mockito.doThrow(new RemoteException()).when(elevatorMockException).getElevatorAccel(1);
 
-        assertEquals(RmiElevatorServiceException.getCommittedDirection(1), 0);
+        assertEquals(RmiElevatorServiceException.getElevatorAccel(1), 0);
     }
     @Test
     public void TestElevatorButton_Exception() throws RemoteException {
@@ -263,11 +263,29 @@ public class RMIElevatorServiceTest {
         assertEquals(RmiElevatorServiceException.getFloorNum(), 0);
     }
     @Test
-    public void TestServicesFloors_Exception() throws RemoteException {}
+    public void TestServicesFloors_Exception() throws RemoteException {
+        elevatorMockException.setServicesFloors(2,5,true);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getServicesFloors(2,5);
+
+        assertFalse(RmiElevatorServiceException.getServicesFloors(2, 5));
+    }
     @Test
-    public void TestTarget_Exception() throws RemoteException {}
+    public void TestTarget_Exception() throws RemoteException {
+        elevatorMockException.setTarget(1,5);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getTarget(1);
+
+        assertEquals(RmiElevatorServiceException.getTarget(1), 0);
+    }
     @Test
-    public void TestGetClockTick_Exception() throws RemoteException {}
+    public void TestClockTick_Exception() throws RemoteException {
+        elevatorMockException.setClockTick(662607015);
+        RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
+        Mockito.doThrow(new RemoteException()).when(elevatorMockException).getClockTick();
+
+        assertEquals(RmiElevatorServiceException.getClockTick(), 0);
+    }
 
 
 
