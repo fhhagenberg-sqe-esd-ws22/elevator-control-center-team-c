@@ -156,7 +156,9 @@ public class RMIElevatorServiceTest {
         RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
         Mockito.doThrow(new RemoteException()).when(elevatorMockException).getCommittedDirection(1);
 
-        assertEquals(RmiElevatorServiceException.getCommittedDirection(1), 0);
+        assertEquals(RmiElevatorServiceException.getCommittedDirection(1), IElevator.ELEVATOR_DIRECTION_UNCOMMITTED);
+
+
     }
     @Test
     public void TestElevatorAccel_Exception() throws RemoteException {
@@ -261,7 +263,7 @@ public class RMIElevatorServiceTest {
         RMIElevatorService RmiElevatorServiceException = new RMIElevatorService(elevatorMockException);
         Mockito.doThrow(new RemoteException()).when(elevatorMockException).getFloorNum();
 
-        assertEquals(RmiElevatorServiceException.getFloorHeight(), 0);
+        assertEquals(RmiElevatorServiceException.getFloorNum(), 0);
     }
     @Test
     public void TestServicesFloors_Exception() throws RemoteException {}
