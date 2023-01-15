@@ -1,13 +1,17 @@
 package at.fhhagenberg.sqe.viewmodel;
 
-import at.fhhagenberg.sqe.IElevator;
-import at.fhhagenberg.sqe.mockobjects.IElevatorMock;
+import sqelevator.IElevator;
 import at.fhhagenberg.sqe.interfaces.IElevatorService;
 import at.fhhagenberg.sqe.model.Building;
 import at.fhhagenberg.sqe.model.Elevator;
 import at.fhhagenberg.sqe.model.FloorButton;
 import at.fhhagenberg.sqe.model.RMIElevatorService;
 import javafx.application.Platform;
+
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 /**
  * Class that handles the communication with the elevator Service
@@ -38,24 +42,41 @@ public class ECCViewModel {
     public ECCViewModel(Building building) {
         this.building = building;
         this.initialized = Boolean.FALSE;
-
-        int floorCnt = 8;
-        int elevatorCnt = 5;
-        createElevatorService(new IElevatorMock(elevatorCnt,floorCnt));     // TODO change the interface and may the location of initialization
     }
 
     /**
      * Create an elevator service.
-     * @param service
      */
-    protected void createElevatorService(IElevator service) {
-        this.elevatorService = new RMIElevatorService(service);
+    protected boolean createElevatorService() {
+        try {
+            IElevator service = (IElevator) Naming.lookup("rmi://localhost/ElevatorSim");
+            this.elevatorService = new RMIElevatorService(service);
+        } catch (NotBoundException | MalformedURLException | RemoteException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
+    /**
+     * Interval trying to connect to via RMI.
+     */
+    private final int connectingIntervalMillis = 500;
 
     class initMethod implements Runnable {
         @Override
         public void run() {
+
+            // do the RMI connection
+            while (!createElevatorService()) {
+                try {
+                    Thread.sleep(connectingIntervalMillis);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+
+            // retrieve data
             int elevatorNum = elevatorService.getElevatorNum();
             int floorHeight = elevatorService.getFloorHeight();
             int floorNum = elevatorService.getFloorNum();
@@ -65,6 +86,7 @@ public class ECCViewModel {
 
             building.setFloorHeight(floorHeight);
 
+            // fill structure
             for (int idx = 0; idx < elevatorNum; idx++) {
                 Elevator elevator = new Elevator(maxPayload,floorNum);
                 building.addElevator(elevator);
@@ -74,6 +96,7 @@ public class ECCViewModel {
                 building.addFloorButton(floorButton);
             }
 
+            // indicate that the data structure is initialized
             initialized = Boolean.TRUE;
         }
     }
