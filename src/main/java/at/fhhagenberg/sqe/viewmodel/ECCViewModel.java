@@ -108,42 +108,45 @@ public class ECCViewModel {
         Platform.runLater(new initMethod());
     }
 
+
+    class updateMethod implements Runnable {
+
+        @Override
+        public void run() {
+            int elevatorNum = building.getElevatorNumINT();
+            int floorNum = building.getFloorNum();
+
+            for (int idxFloor = 0; idxFloor < floorNum; idxFloor++) {
+                building.getFloorButton(idxFloor).setButtonUp(elevatorService.getFloorButtonUp(idxFloor));
+                building.getFloorButton(idxFloor).setButtonDown(elevatorService.getFloorButtonDown(idxFloor));
+            }
+
+            for (int idxElevator = 0; idxElevator < elevatorNum; idxElevator++) {
+                Elevator elevator = building.getElevator(idxElevator);
+                elevator.setAcceleration(elevatorService.getElevatorAccel(idxElevator));
+                elevator.setCurrentFloor(elevatorService.getElevatorFloor(idxElevator));
+                elevator.setCurrentPositionFt(elevatorService.getElevatorPosition(idxElevator));
+                elevator.setCurrentSpeedFtPerSec(elevatorService.getElevatorSpeed(idxElevator));
+                elevator.setDirection(elevatorService.getCommittedDirection(idxElevator));
+                elevator.setDoorStatus(elevatorService.getElevatorDoorStatus(idxElevator));
+                elevator.setFloorTarget(elevatorService.getTarget(idxElevator));
+                elevator.setWeight(elevatorService.getElevatorWeight(idxElevator));
+
+                for (int idxFloor = 0; idxFloor < floorNum; idxFloor++) {
+                    elevator.setButton(idxFloor, elevatorService.getElevatorButton(idxElevator, idxFloor));
+                    elevator.setServicedFloor(idxFloor, elevatorService.getElevatorButton(idxElevator, idxFloor));
+                }
+            }
+
+            //elevator.setAutomaticMode();  // TODO set the automatic mode
+        }
+    }
+
     /**
      * Update content of the building.
      */
     public void update() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                int elevatorNum = building.getElevatorNumINT();
-                int floorNum = building.getFloorNum();
-
-                for (int idxFloor = 0; idxFloor < floorNum; idxFloor++) {
-                    building.getFloorButton(idxFloor).setButtonUp(elevatorService.getFloorButtonUp(idxFloor));
-                    building.getFloorButton(idxFloor).setButtonDown(elevatorService.getFloorButtonDown(idxFloor));
-                }
-
-                for (int idxElevator = 0; idxElevator < elevatorNum; idxElevator++) {
-                    Elevator elevator = building.getElevator(idxElevator);
-                    elevator.setAcceleration(elevatorService.getElevatorAccel(idxElevator));
-                    elevator.setCurrentFloor(elevatorService.getElevatorFloor(idxElevator));
-                    elevator.setCurrentPositionFt(elevatorService.getElevatorPosition(idxElevator));
-                    elevator.setCurrentSpeedFtPerSec(elevatorService.getElevatorSpeed(idxElevator));
-                    elevator.setDirection(elevatorService.getCommittedDirection(idxElevator));
-                    elevator.setDoorStatus(elevatorService.getElevatorDoorStatus(idxElevator));
-                    elevator.setFloorTarget(elevatorService.getTarget(idxElevator));
-                    elevator.setWeight(elevatorService.getElevatorWeight(idxElevator));
-
-                    for (int idxFloor = 0; idxFloor < floorNum; idxFloor++) {
-                        elevator.setButton(idxFloor, elevatorService.getElevatorButton(idxElevator, idxFloor));
-                        elevator.setServicedFloor(idxFloor, elevatorService.getElevatorButton(idxElevator, idxFloor));
-                    }
-                }
-
-                //elevator.setAutomaticMode();  // TODO set the automatic mode
-            }
-        });
-
+        Platform.runLater(new updateMethod());
     }
 
     /**
