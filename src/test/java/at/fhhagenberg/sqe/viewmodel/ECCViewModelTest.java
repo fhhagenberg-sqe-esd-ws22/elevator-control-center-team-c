@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ECCViewModelTest {
 
-    private ECCViewModel eccViewModel;
+    private ECCViewModelMock eccViewModel;
     private Building building;
 
     @BeforeEach
     void Setup() {
         building = new Building();
-        eccViewModel = new ECCViewModel(building);
+        eccViewModel = new ECCViewModelMock(building);
         IElevatorMock elevatorMock = new IElevatorMock(5, 7);
         eccViewModel.elevatorService = new RMIElevatorService(elevatorMock);
     }
