@@ -1,6 +1,6 @@
 package at.fhhagenberg.sqe.mockobjects;
 
-import at.fhhagenberg.sqe.IElevator;
+import sqelevator.IElevator;
 
 import java.rmi.RemoteException;
 

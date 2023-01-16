@@ -1,6 +1,5 @@
 package at.fhhagenberg.sqe.viewmodel;
 
-import at.fhhagenberg.sqe.IElevator;
 import at.fhhagenberg.sqe.model.Elevator;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
@@ -61,6 +60,7 @@ public class ECCAppController {
     public ComboBox elevator_selection;
     public Label target_floor;
     public RadioButton auto_mode_radio;
+    public Label currentFloor = new Label();
     private ECCViewModel viewModel;
     public StringProperty autoModeStringProp;
 
@@ -106,16 +106,12 @@ public class ECCAppController {
         GridPane.setValignment(rectangle,VPos.CENTER);
         GridPane.setHalignment(rectangle,HPos.CENTER);
 
-        Label currentFloor = new Label();
         currentFloor.setStyle("-fx-font-size:50px;");
         currentFloor.setText("test");
         board.add(currentFloor,0,viewModel.getBuilding().getFloorNum()/2,2,1);
 
         GridPane.setValignment(currentFloor,VPos.CENTER);
         GridPane.setHalignment(currentFloor,HPos.CENTER);
-        ((Label)board.getChildren().get(9)).textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentFloor());
-
-        // TODO bind services floors
     }
     @FXML
     public void handleButtonClick(MouseEvent mouseEvent) {
@@ -243,6 +239,7 @@ public class ECCAppController {
                     .visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTarget(i));
 
         }
+        currentFloor.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentFloor());
         position.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentPositionFt());
         speed.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentSpeedFtPerSec());
         weight.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getWeight());

@@ -1,6 +1,6 @@
 package at.fhhagenberg.sqe.model;
 
-import at.fhhagenberg.sqe.IElevator;
+import sqelevator.IElevator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
