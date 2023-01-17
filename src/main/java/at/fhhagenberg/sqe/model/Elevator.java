@@ -53,6 +53,7 @@ public class Elevator {
      * Defines if a floor is serviced by the elevator.
      */
     private Vector<Boolean> servicedFloor;
+    private StringProperty servicedFloorStringProp;
 
     /**
      * Target floor of this elevator.
@@ -79,6 +80,7 @@ public class Elevator {
         button = new Vector<>();
         servicedFloor = new Vector<>();
         floorTarget = new Vector<>();
+        servicedFloorStringProp = new SimpleStringProperty("-");
         automaticMode = new SimpleStringProperty("OFF");
         automaticMode_bool = new SimpleBooleanProperty(false);
         floorTargetStringProp = new SimpleStringProperty("-");
@@ -175,7 +177,29 @@ public class Elevator {
         }
     }
 
+    public StringProperty getServicedFloorStringProp()
+    {
+        return servicedFloorStringProp;
+    }
 
+    public void setServicedFloorStringProp()
+    {
+        StringBuilder test = new StringBuilder();
+        boolean firstValReached = false;
+        for(int i=0; i<servicedFloor.size(); i++)
+        {
+            if(servicedFloor.get(i))
+            {
+                if(firstValReached)
+                {
+                    test.append(", ");
+                }
+                test.append(i);
+                firstValReached = true;
+            }
+        }
+        servicedFloorStringProp.setValue(test.toString());
+    }
     public Boolean getServicedFloor(int number) {
         if (number >= 0 && number < servicedFloor.size()) {
             return servicedFloor.get(number);
@@ -186,6 +210,7 @@ public class Elevator {
         if (number >= 0 && number < servicedFloor.size()) {
             servicedFloor.set(number, state);
         }
+        setServicedFloorStringProp();
     }
 
     public StringProperty getFloorTargetStringProp()
@@ -201,7 +226,7 @@ public class Elevator {
 
     }
     public void setFloorTarget(int floorTarget) {
-        this.floorTargetStringProp.setValue("-");
+        //this.floorTargetStringProp.setValue("-");
         for(int i = 0; i < this.floorTarget.size(); i++)
         {
             this.floorTarget.get(i).setValue(i == floorTarget);
@@ -225,5 +250,11 @@ public class Elevator {
     public void setAutomaticMode(boolean automaticMode) {
         this.automaticMode.setValue(automaticMode ? "ON" : "OFF");
         this.automaticMode_bool.setValue(automaticMode);
+    }
+
+    public void resetTarget() {
+        for (BooleanProperty booleanProperty : this.floorTarget) {
+            booleanProperty.setValue(false);
+        }
     }
 }

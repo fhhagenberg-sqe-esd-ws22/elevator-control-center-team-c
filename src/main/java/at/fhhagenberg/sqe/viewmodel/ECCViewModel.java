@@ -127,12 +127,14 @@ public class ECCViewModel {
                 elevator.setCurrentFloor(elevatorService.getElevatorFloor(idxElevator));
                 elevator.setCurrentPositionFt(elevatorService.getElevatorPosition(idxElevator));
                 elevator.setCurrentSpeedFtPerSec(elevatorService.getElevatorSpeed(idxElevator));
+                elevator.setFloorTarget(elevatorService.getTarget(idxElevator));
+
                 if(elevatorService.getTarget(idxElevator) == elevatorService.getElevatorFloor(idxElevator) && elevatorService.getElevatorDoorStatus(idxElevator) == IElevator.ELEVATOR_DOORS_OPEN)
                 {
                     elevator.setDirection(IElevator.ELEVATOR_DIRECTION_UNCOMMITTED);
+                    elevator.resetTarget();
                 }
                 elevator.setDoorStatus(elevatorService.getElevatorDoorStatus(idxElevator));
-                elevator.setFloorTarget(elevatorService.getTarget(idxElevator));
                 elevator.setWeight(elevatorService.getElevatorWeight(idxElevator));
 
                 for (int idxFloor = 0; idxFloor < floorNum; idxFloor++) {

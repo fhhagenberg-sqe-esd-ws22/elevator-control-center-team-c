@@ -35,9 +35,12 @@ public class ECCAppController {
         @Override
         public void handle(MouseEvent e) {
             var position_clicked = Character.getNumericValue(((Circle)e.getSource()).getId().charAt(((Circle)e.getSource()).getId().length()-1));
+            var current_position = Integer.parseInt(viewModel.getBuilding().getElevator(selectedElevator).getFloorTargetStringProp().getValue());
+            var target_position = Integer.parseInt(viewModel.getBuilding().getElevator(selectedElevator).getCurrentFloor().getValue());
+
+
             if(!autoMode)
             {
-                var current_position = Integer.parseInt(viewModel.getBuilding().getElevator(selectedElevator).getFloorTargetStringProp().getValue());
                 if(current_position != position_clicked)
                 {
                     viewModel.setTarget(selectedElevator, position_clicked);
@@ -262,7 +265,7 @@ public class ECCAppController {
         target_floor.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTargetStringProp());
         auto_mode_setting.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode());
         auto_mode_radio.setSelected(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode_bool().getValue());
-
+        services_floors.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getServicedFloorStringProp());
     }
 
     public void elevator_selected(ActionEvent actionEvent) {
