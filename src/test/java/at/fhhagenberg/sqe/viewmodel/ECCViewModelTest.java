@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ECCViewModelTest {
 
-    private ECCViewModelMock eccViewModel;
+    private ECCViewModel eccViewModel;
     private Building building;
 
     @BeforeEach
