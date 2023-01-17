@@ -160,11 +160,7 @@ public class Elevator {
         return currentSpeedFtPerSec;
     }
     public void setCurrentSpeedFtPerSec(int currentSpeedFtPerSec) {
-        if (currentSpeedFtPerSec >= 0) {
-            this.currentSpeedFtPerSec.setValue(currentSpeedFtPerSec + " ft/s");
-        } else {
-            this.currentSpeedFtPerSec.setValue("0 ft/s");
-        }
+        this.currentSpeedFtPerSec.setValue(currentSpeedFtPerSec + " ft/s");
     }
 
 

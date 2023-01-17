@@ -21,6 +21,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import sqelevator.IElevator;
 
 
 public class ECCAppController {
@@ -36,7 +37,13 @@ public class ECCAppController {
             var position_clicked = Character.getNumericValue(((Circle)e.getSource()).getId().charAt(((Circle)e.getSource()).getId().length()-1));
             if(!autoMode)
             {
-                viewModel.setTarget(selectedElevator, position_clicked);
+                var current_position = Integer.parseInt(viewModel.getBuilding().getElevator(selectedElevator).getFloorTargetStringProp().getValue());
+                if(current_position != position_clicked)
+                {
+                    viewModel.setTarget(selectedElevator, position_clicked);
+                    var committed_dir = current_position < position_clicked ? IElevator.ELEVATOR_DIRECTION_UP : IElevator.ELEVATOR_DIRECTION_DOWN;
+                    viewModel.getBuilding().getElevator(selectedElevator).setDirection(committed_dir);
+                }
             }
             else
             {
@@ -237,7 +244,6 @@ public class ECCAppController {
                     .visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getButton(i));
             ((GridPane) board.getChildren().get(i)).getChildren().get(TARGETFLOOR)
                     .visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTarget(i));
-
         }
         currentFloor.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentFloor());
         position.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentPositionFt());
