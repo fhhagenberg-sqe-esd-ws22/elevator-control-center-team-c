@@ -186,10 +186,12 @@ public class Elevator {
     {
         StringBuilder test = new StringBuilder();
         boolean firstValReached = false;
+        boolean flag = true;
         for(int i=0; i<servicedFloor.size(); i++)
         {
             if(servicedFloor.get(i).getValue())
             {
+
                 if(firstValReached)
                 {
                     test.append(", ");
@@ -197,8 +199,19 @@ public class Elevator {
                 test.append(i);
                 firstValReached = true;
             }
+            else
+            {
+                flag = false;
+            }
         }
-        servicedFloorStringProp.setValue(test.toString());
+        if(flag)
+        {
+            servicedFloorStringProp.setValue("All floors");
+        }
+        else {
+            servicedFloorStringProp.setValue(test.toString());
+        }
+
     }
     public BooleanProperty getServicedFloor(int number) {
         if (number >= 0 && number < servicedFloor.size()) {
