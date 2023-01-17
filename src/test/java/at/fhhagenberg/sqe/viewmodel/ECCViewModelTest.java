@@ -18,8 +18,7 @@ public class ECCViewModelTest {
     void Setup() {
         building = new Building();
         eccViewModel = new ECCViewModelMock(building);
-        IElevatorMock elevatorMock = new IElevatorMock(5, 7);
-        eccViewModel.elevatorService = new RMIElevatorService(elevatorMock);
+        eccViewModel.createElevatorService();
     }
 
     @Test
