@@ -139,7 +139,7 @@ public class ECCViewModel {
 
                 for (int idxFloor = 0; idxFloor < floorNum; idxFloor++) {
                     elevator.setButton(idxFloor, elevatorService.getElevatorButton(idxElevator, idxFloor));
-                    elevator.setServicedFloor(idxFloor, elevatorService.getElevatorButton(idxElevator, idxFloor));
+                    elevator.setServicedFloor(idxFloor, true);
                 }
             }
 

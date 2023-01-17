@@ -52,7 +52,7 @@ public class Elevator {
     /**
      * Defines if a floor is serviced by the elevator.
      */
-    private Vector<Boolean> servicedFloor;
+    private Vector<BooleanProperty> servicedFloor;
     private StringProperty servicedFloorStringProp;
 
     /**
@@ -80,10 +80,10 @@ public class Elevator {
         button = new Vector<>();
         servicedFloor = new Vector<>();
         floorTarget = new Vector<>();
-        servicedFloorStringProp = new SimpleStringProperty("-");
+        servicedFloorStringProp = new SimpleStringProperty("");
         automaticMode = new SimpleStringProperty("OFF");
         automaticMode_bool = new SimpleBooleanProperty(false);
-        floorTargetStringProp = new SimpleStringProperty("-");
+        floorTargetStringProp = new SimpleStringProperty("");
         currentFloor = new SimpleStringProperty("0");
         currentPositionFt = new SimpleStringProperty("0 ft");
         currentSpeedFtPerSec = new SimpleStringProperty("0 ft/s");
@@ -91,7 +91,7 @@ public class Elevator {
         maxPayload = Math.max(maximumPayload, 0);
         for (int idx = 0; idx < floorCnt; idx++) {
             button.add(new SimpleBooleanProperty(Boolean.FALSE));
-            servicedFloor.add(Boolean.FALSE);
+            servicedFloor.add(new SimpleBooleanProperty(Boolean.FALSE));
             floorTarget.add(new SimpleBooleanProperty(Boolean.FALSE));
         }
     }
@@ -188,7 +188,7 @@ public class Elevator {
         boolean firstValReached = false;
         for(int i=0; i<servicedFloor.size(); i++)
         {
-            if(servicedFloor.get(i))
+            if(servicedFloor.get(i).getValue())
             {
                 if(firstValReached)
                 {
@@ -200,15 +200,15 @@ public class Elevator {
         }
         servicedFloorStringProp.setValue(test.toString());
     }
-    public Boolean getServicedFloor(int number) {
+    public BooleanProperty getServicedFloor(int number) {
         if (number >= 0 && number < servicedFloor.size()) {
             return servicedFloor.get(number);
         }
-        return Boolean.FALSE;
+        return new SimpleBooleanProperty(Boolean.FALSE);
     }
     public void setServicedFloor(int number, Boolean state) {
         if (number >= 0 && number < servicedFloor.size()) {
-            servicedFloor.set(number, state);
+            servicedFloor.get(number).setValue(state);
         }
         setServicedFloorStringProp();
     }
@@ -226,7 +226,7 @@ public class Elevator {
 
     }
     public void setFloorTarget(int floorTarget) {
-        //this.floorTargetStringProp.setValue("-");
+        this.floorTargetStringProp.setValue("");
         for(int i = 0; i < this.floorTarget.size(); i++)
         {
             this.floorTarget.get(i).setValue(i == floorTarget);

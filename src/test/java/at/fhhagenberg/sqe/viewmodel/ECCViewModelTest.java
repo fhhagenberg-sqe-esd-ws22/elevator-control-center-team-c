@@ -85,7 +85,7 @@ public class ECCViewModelTest {
         MockInit();
 
         eccViewModel.setServicesFloors(1,5,true);
-        assertTrue(eccViewModel.getBuilding().getElevator(1).getServicedFloor(5));
+        assertTrue(eccViewModel.getBuilding().getElevator(1).getServicedFloor(5).getValue());
     }
 
     @Test

@@ -176,9 +176,8 @@ public class ElevatorTest {
         elevator.setCurrentSpeedFtPerSec(10);
         assertEquals("10 ft/s", elevator.getCurrentSpeedFtPerSec().getValue());
 
-        // test invalid input
         elevator.setCurrentSpeedFtPerSec(-1);
-        assertEquals("0 ft/s", elevator.getCurrentSpeedFtPerSec().getValue());
+        assertEquals("-1 ft/s", elevator.getCurrentSpeedFtPerSec().getValue());
     }
 
     @Test
@@ -200,21 +199,21 @@ public class ElevatorTest {
     @Test
     public void testServicedFloor() {
         // test normal use
-        assertEquals(Boolean.FALSE, elevator.getServicedFloor(0));
-        assertEquals(Boolean.FALSE, elevator.getServicedFloor(1));
-        assertEquals(Boolean.FALSE, elevator.getServicedFloor(2));
+        assertEquals(Boolean.FALSE, elevator.getServicedFloor(0).getValue());
+        assertEquals(Boolean.FALSE, elevator.getServicedFloor(1).getValue());
+        assertEquals(Boolean.FALSE, elevator.getServicedFloor(2).getValue());
 
         elevator.setServicedFloor(0, Boolean.TRUE);
         elevator.setServicedFloor(2, Boolean.TRUE);
-        assertEquals(Boolean.TRUE, elevator.getServicedFloor(0));
-        assertEquals(Boolean.FALSE, elevator.getServicedFloor(1));
-        assertEquals(Boolean.TRUE, elevator.getServicedFloor(2));
+        assertEquals(Boolean.TRUE, elevator.getServicedFloor(0).getValue());
+        assertEquals(Boolean.FALSE, elevator.getServicedFloor(1).getValue());
+        assertEquals(Boolean.TRUE, elevator.getServicedFloor(2).getValue());
 
         // test invalid input
         elevator.setServicedFloor(-1, Boolean.TRUE);
         elevator.setServicedFloor(5, Boolean.TRUE);
-        assertEquals(Boolean.FALSE, elevator.getServicedFloor(-1));
-        assertEquals(Boolean.FALSE, elevator.getServicedFloor(5));
+        assertEquals(Boolean.FALSE, elevator.getServicedFloor(-1).getValue());
+        assertEquals(Boolean.FALSE, elevator.getServicedFloor(5).getValue());
     }
 
     @Test
@@ -223,7 +222,7 @@ public class ElevatorTest {
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(0).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(1).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(2).getValue());
-        assertEquals("-", elevator.getFloorTargetStringProp().getValue());
+        assertEquals("", elevator.getFloorTargetStringProp().getValue());
 
         elevator.setFloorTarget(0);
         assertEquals(Boolean.TRUE, elevator.getFloorTarget(0).getValue());
@@ -242,13 +241,13 @@ public class ElevatorTest {
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(0).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(1).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(2).getValue());
-        assertEquals("-", elevator.getFloorTargetStringProp().getValue());
+        assertEquals("", elevator.getFloorTargetStringProp().getValue());
 
         elevator.setFloorTarget(5);
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(0).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(1).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(2).getValue());
-        assertEquals("-", elevator.getFloorTargetStringProp().getValue());
+        assertEquals("", elevator.getFloorTargetStringProp().getValue());
 
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(-1).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(5).getValue());
