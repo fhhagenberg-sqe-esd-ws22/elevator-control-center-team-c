@@ -1,5 +1,6 @@
 package at.fhhagenberg.sqe;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxAssert;
@@ -17,12 +18,16 @@ public class AppTest {
      *
      * @param stage - Will be injected by the test runner.
      */
-    /*@Start
-    public void start(Stage stage) {
-        var app = new App();
+    @Start
+    public void start(Stage stage) throws Exception {
+        var app = new AppMock();
         app.start(stage);
     }
-     */
+
+    @Test
+    public void testFirstApplication() {
+        // TODO some test like those below
+    }
 
     /**
      * @param robot - Will be injected by the test runner.

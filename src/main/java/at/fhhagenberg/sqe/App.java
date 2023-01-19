@@ -12,12 +12,22 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
+    protected ModelFactory mf;
+    protected ViewModelFactory vmf;
+    protected ViewHandler vh;
+
+    /**
+     * CTor.
+     */
+    public App() {
+        this.mf = new ModelFactory();
+        this.vmf = new ViewModelFactory(mf);
+        this.vh = new ViewHandler(vmf);
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
-        ModelFactory mf = new ModelFactory();
-        ViewModelFactory vmf = new ViewModelFactory(mf);
-        ViewHandler vh = new ViewHandler(stage, vmf);
-        vh.start();
+        vh.start(stage);
 
         // start thread to update all data
         runAutoUpdate(vmf.getEccViewModel());
