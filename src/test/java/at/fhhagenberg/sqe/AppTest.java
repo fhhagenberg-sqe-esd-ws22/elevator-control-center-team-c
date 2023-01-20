@@ -13,6 +13,9 @@ import javafx.stage.Stage;
 
 @ExtendWith(ApplicationExtension.class)
 public class AppTest {
+
+    private AppMock app;
+
     /**
      * Will be called with {@code @Before} semantics, i. e. before each test method.
      *
@@ -20,13 +23,14 @@ public class AppTest {
      */
     @Start
     public void start(Stage stage) throws Exception {
-        var app = new AppMock();
+        app = new AppMock();
         app.start(stage);
     }
 
     @Test
     public void testFirstApplication() {
         // TODO some test like those below
+        var building = app.getBuilding();
     }
 
     /**
