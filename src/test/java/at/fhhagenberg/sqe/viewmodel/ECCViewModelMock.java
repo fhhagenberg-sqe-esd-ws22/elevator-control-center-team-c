@@ -16,10 +16,8 @@ public class ECCViewModelMock extends ECCViewModel{
     }
 
     @Override
-    protected boolean createElevatorService() {
-        int elevatorCount = 5;
-        int floorCount = 10;
-        this.elevatorService = new RMIElevatorService(new IElevatorMock(elevatorCount, floorCount));
+    public boolean createElevatorService() {
+        this.elevatorService = new RMIElevatorService(new IElevatorMock(3, 8));
         return true;
     }
 }

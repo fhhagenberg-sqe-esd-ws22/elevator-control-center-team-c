@@ -14,6 +14,7 @@ public class AppMock extends App{
     }
 
     public Building getBuilding() {
+
         return vmf.getEccViewModel().getBuilding();
     }
 }
