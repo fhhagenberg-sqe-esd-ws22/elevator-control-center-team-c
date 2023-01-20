@@ -23,7 +23,7 @@ public class ViewModelFactory {
     /**
      * Create the ECCViewModel.
      */
-    private ECCViewModel eccViewModel;
+    protected ECCViewModel eccViewModel;
     public ECCViewModel getEccViewModel() {
         if (eccViewModel == null) {
             eccViewModel = new ECCViewModel(modelFactory.getBuilding());

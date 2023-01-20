@@ -20,7 +20,7 @@ public class ViewHandlerTest {
         modelFactory.getBuilding();
         viewModelFactory = new ViewModelFactory(modelFactory);
 
-        viewHandler = new ViewHandler(stage, viewModelFactory);
+        viewHandler = new ViewHandler(viewModelFactory);
     }
 
     //TODO: Test start and openView ????

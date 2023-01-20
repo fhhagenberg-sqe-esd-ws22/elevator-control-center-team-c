@@ -20,6 +20,6 @@ public class SystemInfoTest {
         // if JavaFx has not started yet, the system property is not set
         assumeTrue(javafxVersion != null);
 
-        assertEquals("11", javafxVersion.split("\\.")[0]);
+        assertEquals("17", javafxVersion.split("\\.")[0]);
     }
 }

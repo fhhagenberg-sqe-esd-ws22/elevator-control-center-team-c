@@ -16,7 +16,7 @@ public class ViewHandler {
     /**
      * Stage that is used.
      */
-    private final Stage stage;
+    private Stage stage;
 
     /**
      * Reference to the ViewModelFactory.
@@ -25,19 +25,19 @@ public class ViewHandler {
 
     /**
      * CTor.
-     * @param stage: Used window.
      * @param viewModelFactory: Reference to the ViewModelFactory.
      */
-    public ViewHandler(Stage stage, ViewModelFactory viewModelFactory) {
-        this.stage = stage;
+    public ViewHandler(ViewModelFactory viewModelFactory) {
         this.viewModelFactory = viewModelFactory;
     }
 
     /**
      * Start the whole application.
+     * @param stage: Used window.
      * @throws Exception
      */
-    public void start() throws Exception {
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
         openView("/fxml/ConnectingView.fxml");
     }
 
