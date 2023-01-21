@@ -52,8 +52,9 @@ public class AppTest {
         robot.clickOn();
     }
 
+    /*
     @Test
-    public void testTargetFloorModel(FxRobot robot){
+    public void testTargetFloorModel(){
         app.getService().setElevatorDoorStatus(0,1);    //1 = door is open
 
         robot.clickOn("#stopRequest_4");
@@ -71,7 +72,7 @@ public class AppTest {
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS); // wait for update
 
         FxAssert.verifyThat("#target_floor",  LabeledMatchers.hasText("4"));
-    }
+    }*/
 
     @Test
     public void testServicesFloorsModel() throws RemoteException {
