@@ -35,23 +35,17 @@ public class ECCAppController {
         @Override
         public void handle(MouseEvent e) {
             var position_clicked = Character.getNumericValue(((Circle)e.getSource()).getId().charAt(((Circle)e.getSource()).getId().length()-1));
-            var current_position = Integer.parseInt(viewModel.getBuilding().getElevator(selectedElevator).getFloorTargetStringProp().getValue());
-            var target_position = Integer.parseInt(viewModel.getBuilding().getElevator(selectedElevator).getCurrentFloor().getValue());
+            var current_position = Integer.parseInt(viewModel.getBuilding().getElevator(selectedElevator).getCurrentFloor().getValue());
 
             if(!autoMode)
             {
                 if(current_position != position_clicked
-                        && target_position == current_position
                         && viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getOpenedProperty().getValue())
                 {
                     viewModel.setTarget(selectedElevator, position_clicked);
                     var committed_dir = current_position < position_clicked ? IElevator.ELEVATOR_DIRECTION_UP : IElevator.ELEVATOR_DIRECTION_DOWN;
                     viewModel.getBuilding().getElevator(selectedElevator).setDirection(committed_dir);
                 }
-            }
-            else
-            {
-                viewModel.getBuilding().getElevator(selectedElevator).setFloorTarget(calcBestTargetFloor());
             }
         }
     };

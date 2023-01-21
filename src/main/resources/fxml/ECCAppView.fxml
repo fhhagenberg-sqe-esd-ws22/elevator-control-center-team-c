@@ -160,7 +160,7 @@
                 <RowConstraints maxHeight="171.0" minHeight="10.0" prefHeight="171.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ComboBox prefHeight="42.0" prefWidth="348.0" promptText="Choose the elevator">
+                  <ComboBox prefHeight="42.0" prefWidth="348.0" promptText="Choose the elevator" fx:id="elevator">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>

@@ -20,4 +20,8 @@ public class ECCViewModelMock extends ECCViewModel{
         this.elevatorService = new RMIElevatorService(new IElevatorMock(3, 8));
         return true;
     }
+    public void setUpdate(boolean update)
+    {
+        this.enableUpdate = update;
+    }
 }

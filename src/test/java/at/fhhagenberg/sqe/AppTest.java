@@ -1,5 +1,6 @@
 package at.fhhagenberg.sqe;
 
+import at.fhhagenberg.sqe.model.DoorStatus;
 import at.fhhagenberg.sqe.model.Elevator;
 import at.fhhagenberg.sqe.model.FloorButton;
 import at.fhhagenberg.sqe.viewmodel.ECCViewModel;
@@ -17,10 +18,14 @@ import org.testfx.matcher.control.LabeledMatchers;
 
 import javafx.stage.Stage;
 import org.testfx.util.WaitForAsyncUtils;
+import sqelevator.IElevator;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(ApplicationExtension.class)
 public class AppTest {
@@ -64,15 +69,17 @@ public class AppTest {
 
     @Test
     public void testElevatorUp(FxRobot robot) {
+        ((ECCViewModelMock)app.vmf.getEccViewModel()).setUpdate(false);
+        app.vmf.getEccViewModel().getBuilding().getElevator(0).setDoorStatus(1);
+
+        robot.clickOn("#stopRequest_4");
+
+        boolean ret = app.vmf.getEccViewModel().getBuilding().getElevator(0).getFloorTarget(4).getValue();
+        assertTrue(ret);
 
 
-        //robot.clickOn()
-        //app.vmf.getEccViewModel().getBuilding().getElevator(0).getButton(3);
-        //app.vmf.getEccViewModel().update();
+        /*FxAssert.verifyThat("#services_floors", LabeledMatchers.hasText("All floors"));
 
-
-        FxAssert.verifyThat("#services_floors", LabeledMatchers.hasText("All floors"));
-        /*
         FxAssert.verifyThat("#elevator_count", LabeledMatchers.hasText("All floors"));
         FxAssert.verifyThat("#floor_height", LabeledMatchers.hasText("All floors"));
         FxAssert.verifyThat("#services_floors", LabeledMatchers.hasText("All floors"));
