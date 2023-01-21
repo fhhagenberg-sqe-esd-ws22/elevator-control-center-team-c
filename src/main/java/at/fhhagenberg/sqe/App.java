@@ -36,7 +36,7 @@ public class App extends Application {
     /**
      * Interval to update all information of one building [milliseconds].
      */
-    private final int updateIntervalMillis = 100;
+    private static final int updateIntervalMillis = 100;
 
     /**
      * Thread to update all information of one building.
@@ -57,7 +57,6 @@ public class App extends Application {
 
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                //throw new RuntimeException(e);
             }
         });
         thread.setDaemon(true);

@@ -85,44 +85,52 @@ public class ElevatorTest {
     }
 
     @Test
-    void testDoorStatus() {
+    void testDoorStatusNormal() {
         // test normal use
         assertFalse(elevator.getDoorStatus().getOpenedProperty().getValue());
         assertTrue(elevator.getDoorStatus().getClosedProperty().getValue());
         assertFalse(elevator.getDoorStatus().getOpeningProperty().getValue());
         assertFalse(elevator.getDoorStatus().getClosingProperty().getValue());
-
+    }
+    @Test
+    void testDoorStatusOpened() {
         elevator.setDoorStatus(IElevator.ELEVATOR_DOORS_OPEN);
         assertTrue(elevator.getDoorStatus().getOpenedProperty().getValue());
         assertFalse(elevator.getDoorStatus().getClosedProperty().getValue());
         assertFalse(elevator.getDoorStatus().getOpeningProperty().getValue());
         assertFalse(elevator.getDoorStatus().getClosingProperty().getValue());
-
+    }
+    @Test
+    void testDoorStatusClosed() {
         elevator.setDoorStatus(IElevator.ELEVATOR_DOORS_CLOSED);
         assertFalse(elevator.getDoorStatus().getOpenedProperty().getValue());
         assertTrue(elevator.getDoorStatus().getClosedProperty().getValue());
         assertFalse(elevator.getDoorStatus().getOpeningProperty().getValue());
         assertFalse(elevator.getDoorStatus().getClosingProperty().getValue());
-
+    }
+    @Test
+    void testDoorStatusOpening() {
         elevator.setDoorStatus(IElevator.ELEVATOR_DOORS_OPENING);
         assertFalse(elevator.getDoorStatus().getOpenedProperty().getValue());
         assertFalse(elevator.getDoorStatus().getClosedProperty().getValue());
         assertTrue(elevator.getDoorStatus().getOpeningProperty().getValue());
         assertFalse(elevator.getDoorStatus().getClosingProperty().getValue());
-
+    }
+    @Test
+    void testDoorStatusClosing() {
         elevator.setDoorStatus(IElevator.ELEVATOR_DOORS_CLOSING);
         assertFalse(elevator.getDoorStatus().getOpenedProperty().getValue());
         assertFalse(elevator.getDoorStatus().getClosedProperty().getValue());
         assertFalse(elevator.getDoorStatus().getOpeningProperty().getValue());
         assertTrue(elevator.getDoorStatus().getClosingProperty().getValue());
-
-        // test invalid input
+    }
+    @Test
+    void testInvalidDoorStatus() {
         elevator.setDoorStatus(0);
         assertFalse(elevator.getDoorStatus().getOpenedProperty().getValue());
         assertTrue(elevator.getDoorStatus().getClosedProperty().getValue());
         assertFalse(elevator.getDoorStatus().getOpeningProperty().getValue());
         assertFalse(elevator.getDoorStatus().getClosingProperty().getValue());
-
         elevator.setDoorStatus(5);
         assertFalse(elevator.getDoorStatus().getOpenedProperty().getValue());
         assertTrue(elevator.getDoorStatus().getClosedProperty().getValue());

@@ -45,7 +45,7 @@ public class AppTest {
         robot = new FxRobot();
 
         //click on selection and select first elevator
-        robot.clickOn("#elevator_selection");
+        robot.clickOn("#Elevator_selection");
         robot.moveBy(0,30);
         robot.clickOn();
     }
@@ -89,7 +89,7 @@ public class AppTest {
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS); // wait for update
 
-        FxAssert.verifyThat("#services_floors", LabeledMatchers.hasText("0, 1, 2, 3, 4, 6, 7"));
+        FxAssert.verifyThat("#Services_floors", LabeledMatchers.hasText("0, 1, 2, 3, 4, 6, 7"));
     }
 
     @Test
@@ -109,7 +109,7 @@ public class AppTest {
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
-        FxAssert.verifyThat("#floor_height", LabeledMatchers.hasText("42 ft"));
+        FxAssert.verifyThat("#Floor_height", LabeledMatchers.hasText("42 ft"));
     }
 
     @Test
@@ -126,7 +126,7 @@ public class AppTest {
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
-        FxAssert.verifyThat("#elevator_count", LabeledMatchers.hasText("3"));
+        FxAssert.verifyThat("#Elevator_count", LabeledMatchers.hasText("3"));
     }
     
 
@@ -163,7 +163,7 @@ public class AppTest {
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
-        FxAssert.verifyThat("#speed", LabeledMatchers.hasText("13 ft/s"));
+        FxAssert.verifyThat("#Speed", LabeledMatchers.hasText("13 ft/s"));
     }
 
     @Test
@@ -181,7 +181,7 @@ public class AppTest {
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
-        FxAssert.verifyThat("#weight", LabeledMatchers.hasText("666 lbs"));
+        FxAssert.verifyThat("#Weight", LabeledMatchers.hasText("666 lbs"));
     }
 
     @Test
@@ -198,7 +198,7 @@ public class AppTest {
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
-        FxAssert.verifyThat("#position", LabeledMatchers.hasText("4711 ft"));
+        FxAssert.verifyThat("#Position", LabeledMatchers.hasText("4711 ft"));
     }
 
     @Test
@@ -236,9 +236,9 @@ public class AppTest {
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
-        assertTrue( FxService.serviceContext().getNodeFinder().lookup("#opening_closing_elevator").query().isVisible());
-        assertFalse( FxService.serviceContext().getNodeFinder().lookup("#open_elevator").query().isVisible());
-        assertFalse( FxService.serviceContext().getNodeFinder().lookup("#closed_elevator").query().isVisible());
+        assertTrue( FxService.serviceContext().getNodeFinder().lookup("#Opening_closing_elevator").query().isVisible());
+        assertFalse( FxService.serviceContext().getNodeFinder().lookup("#Open_elevator").query().isVisible());
+        assertFalse( FxService.serviceContext().getNodeFinder().lookup("#Closed_elevator").query().isVisible());
     }
 
     @Test
@@ -257,8 +257,8 @@ public class AppTest {
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
-        assertTrue( FxService.serviceContext().getNodeFinder().lookup("#elevator_downwards").query().isVisible());
-        assertFalse( FxService.serviceContext().getNodeFinder().lookup("#elevator_upwards").query().isVisible());
+        assertTrue( FxService.serviceContext().getNodeFinder().lookup("#Elevator_downwards").query().isVisible());
+        assertFalse( FxService.serviceContext().getNodeFinder().lookup("#Elevator_upwards").query().isVisible());
     }
 
     @Test
@@ -280,7 +280,7 @@ public class AppTest {
 
     @Test
     void testAutoModeButtonModel(){
-        robot.clickOn("#auto_mode_radio");
+        robot.clickOn("#Auto_mode_radio");
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
@@ -288,11 +288,11 @@ public class AppTest {
     }
     @Test
     void testAutoModeButtonGui(){
-        robot.clickOn("#auto_mode_radio");
+        robot.clickOn("#Auto_mode_radio");
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
-        FxAssert.verifyThat("#auto_mode_setting", LabeledMatchers.hasText("ON"));
-        assertTrue( ((RadioButton)FxService.serviceContext().getNodeFinder().lookup("#auto_mode_radio").query()).isSelected());
+        FxAssert.verifyThat("#Auto_mode_setting", LabeledMatchers.hasText("ON"));
+        assertTrue( ((RadioButton)FxService.serviceContext().getNodeFinder().lookup("#Auto_mode_radio").query()).isSelected());
     }
 }

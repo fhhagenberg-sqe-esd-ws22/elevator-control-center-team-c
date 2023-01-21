@@ -71,7 +71,6 @@ public class ECCViewModel {
                     Thread.sleep(connectingIntervalMillis);
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
-                    //throw new RuntimeException(ex);
                 }
             }
 
@@ -81,7 +80,6 @@ public class ECCViewModel {
             int floorNum = elevatorService.getFloorNum();
 
             int maxPayload = 10;    // TODO find correct payload
-            long clockTick = elevatorService.getClockTick();
 
             building.setFloorHeight(floorHeight);
 
