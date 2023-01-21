@@ -1,5 +1,6 @@
 package at.fhhagenberg.sqe.factories;
 
+import at.fhhagenberg.sqe.mockobjects.IElevatorMock;
 import at.fhhagenberg.sqe.viewmodel.ECCViewModelMock;
 
 public class ViewModelFactoryMock extends ViewModelFactory {
@@ -12,4 +13,6 @@ public class ViewModelFactoryMock extends ViewModelFactory {
         super(modelFactory);
         this.eccViewModel = new ECCViewModelMock(modelFactory.getBuilding());
     }
+
+    public IElevatorMock getElevatorService() {return ((ECCViewModelMock)this.eccViewModel).getElevatorService();}
 }

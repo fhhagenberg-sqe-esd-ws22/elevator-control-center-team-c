@@ -112,7 +112,7 @@ public class ECCAppController {
         GridPane.setHalignment(rectangle,HPos.CENTER);
 
         currentFloor.setStyle("-fx-font-size:50px;");
-        currentFloor.setText("test");
+        currentFloor.setId("current_floor");
         board.add(currentFloor,0,viewModel.getBuilding().getFloorNum()/2,2,1);
 
         GridPane.setValignment(currentFloor,VPos.CENTER);
@@ -270,6 +270,7 @@ public class ECCAppController {
 
     public void switch_mode(MouseEvent keyEvent) {
         viewModel.getBuilding().getElevator(selectedElevator).setAutomaticMode(!viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode_bool().getValue());
+        autoMode =  !autoMode;
     }
     private int calcBestTargetFloor()
     {

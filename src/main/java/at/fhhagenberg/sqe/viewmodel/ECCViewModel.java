@@ -18,8 +18,6 @@ import java.rmi.RemoteException;
  * and the update process for the data structure.
  */
 public class ECCViewModel {
-
-    protected boolean enableUpdate = true;
     /**
      * Reference to the data structure.
      */
@@ -96,6 +94,14 @@ public class ECCViewModel {
                 FloorButton floorButton = new FloorButton();
                 building.addFloorButton(floorButton);
             }
+            for(int idxElev=0; idxElev<elevatorNum; idxElev++)
+            {
+                for (int idxFloor = 0; idxFloor < floorNum; idxFloor++) {
+
+                    elevatorService.setServicesFloors(idxElev,idxFloor,true);
+                }
+            }
+
 
             // indicate that the data structure is initialized
             initialized = Boolean.TRUE;
@@ -114,7 +120,6 @@ public class ECCViewModel {
 
         @Override
         public void run() {
-            if (enableUpdate) {
                 int elevatorNum = building.getElevatorNumINT();
                 int floorNum = building.getFloorNum();
 
@@ -130,6 +135,7 @@ public class ECCViewModel {
                     elevator.setCurrentPositionFt(elevatorService.getElevatorPosition(idxElevator));
                     elevator.setCurrentSpeedFtPerSec(elevatorService.getElevatorSpeed(idxElevator));
                     elevator.setFloorTarget(elevatorService.getTarget(idxElevator));
+                    elevator.setDirection(elevatorService.getCommittedDirection(idxElevator));
 
                     if (elevatorService.getTarget(idxElevator) == elevatorService.getElevatorFloor(idxElevator) && elevatorService.getElevatorDoorStatus(idxElevator) == IElevator.ELEVATOR_DOORS_OPEN) {
                         elevator.setDirection(IElevator.ELEVATOR_DIRECTION_UNCOMMITTED);
@@ -140,12 +146,12 @@ public class ECCViewModel {
 
                     for (int idxFloor = 0; idxFloor < floorNum; idxFloor++) {
                         elevator.setButton(idxFloor, elevatorService.getElevatorButton(idxElevator, idxFloor));
-                        elevator.setServicedFloor(idxFloor, true);
+                        elevator.setServicedFloor(idxFloor, elevatorService.getServicesFloors(idxElevator,idxFloor));
                     }
                 }
+                building.setFloorHeight(elevatorService.getFloorHeight());
 
                 //elevator.setAutomaticMode();  // TODO set the automatic mode
-            }
         }
     }
 

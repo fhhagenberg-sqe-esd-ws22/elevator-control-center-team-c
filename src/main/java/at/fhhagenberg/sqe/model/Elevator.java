@@ -267,7 +267,7 @@ public class Elevator {
 
     public void resetTarget() {
         for (BooleanProperty booleanProperty : this.floorTarget) {
-            booleanProperty.setValue(false);
+            booleanProperty.set(false);
         }
     }
 }
