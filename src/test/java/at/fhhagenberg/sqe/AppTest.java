@@ -57,7 +57,8 @@ public class AppTest {
         app.getService().setElevatorDoorStatus(0,1);    //1 = door is open
 
         robot.clickOn("#stopRequest_4");
-        //update gets called
+        WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS); // wait for update
+
 
         assertTrue(app.vmf.getEccViewModel().getBuilding().getElevator(0).getFloorTarget(4).getValue());
     }
@@ -67,12 +68,9 @@ public class AppTest {
         app.getService().setElevatorDoorStatus(0,1);    //1 = door is open
 
         robot.clickOn("#stopRequest_4");
-        //update gets called
+        WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS); // wait for update
 
         FxAssert.verifyThat("#target_floor",  LabeledMatchers.hasText("4"));
-
-
-
     }
 
     @Test
