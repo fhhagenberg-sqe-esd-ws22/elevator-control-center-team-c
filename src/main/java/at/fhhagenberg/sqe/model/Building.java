@@ -63,9 +63,9 @@ public class Building {
     public StringProperty getFloorHeight() { return floorHeight; }
     public void setFloorHeight(int floorHeight) {
         if (floorHeight > 0) {
-            this.floorHeight.setValue(floorHeight + " ft");
+            this.floorHeight.set(floorHeight + " ft");
         } else {
-            this.floorHeight.setValue("0 ft");
+            this.floorHeight.set("0 ft");
         }
     }
 

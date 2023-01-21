@@ -26,6 +26,10 @@ public class ECCViewModelTest {
         ECCViewModel.initMethod init = eccViewModel.new initMethod();
         init.run();
 
+        assertEquals("3", eccViewModel.getBuilding().getElevatorNum().get());
+        assertEquals(8, eccViewModel.getBuilding().getFloorNum());
+        assertEquals(eccViewModel.getBuilding().getFloorHeight().get(), "0 ft");
+        assertFalse(eccViewModel.getBuilding().getFloorButton(7).isButtonDown().get());
         assertTrue(eccViewModel.isInitialized());
     }
 

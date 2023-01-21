@@ -18,7 +18,6 @@ import java.rmi.RemoteException;
  * and the update process for the data structure.
  */
 public class ECCViewModel {
-
     /**
      * Reference to the data structure.
      */
@@ -95,6 +94,14 @@ public class ECCViewModel {
                 FloorButton floorButton = new FloorButton();
                 building.addFloorButton(floorButton);
             }
+            for(int idxElev=0; idxElev<elevatorNum; idxElev++)
+            {
+                for (int idxFloor = 0; idxFloor < floorNum; idxFloor++) {
+
+                    elevatorService.setServicesFloors(idxElev,idxFloor,true);
+                }
+            }
+
 
             // indicate that the data structure is initialized
             initialized = Boolean.TRUE;
@@ -113,37 +120,38 @@ public class ECCViewModel {
 
         @Override
         public void run() {
-            int elevatorNum = building.getElevatorNumINT();
-            int floorNum = building.getFloorNum();
-
-            for (int idxFloor = 0; idxFloor < floorNum; idxFloor++) {
-                building.getFloorButton(idxFloor).setButtonUp(elevatorService.getFloorButtonUp(idxFloor));
-                building.getFloorButton(idxFloor).setButtonDown(elevatorService.getFloorButtonDown(idxFloor));
-            }
-
-            for (int idxElevator = 0; idxElevator < elevatorNum; idxElevator++) {
-                Elevator elevator = building.getElevator(idxElevator);
-                elevator.setAcceleration(elevatorService.getElevatorAccel(idxElevator));
-                elevator.setCurrentFloor(elevatorService.getElevatorFloor(idxElevator));
-                elevator.setCurrentPositionFt(elevatorService.getElevatorPosition(idxElevator));
-                elevator.setCurrentSpeedFtPerSec(elevatorService.getElevatorSpeed(idxElevator));
-                elevator.setFloorTarget(elevatorService.getTarget(idxElevator));
-
-                if(elevatorService.getTarget(idxElevator) == elevatorService.getElevatorFloor(idxElevator) && elevatorService.getElevatorDoorStatus(idxElevator) == IElevator.ELEVATOR_DOORS_OPEN)
-                {
-                    elevator.setDirection(IElevator.ELEVATOR_DIRECTION_UNCOMMITTED);
-                    elevator.resetTarget();
-                }
-                elevator.setDoorStatus(elevatorService.getElevatorDoorStatus(idxElevator));
-                elevator.setWeight(elevatorService.getElevatorWeight(idxElevator));
+                int elevatorNum = building.getElevatorNumINT();
+                int floorNum = building.getFloorNum();
 
                 for (int idxFloor = 0; idxFloor < floorNum; idxFloor++) {
-                    elevator.setButton(idxFloor, elevatorService.getElevatorButton(idxElevator, idxFloor));
-                    elevator.setServicedFloor(idxFloor, true);
+                    building.getFloorButton(idxFloor).setButtonUp(elevatorService.getFloorButtonUp(idxFloor));
+                    building.getFloorButton(idxFloor).setButtonDown(elevatorService.getFloorButtonDown(idxFloor));
                 }
-            }
 
-            //elevator.setAutomaticMode();  // TODO set the automatic mode
+                for (int idxElevator = 0; idxElevator < elevatorNum; idxElevator++) {
+                    Elevator elevator = building.getElevator(idxElevator);
+                    elevator.setAcceleration(elevatorService.getElevatorAccel(idxElevator));
+                    elevator.setCurrentFloor(elevatorService.getElevatorFloor(idxElevator));
+                    elevator.setCurrentPositionFt(elevatorService.getElevatorPosition(idxElevator));
+                    elevator.setCurrentSpeedFtPerSec(elevatorService.getElevatorSpeed(idxElevator));
+                    elevator.setFloorTarget(elevatorService.getTarget(idxElevator));
+                    elevator.setDirection(elevatorService.getCommittedDirection(idxElevator));
+
+                    if (elevatorService.getTarget(idxElevator) == elevatorService.getElevatorFloor(idxElevator) && elevatorService.getElevatorDoorStatus(idxElevator) == IElevator.ELEVATOR_DOORS_OPEN) {
+                        elevator.setDirection(IElevator.ELEVATOR_DIRECTION_UNCOMMITTED);
+                        elevator.resetTarget();
+                    }
+                    elevator.setDoorStatus(elevatorService.getElevatorDoorStatus(idxElevator));
+                    elevator.setWeight(elevatorService.getElevatorWeight(idxElevator));
+
+                    for (int idxFloor = 0; idxFloor < floorNum; idxFloor++) {
+                        elevator.setButton(idxFloor, elevatorService.getElevatorButton(idxElevator, idxFloor));
+                        elevator.setServicedFloor(idxFloor, elevatorService.getServicesFloors(idxElevator,idxFloor));
+                    }
+                }
+                building.setFloorHeight(elevatorService.getFloorHeight());
+
+                //elevator.setAutomaticMode();  // TODO set the automatic mode
         }
     }
 
