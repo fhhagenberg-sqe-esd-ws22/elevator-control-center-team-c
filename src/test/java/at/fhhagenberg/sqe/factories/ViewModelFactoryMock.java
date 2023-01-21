@@ -7,7 +7,7 @@ public class ViewModelFactoryMock extends ViewModelFactory {
     /**
      * CTor.
      *
-     * @param modelFactory
+     * @param modelFactory mf
      */
     public ViewModelFactoryMock(ModelFactory modelFactory) {
         super(modelFactory);

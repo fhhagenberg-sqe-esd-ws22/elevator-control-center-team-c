@@ -9,7 +9,7 @@ public class ECCViewModelMock extends ECCViewModel{
     /**
      * CTor.
      *
-     * @param building
+     * @param building holds elevator data
      */
     public ECCViewModelMock(Building building) {
         super(building);

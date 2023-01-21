@@ -55,9 +55,9 @@ public class App extends Application {
                     eccViewModel.update();
                 }
 
-            } catch (InterruptedException e) {      // TODO make useful error handling
-                e.printStackTrace(System.err);
-                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                //throw new RuntimeException(e);
             }
         });
         thread.setDaemon(true);

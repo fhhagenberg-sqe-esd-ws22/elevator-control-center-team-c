@@ -172,34 +172,33 @@ public class RMIElevatorService implements IElevatorService {
         }
     }
 
-    //TODO: Error handling -> implement own Exception Type?
     public void setCommittedDirection(int elevatorNumber, int direction) {
         try {
             elevatorService.setCommittedDirection(elevatorNumber, direction);
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
+            //TODO: Error handling -> implement own Exception Type?
         }
     }
-    //TODO: Error handling -> implement own Exception Type?
+
     public void setServicesFloors(int elevatorNumber, int floor, boolean service) {
         try {
             elevatorService.setServicesFloors(elevatorNumber, floor, service);
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
+            //TODO: Error handling -> implement own Exception Type?
         }
     }
-    //TODO: Error handling -> implement own Exception Type?
+
     public void setTarget(int elevatorNumber, int target) {
         try {
             elevatorService.setTarget(elevatorNumber, target);
         }
         catch (RemoteException e)
         {
-            e.printStackTrace();
+            //TODO: Error handling -> implement own Exception Type?
         }
     }
 

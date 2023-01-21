@@ -28,21 +28,19 @@ public class AppTest {
     private FxRobot robot;
 
     /**
-     * Will be called with {@code @Before} semantics, i. e. before each test method.
+     * Will be called with {@code @Before} semantics, i.e. before each test method.
      *
      * @param stage - Will be injected by the test runner.
      */
     @Start
-    public void start(Stage stage) throws Exception {
+    void start(Stage stage) throws Exception {
         app = new AppMock();
         ((ECCViewModelMock)app.vmf.getEccViewModel()).createElevatorService();
         app.start(stage);
-
-
     }
 
     @BeforeEach
-    public void Setup(){
+    void Setup(){
         WaitForAsyncUtils.sleep(2, TimeUnit.SECONDS);
         robot = new FxRobot();
 
@@ -54,7 +52,7 @@ public class AppTest {
 
     /*
     @Test
-    public void testTargetFloorModel(){
+    void testTargetFloorModel(){
         app.getService().setElevatorDoorStatus(0,1);    //1 = door is open
 
         robot.clickOn("#stopRequest_4");
@@ -65,7 +63,7 @@ public class AppTest {
     }
 
     @Test
-    public void testTargetFloorGui (){
+    void testTargetFloorGui (){
         app.getService().setElevatorDoorStatus(0,1);    //1 = door is open
 
         robot.clickOn("#stopRequest_4");
@@ -75,7 +73,7 @@ public class AppTest {
     }*/
 
     @Test
-    public void testServicesFloorsModel() throws RemoteException {
+    void testServicesFloorsModel() throws RemoteException {
         app.getService().setElevatorDoorStatus(0,1);    //1 = door is open
         app.getService().setServicesFloors(0,5,false);
 
@@ -85,7 +83,7 @@ public class AppTest {
     }
 
     @Test
-    public void testServicesFloorsGui() throws RemoteException {
+    void testServicesFloorsGui() throws RemoteException {
         app.getService().setElevatorDoorStatus(0,1);    //1 = door is open
         app.getService().setServicesFloors(0,5,false);
 
@@ -95,17 +93,17 @@ public class AppTest {
     }
 
     @Test
-    public void testFloorHeightModel(){
+    void testFloorHeightModel(){
         app.getService().setElevatorDoorStatus(0,1);    //1 = door is open
         app.getService().setFloorHeight(42);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
-        assertEquals(app.vmf.getEccViewModel().getBuilding().getFloorHeight().get(), "42 ft");
+        assertEquals("42 ft", app.vmf.getEccViewModel().getBuilding().getFloorHeight().get());
     }
 
     @Test
-    public void testFloorHeightGui(){
+    void testFloorHeightGui(){
         app.getService().setElevatorDoorStatus(0,1);    //1 = door is open
         app.getService().setFloorHeight(42);
 
@@ -115,15 +113,15 @@ public class AppTest {
     }
 
     @Test
-    public void testElevatorCountModel(){
+    void testElevatorCountModel(){
         app.getService().setElevatorDoorStatus(0,1);    //1 = door is open
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
-        assertEquals(app.vmf.getEccViewModel().getBuilding().getElevatorNumINT(), 3);
+        assertEquals(3, app.vmf.getEccViewModel().getBuilding().getElevatorNumINT());
     }
     @Test
-    public void testElevatorCountGui(){
+    void testElevatorCountGui(){
         app.getService().setElevatorDoorStatus(0,1);    //1 = door is open
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
@@ -133,7 +131,7 @@ public class AppTest {
     
 
     @Test
-    public void testCallRequestModel(){
+    void testCallRequestModel(){
         app.getService().setFloorButtonUp(4,true);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
@@ -142,7 +140,7 @@ public class AppTest {
     }
     @Test
     //@ParameterizedTest
-    public void testCallRequestGui() {
+    void testCallRequestGui() {
         app.getService().setFloorButtonUp(4,true);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
@@ -152,15 +150,15 @@ public class AppTest {
 
 
     @Test
-    public void testSpeedModel(){
+    void testSpeedModel(){
         app.getService().setElevatorSpeed(0, 13);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
-        assertEquals(app.vmf.getEccViewModel().getBuilding().getElevator(0).getCurrentSpeedFtPerSec().get(), "13 ft/s");
+        assertEquals("13 ft/s", app.vmf.getEccViewModel().getBuilding().getElevator(0).getCurrentSpeedFtPerSec().get());
     }
     @Test
-    public void testSpeedGui(){
+    void testSpeedGui(){
         app.getService().setElevatorSpeed(0, 13);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
@@ -169,16 +167,16 @@ public class AppTest {
     }
 
     @Test
-    public void testWeightModel(){
+    void testWeightModel(){
         app.getService().setElevatorWeight(0,666);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
-        assertEquals(app.vmf.getEccViewModel().getBuilding().getElevator(0).getWeight().get(), "666 lbs");
+        assertEquals("666 lbs", app.vmf.getEccViewModel().getBuilding().getElevator(0).getWeight().get());
 
     }
     @Test
-    public void testWeightGui(){
+    void testWeightGui(){
         app.getService().setElevatorWeight(0,666);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
@@ -187,15 +185,15 @@ public class AppTest {
     }
 
     @Test
-    public void testPositionModel(){
+    void testPositionModel(){
         app.getService().setElevatorPosition(0,4711);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
-        assertEquals(app.vmf.getEccViewModel().getBuilding().getElevator(0).getCurrentPositionFt().get(), "4711 ft");
+        assertEquals("4711 ft", app.vmf.getEccViewModel().getBuilding().getElevator(0).getCurrentPositionFt().get());
     }
     @Test
-    public void testPositionGui(){
+    void testPositionGui(){
         app.getService().setElevatorPosition(0,4711);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
@@ -204,7 +202,7 @@ public class AppTest {
     }
 
     @Test
-    public void testStopRequestModel() {
+    void testStopRequestModel() {
         app.getService().setElevatorButton(0,5,true);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
@@ -213,7 +211,7 @@ public class AppTest {
 
     }
     @Test
-    public void testStopRequestGui(){
+    void testStopRequestGui(){
         app.getService().setElevatorButton(0,5,true);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
@@ -222,7 +220,7 @@ public class AppTest {
     }
 
     @Test
-    public void testDoorStatusModel(){
+    void testDoorStatusModel(){
         app.getService().setElevatorDoorStatus(0,4);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
@@ -233,7 +231,7 @@ public class AppTest {
         assertFalse(app.vmf.getEccViewModel().getBuilding().getElevator(0).getDoorStatus().getClosedProperty().get());
     }
     @Test
-    public void testDoorStatusGui(){
+    void testDoorStatusGui(){
         app.getService().setElevatorDoorStatus(0,4);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
@@ -244,7 +242,7 @@ public class AppTest {
     }
 
     @Test
-    public void testElevatorDirectionModel() throws RemoteException {
+    void testElevatorDirectionModel() throws RemoteException {
         app.getService().setCommittedDirection(0, 2);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
@@ -254,7 +252,7 @@ public class AppTest {
         assertFalse(app.vmf.getEccViewModel().getBuilding().getElevator(0).getDirection().getUpProperty().get());
     }
     @Test
-    public void testElevatorDirectionGui() throws RemoteException {
+    void testElevatorDirectionGui() throws RemoteException {
         app.getService().setCommittedDirection(0, 1);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
@@ -264,15 +262,15 @@ public class AppTest {
     }
 
     @Test
-    public void testCurrentFloorModel() {
+    void testCurrentFloorModel() {
         app.getService().setElevatorFloor(0,5);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
-        assertEquals(app.vmf.getEccViewModel().getBuilding().getElevator(0).getCurrentFloor().get(), "5");
+        assertEquals("5", app.vmf.getEccViewModel().getBuilding().getElevator(0).getCurrentFloor().get());
     }
     @Test
-    public void testCurrentFloorGui() {
+    void testCurrentFloorGui() {
         app.getService().setElevatorFloor(0,5);
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
@@ -281,7 +279,7 @@ public class AppTest {
     }
 
     @Test
-    public void testAutoModeButtonModel(){
+    void testAutoModeButtonModel(){
         robot.clickOn("#auto_mode_radio");
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
@@ -289,7 +287,7 @@ public class AppTest {
         assertTrue(app.vmf.getEccViewModel().getBuilding().getElevator(0).getAutomaticMode_bool().get());
     }
     @Test
-    public void testAutoModeButtonGui(){
+    void testAutoModeButtonGui(){
         robot.clickOn("#auto_mode_radio");
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);

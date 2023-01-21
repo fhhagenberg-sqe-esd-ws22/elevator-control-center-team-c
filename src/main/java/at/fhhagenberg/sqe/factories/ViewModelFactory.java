@@ -14,7 +14,7 @@ public class ViewModelFactory {
 
     /**
      * CTor.
-     * @param modelFactory
+     * @param modelFactory mf
      */
     public ViewModelFactory(ModelFactory modelFactory) {
         this.modelFactory = modelFactory;

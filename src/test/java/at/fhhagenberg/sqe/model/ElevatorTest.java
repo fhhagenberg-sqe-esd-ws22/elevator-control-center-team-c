@@ -11,12 +11,12 @@ public class ElevatorTest {
     private Elevator elevator;
 
     @BeforeEach
-    public void Setup(){
+    void Setup(){
         elevator = new Elevator(100, 3);
     }
 
     @Test
-    public void testDirection() {
+    void testDirection() {
         // test normal use
         assertFalse(elevator.getDirection().getUpProperty().getValue());
         assertFalse(elevator.getDirection().getDownProperty().getValue());
@@ -50,7 +50,7 @@ public class ElevatorTest {
     }
 
     @Test
-    public void testAcceleration() {
+    void testAcceleration() {
         assertEquals(0, elevator.getAcceleration());
 
         elevator.setAcceleration(-10);
@@ -61,7 +61,7 @@ public class ElevatorTest {
     }
 
     @Test
-    public void testStopRequestButton() {
+    void testStopRequestButton() {
         // test normal use
         assertEquals(Boolean.FALSE, elevator.getButton(0).getValue());
         assertEquals(Boolean.FALSE, elevator.getButton(1).getValue());
@@ -85,7 +85,7 @@ public class ElevatorTest {
     }
 
     @Test
-    public void testDoorStatus() {
+    void testDoorStatus() {
         // test normal use
         assertFalse(elevator.getDoorStatus().getOpenedProperty().getValue());
         assertTrue(elevator.getDoorStatus().getClosedProperty().getValue());
@@ -131,7 +131,7 @@ public class ElevatorTest {
     }
 
     @Test
-    public void testCurrentFloor() {
+    void testCurrentFloor() {
         // test normal use
         assertEquals("0", elevator.getCurrentFloor().getValue());
 
@@ -150,7 +150,7 @@ public class ElevatorTest {
     }
 
     @Test
-    public void testCurrentPositionFt() {
+    void testCurrentPositionFt() {
         // test normal use
         assertEquals("0 ft", elevator.getCurrentPositionFt().getValue());
 
@@ -166,7 +166,7 @@ public class ElevatorTest {
     }
 
     @Test
-    public void testCurrentSpeedFtPerSec() {
+    void testCurrentSpeedFtPerSec() {
         // test normal use
         assertEquals("0 ft/s", elevator.getCurrentSpeedFtPerSec().getValue());
 
@@ -181,7 +181,7 @@ public class ElevatorTest {
     }
 
     @Test
-    public void testWeight() {
+    void testWeight() {
         // test normal use
         assertEquals("0 lbs", elevator.getWeight().getValue());
 
@@ -197,7 +197,7 @@ public class ElevatorTest {
     }
 
     @Test
-    public void testServicedFloor() {
+    void testServicedFloor() {
         // test normal use
         assertEquals(Boolean.FALSE, elevator.getServicedFloor(0).getValue());
         assertEquals(Boolean.FALSE, elevator.getServicedFloor(1).getValue());
@@ -217,7 +217,7 @@ public class ElevatorTest {
     }
 
     @Test
-    public void testFloorTarget() {
+    void testFloorTarget() {
         // test normal use
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(0).getValue());
         assertEquals(Boolean.FALSE, elevator.getFloorTarget(1).getValue());
@@ -254,12 +254,12 @@ public class ElevatorTest {
     }
 
     @Test
-    public void testMaxPayload() {
+    void testMaxPayload() {
         assertEquals(100, elevator.getMaxPayload());
     }
 
     @Test
-    public void testAutomaticMode() {
+    void testAutomaticMode() {
         assertEquals("OFF", elevator.getAutomaticMode().getValue());
         assertFalse(elevator.getAutomaticMode_bool().getValue());
 

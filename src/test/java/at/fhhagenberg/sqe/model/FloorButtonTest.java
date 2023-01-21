@@ -10,12 +10,12 @@ public class FloorButtonTest {
     private FloorButton floorButton;
 
     @BeforeEach
-    public void Setup() {
+    void Setup() {
         floorButton = new FloorButton();
     }
 
     @Test
-    public void testUp() {
+    void testUp() {
         assertEquals(Boolean.FALSE, floorButton.isButtonUp().getValue());
 
         floorButton.setButtonUp(Boolean.TRUE);
@@ -26,7 +26,7 @@ public class FloorButtonTest {
     }
 
     @Test
-    public void testDown() {
+    void testDown() {
         assertEquals(Boolean.FALSE, floorButton.isButtonDown().getValue());
 
         floorButton.setButtonDown(Boolean.TRUE);
