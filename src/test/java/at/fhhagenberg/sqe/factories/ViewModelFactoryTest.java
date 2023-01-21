@@ -1,6 +1,5 @@
 package at.fhhagenberg.sqe.factories;
 
-import at.fhhagenberg.sqe.model.Building;
 import at.fhhagenberg.sqe.viewmodel.ECCViewModel;
 import org.junit.jupiter.api.Test;
 

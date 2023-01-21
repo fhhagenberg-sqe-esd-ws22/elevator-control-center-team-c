@@ -1,6 +1,5 @@
 package at.fhhagenberg.sqe.viewmodel;
 
-import at.fhhagenberg.sqe.mockobjects.IElevatorMock;
 import at.fhhagenberg.sqe.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,12 +22,12 @@ public class ECCViewModelTest {
 
     @Test
     void TestInit() {
-        ECCViewModel.initMethod init = eccViewModel.new initMethod();
+        ECCViewModel.InitMethod init = eccViewModel.new InitMethod();
         init.run();
 
         assertEquals("3", eccViewModel.getBuilding().getElevatorNum().get());
         assertEquals(8, eccViewModel.getBuilding().getFloorNum());
-        assertEquals(eccViewModel.getBuilding().getFloorHeight().get(), "0 ft");
+        assertEquals("0 ft", eccViewModel.getBuilding().getFloorHeight().get());
         assertFalse(eccViewModel.getBuilding().getFloorButton(7).isButtonDown().get());
         assertTrue(eccViewModel.isInitialized());
     }
@@ -57,21 +56,21 @@ public class ECCViewModelTest {
     @Test
     void TestUpdate(){
         MockInit();
-        ECCViewModel.updateMethod update = eccViewModel.new updateMethod();
+        ECCViewModel.UpdateMethod update = eccViewModel.new UpdateMethod();
 
         eccViewModel.getBuilding().getElevator(1).setAcceleration(2);
-        assertEquals(eccViewModel.getBuilding().getElevator(1).getAcceleration(),2);
+        assertEquals(2, eccViewModel.getBuilding().getElevator(1).getAcceleration());
 
         //run method to be tested
         update.run();
 
         //check results of tested method
-        assertEquals(eccViewModel.getBuilding().getElevator(1).getAcceleration(),0);
+        assertEquals(0, eccViewModel.getBuilding().getElevator(1).getAcceleration());
     }
 
     @Test
     void TestGetBuilding(){
-        assertEquals(eccViewModel.getBuilding(), building);
+        assertEquals(building, eccViewModel.getBuilding());
     }
 
     @Test
@@ -82,7 +81,7 @@ public class ECCViewModelTest {
         MockInit();
 
         eccViewModel.setCommittedDirection(1,IElevator.ELEVATOR_DIRECTION_DOWN);
-        assertEquals(eccViewModel.getBuilding().getElevator(1).getDirection().getDownProperty().get(), direction.getDownProperty().asObject().get());
+        assertEquals( direction.getDownProperty().asObject().get(), eccViewModel.getBuilding().getElevator(1).getDirection().getDownProperty().get());
     }
     @Test
     void TestSetServicesFloors(){
@@ -99,9 +98,4 @@ public class ECCViewModelTest {
         eccViewModel.setTarget(2,4);
         assertTrue(eccViewModel.getBuilding().getElevator(2).getFloorTarget(4).get());
     }
-
-
-
-
-
 }

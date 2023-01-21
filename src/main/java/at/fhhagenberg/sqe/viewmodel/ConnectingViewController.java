@@ -54,7 +54,7 @@ public class ConnectingViewController {
     /**
      * Thread to check if the data structure is completely initialized. If
      * so, switch to the main page.
-     * @param eccViewModel
+     * @param eccViewModel vm
      */
     private void runAutoCheck(ECCViewModel eccViewModel) {
         Thread thread = new Thread(() -> {
@@ -68,9 +68,11 @@ public class ConnectingViewController {
                 this.viewHandler.openView("/fxml/ECCAppView.fxml");
 
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                Thread.currentThread().interrupt();
+                //throw new RuntimeException(e);
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                Thread.currentThread().interrupt();
+                //throw new RuntimeException(e);
             }
         });
         thread.setDaemon(true);

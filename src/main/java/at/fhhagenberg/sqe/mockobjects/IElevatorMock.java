@@ -8,9 +8,6 @@ public class IElevatorMock implements IElevator {
 
     public IElevatorMock(int maxElevatorsCnt, int maxElevatorFloorsCnt)
     {
-        //maxElevatorFloorsCnt= maxElevatorFloorsCnt + 1;
-        //maxElevatorsCnt = maxElevatorsCnt +1;
-
         mElevatorNum = maxElevatorsCnt;
         mFloorNum = maxElevatorFloorsCnt;
 

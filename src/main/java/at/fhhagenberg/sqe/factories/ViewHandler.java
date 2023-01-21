@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import javax.swing.text.View;
 import java.io.IOException;
 
 public class ViewHandler {
@@ -34,7 +33,7 @@ public class ViewHandler {
     /**
      * Start the whole application.
      * @param stage: Used window.
-     * @throws Exception
+     * @throws Exception error at start
      */
     public void start(Stage stage) throws Exception {
         this.stage = stage;
@@ -44,7 +43,7 @@ public class ViewHandler {
     /**
      * Open/switch to a view.
      * @param viewToOpen: View to be shown.
-     * @throws Exception
+     * @throws Exception error at opening view
      */
     public void openView(String viewToOpen) throws Exception {
 

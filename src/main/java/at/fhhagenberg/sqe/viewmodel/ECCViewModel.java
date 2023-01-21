@@ -36,7 +36,7 @@ public class ECCViewModel {
 
     /**
      * CTor.
-     * @param building
+     * @param building holds elevator data
      */
     public ECCViewModel(Building building) {
         this.building = building;
@@ -51,7 +51,6 @@ public class ECCViewModel {
             IElevator service = (IElevator) Naming.lookup("rmi://localhost/ElevatorSim");
             this.elevatorService = new RMIElevatorService(service);
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
-            e.printStackTrace();
             return false;
         }
         return true;
@@ -62,7 +61,7 @@ public class ECCViewModel {
      */
     private final int connectingIntervalMillis = 500;
 
-    class initMethod implements Runnable {
+    class InitMethod implements Runnable {
         @Override
         public void run() {
 
@@ -71,7 +70,8 @@ public class ECCViewModel {
                 try {
                     Thread.sleep(connectingIntervalMillis);
                 } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
+                    Thread.currentThread().interrupt();
+                    //throw new RuntimeException(ex);
                 }
             }
 
@@ -112,11 +112,11 @@ public class ECCViewModel {
      * Initialize the structure of one building. Should be called only once.
      */
     public void init() {
-        Platform.runLater(new initMethod());
+        Platform.runLater(new InitMethod());
     }
 
 
-    class updateMethod implements Runnable {
+    class UpdateMethod implements Runnable {
 
         @Override
         public void run() {
@@ -138,7 +138,7 @@ public class ECCViewModel {
                     elevator.setDirection(elevatorService.getCommittedDirection(idxElevator));
 
                     if (elevatorService.getTarget(idxElevator) == elevatorService.getElevatorFloor(idxElevator) && elevatorService.getElevatorDoorStatus(idxElevator) == IElevator.ELEVATOR_DOORS_OPEN) {
-                        elevator.setDirection(IElevator.ELEVATOR_DIRECTION_UNCOMMITTED);
+                        elevatorService.setCommittedDirection(idxElevator, IElevator.ELEVATOR_DIRECTION_UNCOMMITTED);
                         elevator.resetTarget();
                     }
                     elevator.setDoorStatus(elevatorService.getElevatorDoorStatus(idxElevator));
@@ -159,12 +159,12 @@ public class ECCViewModel {
      * Update content of the building.
      */
     public void update() {
-        Platform.runLater(new updateMethod());
+        Platform.runLater(new UpdateMethod());
     }
 
     /**
      * Retrieve the building.
-     * @return
+     * @return building
      */
     public Building getBuilding()
     {
@@ -173,7 +173,7 @@ public class ECCViewModel {
 
     /**
      * Flag to check if the building is already initialized.
-     * @return
+     * @return true if initialized
      */
     public Boolean isInitialized() {
         return this.initialized;
@@ -181,8 +181,8 @@ public class ECCViewModel {
 
     /**
      * Send a committed direction to the service.
-     * @param elevatorNumber
-     * @param direction
+     * @param elevatorNumber elevator
+     * @param direction up, down, undefined
      */
     public void setCommittedDirection(int elevatorNumber, int direction) {
         Elevator elevator = this.building.getElevator(elevatorNumber);
@@ -194,9 +194,9 @@ public class ECCViewModel {
 
     /**
      * Send a serviced floor to the service.
-     * @param elevatorNumber
-     * @param floor
-     * @param service
+     * @param elevatorNumber elevator num
+     * @param floor number of floor
+     * @param service set service floor
      */
     public void setServicesFloors(int elevatorNumber, int floor, boolean service) {
         Elevator elevator = this.building.getElevator(elevatorNumber);
@@ -208,8 +208,8 @@ public class ECCViewModel {
 
     /**
      * Send a new target floor to the service.
-     * @param elevatorNumber
-     * @param target
+     * @param elevatorNumber elevator num
+     * @param target desired floor
      */
     public void setTarget(int elevatorNumber, int target) {
         Elevator elevator = this.building.getElevator(elevatorNumber);

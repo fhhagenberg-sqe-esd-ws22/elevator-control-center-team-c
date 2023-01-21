@@ -15,7 +15,7 @@ public class BuildingTest {
     }
 
     @Test
-    public void testAddGetElevator() {
+    void testAddGetElevator() {
         assertNull(building.getElevator(0));
         assertNull(building.getElevator(-1));
         assertNull(building.getElevator(1));
@@ -38,7 +38,7 @@ public class BuildingTest {
     }
 
     @Test
-    public void testFloorHeight() {
+    void testFloorHeight() {
         // test normal use
         assertEquals("0 ft", building.getFloorHeight().getValue());
 
@@ -57,7 +57,7 @@ public class BuildingTest {
     }
 
     @Test
-    public void testFloorButtons() {
+    void testFloorButtons() {
         assertNull(building.getFloorButton(0));
         assertNull(building.getFloorButton(-1));
         assertNull(building.getFloorButton(1));
