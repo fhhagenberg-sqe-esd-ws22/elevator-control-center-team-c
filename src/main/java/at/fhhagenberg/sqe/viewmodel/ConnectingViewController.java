@@ -42,37 +42,31 @@ public class ConnectingViewController {
         rotateTransition.setCycleCount(RotateTransition.INDEFINITE);
         rotateTransition.setByAngle(360);
         rotateTransition.play();
-
-        runAutoCheck(this.viewModel);
+        runAutoCheck();
     }
 
     /**
      * Interval to check if the data structure is completely initialized.
      */
-    private final int checkIntervalMillis = 500;
+    private static final int checkIntervalMillis = 500;
 
     /**
      * Thread to check if the data structure is completely initialized. If
      * so, switch to the main page.
-     * @param eccViewModel vm
      */
-    private void runAutoCheck(ECCViewModel eccViewModel) {
+    private void runAutoCheck() {
         Thread thread = new Thread(() -> {
             try {
 
                 Thread.sleep(checkIntervalMillis);
-                while (!viewModel.isInitialized()) {
+                while (!Boolean.TRUE.equals(viewModel.isInitialized())) {
                     Thread.sleep(checkIntervalMillis);
                 }
 
                 this.viewHandler.openView("/fxml/ECCAppView.fxml");
 
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                //throw new RuntimeException(e);
             } catch (Exception e) {
                 Thread.currentThread().interrupt();
-                //throw new RuntimeException(e);
             }
         });
         thread.setDaemon(true);

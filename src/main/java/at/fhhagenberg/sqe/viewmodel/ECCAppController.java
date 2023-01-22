@@ -43,22 +43,22 @@ public class ECCAppController {
             }
         }
     };
-    public GridPane board;
-    public Polygon elevator_upwards;
-    public Polygon elevator_downwards;
-    public Label speed;
-    public Label weight;
-    public Label position;
-    public Label elevator_count;
-    public Label floor_height;
-    public Label services_floors;
-    public Rectangle opening_closing_elevator;
-    public Rectangle open_elevator;
-    public Line closed_elevator;
-    public Label auto_mode_setting;
-    public ComboBox elevator_selection;
-    public Label target_floor;
-    public RadioButton auto_mode_radio;
+    public GridPane Board;
+    public Polygon Elevator_upwards;
+    public Polygon Elevator_downwards;
+    public Label Speed;
+    public Label Weight;
+    public Label Position;
+    public Label Elevator_count;
+    public Label Floor_height;
+    public Label Services_floors;
+    public Rectangle Opening_closing_elevator;
+    public Rectangle Open_elevator;
+    public Line Closed_elevator;
+    public Label Auto_mode_setting;
+    public ComboBox Elevator_selection;
+    public Label Target_floor;
+    public RadioButton Auto_mode_radio;
     public Label currentFloor = new Label();
     private ECCViewModel viewModel;
     public StringProperty autoModeStringProp;
@@ -74,29 +74,29 @@ public class ECCAppController {
         for(int i = 0; i < viewModel.getBuilding().getFloorNum(); i++)
         {
             if(i<viewModel.getBuilding().getFloorNum()/2)
-                board.add(createGridPane(i),0,i);
+                Board.add(CreateGridPane(i),0,i);
             else
-                board.add(createGridPane(i),1,i-4);
+                Board.add(CreateGridPane(i),1,i-4);
         }
         var rectangle = new Rectangle(100,100,Color.WHITE);
         rectangle.setStroke(Color.BLACK);
 
-        elevator_selection.setItems(FXCollections.observableArrayList(createElevatorSelection(Integer.parseInt(viewModel.getBuilding().getElevatorNum().getValue()))));
+        Elevator_selection.setItems(FXCollections.observableArrayList(CreateElevatorSelection(Integer.parseInt(viewModel.getBuilding().getElevatorNum().getValue()))));
 
-        board.add(rectangle,0,viewModel.getBuilding().getFloorNum()/2,2,1);
+        Board.add(rectangle,0,viewModel.getBuilding().getFloorNum()/2,2,1);
 
         GridPane.setValignment(rectangle,VPos.CENTER);
         GridPane.setHalignment(rectangle,HPos.CENTER);
 
         currentFloor.setStyle("-fx-font-size:50px;");
         currentFloor.setId("current_floor");
-        board.add(currentFloor,0,viewModel.getBuilding().getFloorNum()/2,2,1);
+        Board.add(currentFloor,0,viewModel.getBuilding().getFloorNum()/2,2,1);
 
         GridPane.setValignment(currentFloor,VPos.CENTER);
         GridPane.setHalignment(currentFloor,HPos.CENTER);
     }
 
-    private String[] createElevatorSelection(int amount)
+    private String[] CreateElevatorSelection(int amount)
     {
         String[] selections = new String[amount];
         for(int i=0; i<amount; i++)
@@ -105,7 +105,7 @@ public class ECCAppController {
         }
         return selections;
     }
-    private GridPane createGridPane(int floor)
+    private GridPane CreateGridPane(int floor)
     {
         var innerGrid = new GridPane();
         innerGrid.setId("gridPane_"+ floor);
@@ -203,45 +203,45 @@ public class ECCAppController {
     /*
      * BINDINGS
      */
-    private void setBindings()
+    private void SetBindings()
     {
         for(int i = 0; i<viewModel.getBuilding().getFloorNum(); i++)
         {
-            ((GridPane) board.getChildren().get(i)).getChildren().get(FLOORBUTTONDOWN)
+            ((GridPane) Board.getChildren().get(i)).getChildren().get(FLOORBUTTONDOWN)
                     .visibleProperty().bind(viewModel.getBuilding().getFloorButton(i).isButtonDown());
-            ((GridPane) board.getChildren().get(i)).getChildren().get(FLOORBUTTONUP)
+            ((GridPane) Board.getChildren().get(i)).getChildren().get(FLOORBUTTONUP)
                     .visibleProperty().bind(viewModel.getBuilding().getFloorButton(i).isButtonUp());
-            ((GridPane) board.getChildren().get(i)).getChildren().get(STOPREQUEST)
+            ((GridPane) Board.getChildren().get(i)).getChildren().get(STOPREQUEST)
                     .visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getButton(i));
-            ((GridPane) board.getChildren().get(i)).getChildren().get(TARGETFLOOR)
+            ((GridPane) Board.getChildren().get(i)).getChildren().get(TARGETFLOOR)
                     .visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTarget(i));
         }
         currentFloor.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentFloor());
-        position.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentPositionFt());
-        speed.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentSpeedFtPerSec());
-        weight.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getWeight());
-        elevator_count.textProperty().bind(viewModel.getBuilding().getElevatorNum());
-        floor_height.textProperty().bind(viewModel.getBuilding().getFloorHeight());
-        open_elevator.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getOpenedProperty());
-        closed_elevator.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getClosedProperty());
-        opening_closing_elevator.visibleProperty().bind(Bindings.or(
+        Position.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentPositionFt());
+        Speed.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getCurrentSpeedFtPerSec());
+        Weight.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getWeight());
+        Elevator_count.textProperty().bind(viewModel.getBuilding().getElevatorNum());
+        Floor_height.textProperty().bind(viewModel.getBuilding().getFloorHeight());
+        Open_elevator.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getOpenedProperty());
+        Closed_elevator.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getClosedProperty());
+        Opening_closing_elevator.visibleProperty().bind(Bindings.or(
                 viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getOpeningProperty(),
                 viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getClosingProperty()
         ));
-        elevator_upwards.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDirection().getUpProperty());
-        elevator_downwards.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDirection().getDownProperty());
-        target_floor.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTargetStringProp());
-        auto_mode_setting.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode());
-        auto_mode_radio.setSelected(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode_bool().getValue());
-        services_floors.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getServicedFloorStringProp());
+        Elevator_upwards.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDirection().getUpProperty());
+        Elevator_downwards.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDirection().getDownProperty());
+        Target_floor.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTargetStringProp());
+        Auto_mode_setting.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode());
+        Auto_mode_radio.setSelected(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode_bool().getValue());
+        Services_floors.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getServicedFloorStringProp());
     }
 
-    public void elevator_selected() {
-        selectedElevator = Character.getNumericValue(elevator_selection.getValue().toString().charAt(elevator_selection.getValue().toString().length()-1));
-        setBindings();
+    public void Elevator_selected() {
+        selectedElevator = Character.getNumericValue(Elevator_selection.getValue().toString().charAt(Elevator_selection.getValue().toString().length()-1));
+        SetBindings();
     }
 
-    public void switch_mode() {
+    public void Switch_mode() {
         viewModel.getBuilding().getElevator(selectedElevator).setAutomaticMode(!viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode_bool().getValue());
         autoMode =  !autoMode;
     }

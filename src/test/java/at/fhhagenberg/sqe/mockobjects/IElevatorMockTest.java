@@ -99,7 +99,7 @@ public class IElevatorMockTest {
 
     @Test
     void TestFloorNum() throws RemoteException {
-        assertEquals(sut.getFloorNum(), 10);
+        assertEquals( 10, sut.getFloorNum());
 
         sut.setFloorNum(15);
         assertEquals(15, sut.getFloorNum());
