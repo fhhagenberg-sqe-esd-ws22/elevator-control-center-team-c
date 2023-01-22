@@ -82,7 +82,7 @@
                 <GridPane.margin>
                     <Insets/>
                 </GridPane.margin>
-                <GridPane onMouseReleased="#Switch_mode" prefHeight="225.0" prefWidth="367.0">
+                <GridPane onMouseReleased="#switchMode" prefHeight="225.0" prefWidth="367.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
@@ -317,7 +317,7 @@
                     </font>
                 </Label>
             </GridPane>
-            <ComboBox fx:id="Elevator_selection" layoutX="10.0" layoutY="16.0" onAction="#Elevator_selected"
+            <ComboBox fx:id="Elevator_selection" layoutX="10.0" layoutY="16.0" onAction="#elevator_selected"
                       prefHeight="42.0" prefWidth="348.0" promptText="Choose the elevator"/>
         </GridPane>
         <Label text="General Info" GridPane.columnIndex="2">
@@ -336,7 +336,7 @@
             <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
-            <RadioButton fx:id="Auto_mode_radio" mnemonicParsing="false" onMouseClicked="#Switch_mode"
+            <RadioButton fx:id="Auto_mode_radio" mnemonicParsing="false" onMouseClicked="#switchMode"
                          text="Auto">
                 <font>
                     <Font size="36.0"/>

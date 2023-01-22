@@ -6,7 +6,7 @@ import java.rmi.RemoteException;
 
 public class RMIElevatorService implements IElevatorService {
 
-    public IElevator elevatorService;
+    private IElevator elevatorService;
 
     public RMIElevatorService(IElevator service) {
         elevatorService = service;

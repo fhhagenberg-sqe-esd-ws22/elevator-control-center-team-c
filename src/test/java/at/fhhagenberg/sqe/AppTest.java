@@ -284,7 +284,7 @@ public class AppTest {
 
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS);
 
-        assertTrue(app.vmf.getEccViewModel().getBuilding().getElevator(0).getAutomaticMode_bool().get());
+        assertTrue(app.vmf.getEccViewModel().getBuilding().getElevator(0).getAutomaticModeBool().get());
     }
     @Test
     void testAutoModeButtonGui(){
