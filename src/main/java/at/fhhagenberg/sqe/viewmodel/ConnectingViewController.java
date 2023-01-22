@@ -48,7 +48,7 @@ public class ConnectingViewController {
     /**
      * Interval to check if the data structure is completely initialized.
      */
-    private static final int checkIntervalMillis = 500;
+    private static final int CHECK_INTERVAL_MILLIS = 500;
 
     /**
      * Thread to check if the data structure is completely initialized. If
@@ -58,9 +58,9 @@ public class ConnectingViewController {
         Thread thread = new Thread(() -> {
             try {
 
-                Thread.sleep(checkIntervalMillis);
+                Thread.sleep(CHECK_INTERVAL_MILLIS);
                 while (!Boolean.TRUE.equals(viewModel.isInitialized())) {
-                    Thread.sleep(checkIntervalMillis);
+                    Thread.sleep(CHECK_INTERVAL_MILLIS);
                 }
 
                 this.viewHandler.openView("/fxml/ECCAppView.fxml");

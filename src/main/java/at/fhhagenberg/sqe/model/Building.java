@@ -3,14 +3,14 @@ package at.fhhagenberg.sqe.model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Building {
 
     /**
      * List of all elevators in the building.
      */
-    private final Vector<Elevator> elevators;
+    private final ArrayList<Elevator> elevators;
 
     /**
      * Height of one floor.
@@ -20,14 +20,14 @@ public class Building {
     /**
      * Status of the floor buttons.
      */
-    private final Vector<FloorButton> floorButtons;
+    private final ArrayList<FloorButton> floorButtons;
 
     private final StringProperty elevatorCnt;
 
 
     public Building() {
-        elevators = new Vector<>();
-        floorButtons = new Vector<>();
+        elevators = new ArrayList<>();
+        floorButtons = new ArrayList<>();
         floorHeight = new SimpleStringProperty("0 ft");
         elevatorCnt = new SimpleStringProperty("0");
     }

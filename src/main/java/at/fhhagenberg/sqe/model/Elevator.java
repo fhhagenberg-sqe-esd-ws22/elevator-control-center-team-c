@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Elevator {
 
@@ -22,7 +22,7 @@ public class Elevator {
     /**
      * Stop request button in the elevator.
      */
-    private Vector<BooleanProperty> button;
+    private ArrayList<BooleanProperty> button;
 
     /**
      * Current door status.
@@ -52,13 +52,13 @@ public class Elevator {
     /**
      * Defines if a floor is serviced by the elevator.
      */
-    private Vector<BooleanProperty> servicedFloor;
+    private ArrayList<BooleanProperty> servicedFloor;
     private StringProperty servicedFloorStringProp;
 
     /**
      * Target floor of this elevator.
      */
-    private Vector<BooleanProperty> floorTarget;
+    private ArrayList<BooleanProperty> floorTarget;
     private StringProperty floorTargetStringProp;
 
     /**
@@ -70,19 +70,19 @@ public class Elevator {
      * Define if automatic mode is enabled.
      */
     private StringProperty automaticMode;
-    private BooleanProperty automaticMode_bool;
+    private BooleanProperty automaticModeBool;
 
 
 
     public Elevator(int maximumPayload, int floorCnt){
         direction = new DirectionStatus();
         doorStatus = new DoorStatus();
-        button = new Vector<>();
-        servicedFloor = new Vector<>();
-        floorTarget = new Vector<>();
+        button = new ArrayList<>();
+        servicedFloor = new ArrayList<>();
+        floorTarget = new ArrayList<>();
         servicedFloorStringProp = new SimpleStringProperty("");
         automaticMode = new SimpleStringProperty("OFF");
-        automaticMode_bool = new SimpleBooleanProperty(false);
+        automaticModeBool = new SimpleBooleanProperty(false);
         floorTargetStringProp = new SimpleStringProperty("");
         currentFloor = new SimpleStringProperty("0");
         currentPositionFt = new SimpleStringProperty("0 ft");
@@ -189,7 +189,7 @@ public class Elevator {
         boolean flag = true;
         for(int i=0; i<servicedFloor.size(); i++)
         {
-            if(servicedFloor.get(i).getValue())
+            if(Boolean.TRUE.equals(servicedFloor.get(i).getValue()))
             {
 
                 if(firstValReached)
@@ -233,7 +233,7 @@ public class Elevator {
     public BooleanProperty getFloorTarget(int number) {
         if (number >= 0 && number < servicedFloor.size())
         {
-            return floorTarget.elementAt(number);
+            return floorTarget.get(number);
         }
         return new SimpleBooleanProperty(Boolean.FALSE);
 
@@ -256,13 +256,13 @@ public class Elevator {
     }
 
 
-    public BooleanProperty getAutomaticMode_bool() { return automaticMode_bool;}
+    public BooleanProperty getAutomaticModeBool() { return automaticModeBool;}
 
 
     public StringProperty getAutomaticMode() { return automaticMode; }
     public void setAutomaticMode(boolean automaticMode) {
         this.automaticMode.setValue(automaticMode ? "ON" : "OFF");
-        this.automaticMode_bool.setValue(automaticMode);
+        this.automaticModeBool.setValue(automaticMode);
     }
 
     public void resetTarget() {

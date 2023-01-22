@@ -36,7 +36,7 @@ public class App extends Application {
     /**
      * Interval to update all information of one building [milliseconds].
      */
-    private static final int updateIntervalMillis = 100;
+    private static final int UPDATE_INTERVAL_MILLIS = 100;
 
     /**
      * Thread to update all information of one building.
@@ -51,7 +51,7 @@ public class App extends Application {
 
                 // update the content
                 while (true) {
-                    Thread.sleep(updateIntervalMillis);
+                    Thread.sleep(UPDATE_INTERVAL_MILLIS);
                     eccViewModel.update();
                 }
 

@@ -269,14 +269,14 @@ public class ElevatorTest {
     @Test
     void testAutomaticMode() {
         assertEquals("OFF", elevator.getAutomaticMode().getValue());
-        assertFalse(elevator.getAutomaticMode_bool().getValue());
+        assertFalse(elevator.getAutomaticModeBool().getValue());
 
         elevator.setAutomaticMode(Boolean.FALSE);
         assertEquals("OFF", elevator.getAutomaticMode().getValue());
-        assertFalse(elevator.getAutomaticMode_bool().getValue());
+        assertFalse(elevator.getAutomaticModeBool().getValue());
 
         elevator.setAutomaticMode(Boolean.TRUE);
         assertEquals("ON", elevator.getAutomaticMode().getValue());
-        assertTrue(elevator.getAutomaticMode_bool().getValue());
+        assertTrue(elevator.getAutomaticModeBool().getValue());
     }
 }

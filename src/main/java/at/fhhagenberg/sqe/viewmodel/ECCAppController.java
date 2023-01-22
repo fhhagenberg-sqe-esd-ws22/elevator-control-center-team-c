@@ -22,27 +22,27 @@ import sqelevator.IElevator;
 
 public class ECCAppController {
 
-    private final int FLOORBUTTONUP = 4;
-    private final int FLOORBUTTONDOWN = 6;
-    private final int STOPREQUEST = 1;
-    private final int TARGETFLOOR = 8;
+    private static final int FLOORBUTTONUP = 4;
+    private static final int FLOORBUTTONDOWN = 6;
+    private static final int STOPREQUEST = 1;
+    private static final int TARGETFLOOR = 8;
     //Creating the mouse event handler
-    EventHandler<MouseEvent> eventHandler = new EventHandler<>() {
-        @Override
-        public void handle(MouseEvent e) {
-            var position_clicked = Character.getNumericValue(((Circle) e.getSource()).getId().charAt(((Circle) e.getSource()).getId().length() - 1));
-            var current_position = Integer.parseInt(viewModel.getBuilding().getElevator(selectedElevator).getCurrentFloor().getValue());
+    EventHandler<MouseEvent> eventHandler = this::CalculateManualTarget;
 
-            if (!autoMode) {
-                if (current_position != position_clicked
-                        && viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getOpenedProperty().getValue()) {
-                    viewModel.setTarget(selectedElevator, position_clicked);
-                    var committed_dir = current_position < position_clicked ? IElevator.ELEVATOR_DIRECTION_UP : IElevator.ELEVATOR_DIRECTION_DOWN;
-                    viewModel.setCommittedDirection(selectedElevator, committed_dir);
-                }
+    private void CalculateManualTarget(MouseEvent e) {
+        var positionClicked = Character.getNumericValue(((Circle) e.getSource()).getId().charAt(((Circle) e.getSource()).getId().length() - 1));
+        var currentPosition = Integer.parseInt(viewModel.getBuilding().getElevator(selectedElevator).getCurrentFloor().getValue());
+
+        if (!autoMode && currentPosition != positionClicked
+                && Boolean.TRUE.equals(viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getOpenedProperty().getValue())) {
+            {
+                viewModel.setTarget(selectedElevator, positionClicked);
+                var committedDirection = currentPosition < positionClicked ? IElevator.ELEVATOR_DIRECTION_UP : IElevator.ELEVATOR_DIRECTION_DOWN;
+                viewModel.setCommittedDirection(selectedElevator, committedDirection);
             }
         }
-    };
+    }
+
     public GridPane Board;
     public Polygon Elevator_upwards;
     public Polygon Elevator_downwards;
@@ -60,10 +60,10 @@ public class ECCAppController {
     public Label Target_floor;
     public RadioButton Auto_mode_radio;
     public Label currentFloor = new Label();
-    private ECCViewModel viewModel;
+    public ECCViewModel viewModel;
     public StringProperty autoModeStringProp;
     private int selectedElevator = 0;
-    private boolean autoMode = false;
+    public boolean autoMode = false;
 
 
     public void init(ECCViewModel eccViewModel) {
@@ -74,9 +74,9 @@ public class ECCAppController {
         for(int i = 0; i < viewModel.getBuilding().getFloorNum(); i++)
         {
             if(i<viewModel.getBuilding().getFloorNum()/2)
-                Board.add(CreateGridPane(i),0,i);
+                Board.add(createGridPane(i),0,i);
             else
-                Board.add(CreateGridPane(i),1,i-4);
+                Board.add(createGridPane(i),1,i-4);
         }
         var rectangle = new Rectangle(100,100,Color.WHITE);
         rectangle.setStroke(Color.BLACK);
@@ -105,7 +105,7 @@ public class ECCAppController {
         }
         return selections;
     }
-    private GridPane CreateGridPane(int floor)
+    private GridPane createGridPane(int floor)
     {
         var innerGrid = new GridPane();
         innerGrid.setId("gridPane_"+ floor);
@@ -116,12 +116,12 @@ public class ECCAppController {
         outerCircleFirstRow.setStroke(Color.BLACK);
         outerCircleFirstRow.setStrokeWidth(1);
 
-        Circle outerCircleFirstRow_Pressed = new Circle();
-        outerCircleFirstRow_Pressed.setRadius(30);
-        outerCircleFirstRow_Pressed.setVisible(false);
-        outerCircleFirstRow_Pressed.setFill(Color.GREEN);
-        outerCircleFirstRow_Pressed.setStroke(Color.BLACK);
-        outerCircleFirstRow_Pressed.setStrokeWidth(1);
+        Circle outerCircleFirstRowPressed = new Circle();
+        outerCircleFirstRowPressed.setRadius(30);
+        outerCircleFirstRowPressed.setVisible(false);
+        outerCircleFirstRowPressed.setFill(Color.GREEN);
+        outerCircleFirstRowPressed.setStroke(Color.BLACK);
+        outerCircleFirstRowPressed.setStrokeWidth(1);
 
         Circle outerCircleThirdColumn = new Circle();
         outerCircleThirdColumn.setRadius(35);
@@ -151,14 +151,14 @@ public class ECCAppController {
         RowConstraints row = new RowConstraints(50,100,150, Priority.SOMETIMES,VPos.CENTER,true);
         innerGrid.getRowConstraints().add(row);
 
-        Polygon triangleUp_pressed = new Polygon();
-        triangleUp_pressed.getPoints().addAll(-30.0, 27.0, 30.0, 27.0, 0.0, -30.0
+        Polygon triangleUpPressed = new Polygon();
+        triangleUpPressed.getPoints().addAll(-30.0, 27.0, 30.0, 27.0, 0.0, -30.0
         );
-        triangleUp_pressed.setFill(Color.GREEN);
-        triangleUp_pressed.setStroke(Color.BLACK);
-        triangleUp_pressed.setVisible(false);
-        GridPane.setValignment(triangleUp_pressed,VPos.TOP);
-        triangleUp_pressed.setId("callRequest_Up_" + floor);
+        triangleUpPressed.setFill(Color.GREEN);
+        triangleUpPressed.setStroke(Color.BLACK);
+        triangleUpPressed.setVisible(false);
+        GridPane.setValignment(triangleUpPressed,VPos.TOP);
+        triangleUpPressed.setId("callRequest_Up_" + floor);
 
         Polygon triangleUp= new Polygon();
         triangleUp.getPoints().addAll(-30.0, 27.0, 30.0, 27.0, 0.0, -30.0
@@ -176,26 +176,25 @@ public class ECCAppController {
         triangleDown.setScaleY(-1);
 
 
-        Polygon triangleDown_pressed = new Polygon();
-        triangleDown_pressed.getPoints().addAll(-30.0, 27.0, 30.0, 27.0, 0.0, -30.0
+        Polygon triangleDownPressed = new Polygon();
+        triangleDownPressed.getPoints().addAll(-30.0, 27.0, 30.0, 27.0, 0.0, -30.0
         );
-        triangleDown_pressed.setFill(Color.GREEN);
-        triangleDown_pressed.setStroke(Color.BLACK);
-        triangleDown_pressed.setVisible(false);
-        GridPane.setValignment(triangleDown_pressed,VPos.BOTTOM);
-        triangleDown_pressed.setScaleY(-1);
-        triangleDown_pressed.setId("callRequest_Down_" + floor);
+        triangleDownPressed.setFill(Color.GREEN);
+        triangleDownPressed.setStroke(Color.BLACK);
+        triangleDownPressed.setVisible(false);
+        GridPane.setValignment(triangleDownPressed,VPos.BOTTOM);
+        triangleDownPressed.setScaleY(-1);
+        triangleDownPressed.setId("callRequest_Down_" + floor);
 
         innerGrid.add(outerCircleFirstRow,0,0);
-        innerGrid.add(outerCircleFirstRow_Pressed,0,0);
+        innerGrid.add(outerCircleFirstRowPressed,0,0);
         innerGrid.add(text,0,0);
         innerGrid.add(triangleUp,1,0);
-        innerGrid.add(triangleUp_pressed,1,0);
+        innerGrid.add(triangleUpPressed,1,0);
         innerGrid.add(triangleDown,1,0);
-        innerGrid.add(triangleDown_pressed,1,0);
+        innerGrid.add(triangleDownPressed,1,0);
         innerGrid.add(outerCircleThirdColumn,2,0);
         innerGrid.add(innerCircleThirdColum,2,0);
-        //innerGrid.setGridLinesVisible(true);
         GridPane.setMargin(innerGrid,new Insets(10,10,10,10));
 
         return innerGrid;
@@ -203,7 +202,7 @@ public class ECCAppController {
     /*
      * BINDINGS
      */
-    private void SetBindings()
+    private void setBindings()
     {
         for(int i = 0; i<viewModel.getBuilding().getFloorNum(); i++)
         {
@@ -232,17 +231,17 @@ public class ECCAppController {
         Elevator_downwards.visibleProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getDirection().getDownProperty());
         Target_floor.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getFloorTargetStringProp());
         Auto_mode_setting.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode());
-        Auto_mode_radio.setSelected(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode_bool().getValue());
+        Auto_mode_radio.setSelected(viewModel.getBuilding().getElevator(selectedElevator).getAutomaticModeBool().getValue());
         Services_floors.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getServicedFloorStringProp());
     }
 
-    public void Elevator_selected() {
+    public void elevator_selected() {
         selectedElevator = Character.getNumericValue(Elevator_selection.getValue().toString().charAt(Elevator_selection.getValue().toString().length()-1));
-        SetBindings();
+        setBindings();
     }
 
-    public void Switch_mode() {
-        viewModel.getBuilding().getElevator(selectedElevator).setAutomaticMode(!viewModel.getBuilding().getElevator(selectedElevator).getAutomaticMode_bool().getValue());
+    public void switchMode() {
+        viewModel.getBuilding().getElevator(selectedElevator).setAutomaticMode(!viewModel.getBuilding().getElevator(selectedElevator).getAutomaticModeBool().getValue());
         autoMode =  !autoMode;
     }
 
