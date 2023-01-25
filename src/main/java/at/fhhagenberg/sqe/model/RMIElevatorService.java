@@ -178,7 +178,7 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            //TODO: Error handling -> implement own Exception Type?
+            return;
         }
     }
 
@@ -188,7 +188,7 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            //TODO: Error handling -> implement own Exception Type?
+            return;
         }
     }
 
@@ -198,7 +198,7 @@ public class RMIElevatorService implements IElevatorService {
         }
         catch (RemoteException e)
         {
-            //TODO: Error handling -> implement own Exception Type?
+            return;
         }
     }
 

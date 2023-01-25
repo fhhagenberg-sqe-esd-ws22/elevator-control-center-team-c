@@ -27,76 +27,95 @@ public class ECCAppController {
     private static final int STOPREQUEST = 1;
     private static final int TARGETFLOOR = 8;
     //Creating the mouse event handler
-    EventHandler<MouseEvent> eventHandler = this::CalculateManualTarget;
+    EventHandler<MouseEvent> eventHandler = this::calculateManualTarget;
 
-    private void CalculateManualTarget(MouseEvent e) {
+    private void calculateManualTarget(MouseEvent e) {
         var positionClicked = Character.getNumericValue(((Circle) e.getSource()).getId().charAt(((Circle) e.getSource()).getId().length() - 1));
         var currentPosition = Integer.parseInt(viewModel.getBuilding().getElevator(selectedElevator).getCurrentFloor().getValue());
 
         if (!autoMode && currentPosition != positionClicked
                 && Boolean.TRUE.equals(viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getOpenedProperty().getValue())) {
-            {
-                viewModel.setTarget(selectedElevator, positionClicked);
-                var committedDirection = currentPosition < positionClicked ? IElevator.ELEVATOR_DIRECTION_UP : IElevator.ELEVATOR_DIRECTION_DOWN;
-                viewModel.setCommittedDirection(selectedElevator, committedDirection);
-            }
+            setDirectionAndTarget(currentPosition,positionClicked);
         }
     }
 
-    public GridPane Board;
-    public Polygon Elevator_upwards;
-    public Polygon Elevator_downwards;
-    public Label Speed;
-    public Label Weight;
-    public Label Position;
-    public Label Elevator_count;
-    public Label Floor_height;
-    public Label Services_floors;
-    public Rectangle Opening_closing_elevator;
-    public Rectangle Open_elevator;
-    public Line Closed_elevator;
-    public Label Auto_mode_setting;
-    public ComboBox Elevator_selection;
-    public Label Target_floor;
-    public RadioButton Auto_mode_radio;
-    public Label currentFloor = new Label();
-    public ECCViewModel viewModel;
-    public StringProperty autoModeStringProp;
-    private int selectedElevator = 0;
-    public boolean autoMode = false;
+    private void setDirectionAndTarget(int currentPosition, int positionClicked)
+    {
+        viewModel.setTarget(selectedElevator, positionClicked);
+        var committedDirection = currentPosition < positionClicked ? IElevator.ELEVATOR_DIRECTION_UP : IElevator.ELEVATOR_DIRECTION_DOWN;
+        viewModel.setCommittedDirection(selectedElevator, committedDirection);
+    }
+
+    public GridPane Board;              //NOSONAR
+    public Polygon Elevator_upwards;    //NOSONAR
+    public Polygon Elevator_downwards;  //NOSONAR
+    public Label Speed;                 //NOSONAR
+    public Label Weight;                //NOSONAR
+    public Label Position;              //NOSONAR
+    public Label Elevator_count;        //NOSONAR
+    public Label Floor_height;          //NOSONAR
+    public Label Services_floors;       //NOSONAR
+    public Rectangle Opening_closing_elevator;  //NOSONAR
+    public Rectangle Open_elevator;     //NOSONAR
+    public Line Closed_elevator;        //NOSONAR
+    public Label Auto_mode_setting;     //NOSONAR
+    public ComboBox<String> Elevator_selection; //NOSONAR
+    public Label Target_floor;          //NOSONAR
+    public RadioButton Auto_mode_radio; //NOSONAR
+    public Label currentFloor = new Label();    //NOSONAR
+    private ECCViewModel viewModel;     //NOSONAR
+    public StringProperty autoModeStringProp;   //NOSONAR
+    private int selectedElevator = 0;   //NOSONAR
+    public boolean autoMode = false;    //NOSONAR
 
 
     public void init(ECCViewModel eccViewModel) {
         this.viewModel = eccViewModel;
+
+
         autoModeStringProp = new SimpleStringProperty("OFF");
-
-
         for(int i = 0; i < viewModel.getBuilding().getFloorNum(); i++)
         {
-            if(i<viewModel.getBuilding().getFloorNum()/2)
-                Board.add(createGridPane(i),0,i);
-            else
-                Board.add(createGridPane(i),1,i-4);
+            if(viewModel.getBuilding().getFloorNum()%2 == 0)
+            {
+                if(i<viewModel.getBuilding().getFloorNum()/2)
+                    Board.add(createGridPane(i),0,i);
+                else
+                    Board.add(createGridPane(i),1,i-viewModel.getBuilding().getFloorNum()/2);
+            }
+            else {
+                if(i<viewModel.getBuilding().getFloorNum()/2+1)
+                    Board.add(createGridPane(i),0,i);
+                else
+                    Board.add(createGridPane(i),1,i-(viewModel.getBuilding().getFloorNum()/2+1));
+            }
+
         }
         var rectangle = new Rectangle(100,100,Color.WHITE);
         rectangle.setStroke(Color.BLACK);
 
-        Elevator_selection.setItems(FXCollections.observableArrayList(CreateElevatorSelection(Integer.parseInt(viewModel.getBuilding().getElevatorNum().getValue()))));
-
-        Board.add(rectangle,0,viewModel.getBuilding().getFloorNum()/2,2,1);
+        Elevator_selection.setItems(FXCollections.observableArrayList(createElevatorSelection(Integer.parseInt(viewModel.getBuilding().getElevatorNum().getValue()))));
 
         GridPane.setValignment(rectangle,VPos.CENTER);
         GridPane.setHalignment(rectangle,HPos.CENTER);
 
         currentFloor.setStyle("-fx-font-size:50px;");
         currentFloor.setId("current_floor");
-        Board.add(currentFloor,0,viewModel.getBuilding().getFloorNum()/2,2,1);
 
+        if((viewModel.getBuilding().getFloorNum()/2)%2==0)
+        {
+            Board.add(rectangle,0,viewModel.getBuilding().getFloorNum()/2,2,1);
+            Board.add(currentFloor,0,viewModel.getBuilding().getFloorNum()/2,2,1);
+        }
+        else {
+            Board.add(rectangle,0,viewModel.getBuilding().getFloorNum()/2+1,2,1);
+            Board.add(currentFloor,0,viewModel.getBuilding().getFloorNum()/2+1,2,1);
+        }
         GridPane.setValignment(currentFloor,VPos.CENTER);
         GridPane.setHalignment(currentFloor,HPos.CENTER);
     }
 
-    private String[] CreateElevatorSelection(int amount)
+    private String[] createElevatorSelection(int amount)
     {
         String[] selections = new String[amount];
         for(int i=0; i<amount; i++)
@@ -197,6 +216,7 @@ public class ECCAppController {
         innerGrid.add(innerCircleThirdColum,2,0);
         GridPane.setMargin(innerGrid,new Insets(10,10,10,10));
 
+        innerGrid.setPrefHeight(150);
         return innerGrid;
     }
     /*
@@ -235,8 +255,8 @@ public class ECCAppController {
         Services_floors.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getServicedFloorStringProp());
     }
 
-    public void elevator_selected() {
-        selectedElevator = Character.getNumericValue(Elevator_selection.getValue().toString().charAt(Elevator_selection.getValue().toString().length()-1));
+    public void elevatorSelected() {
+        selectedElevator = Character.getNumericValue(Elevator_selection.getValue().charAt(Elevator_selection.getValue().length()-1));
         setBindings();
     }
 

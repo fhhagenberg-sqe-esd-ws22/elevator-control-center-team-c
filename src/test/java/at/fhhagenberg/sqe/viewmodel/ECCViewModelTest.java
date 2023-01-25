@@ -8,7 +8,7 @@ import sqelevator.IElevator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ECCViewModelTest {
+class ECCViewModelTest {
 
     private ECCViewModel eccViewModel;
     private Building building;
@@ -37,8 +37,7 @@ public class ECCViewModelTest {
         int floorHeight = eccViewModel.elevatorService.getFloorHeight();
         int floorNum = eccViewModel.elevatorService.getFloorNum();
 
-        int maxPayload = 10;    // TODO find correct payload
-        long clockTick = eccViewModel.elevatorService.getClockTick();
+        int maxPayload = 5000;
 
         building.setFloorHeight(floorHeight);
 

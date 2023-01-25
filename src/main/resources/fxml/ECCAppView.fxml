@@ -317,7 +317,7 @@
                     </font>
                 </Label>
             </GridPane>
-            <ComboBox fx:id="Elevator_selection" layoutX="10.0" layoutY="16.0" onAction="#elevator_selected"
+            <ComboBox fx:id="Elevator_selection" layoutX="10.0" layoutY="16.0" onAction="#elevatorSelected"
                       prefHeight="42.0" prefWidth="348.0" promptText="Choose the elevator"/>
         </GridPane>
         <Label text="General Info" GridPane.columnIndex="2">

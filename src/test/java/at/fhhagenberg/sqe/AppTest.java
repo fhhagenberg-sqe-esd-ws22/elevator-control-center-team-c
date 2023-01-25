@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(ApplicationExtension.class)
-public class AppTest {
+class AppTest {
 
     private AppMock app;
 
@@ -50,7 +50,7 @@ public class AppTest {
         robot.clickOn();
     }
 
-    /*
+
     @Test
     void testTargetFloorModel(){
         app.getService().setElevatorDoorStatus(0,1);    //1 = door is open
@@ -69,8 +69,8 @@ public class AppTest {
         robot.clickOn("#stopRequest_4");
         WaitForAsyncUtils.sleep(200, TimeUnit.MILLISECONDS); // wait for update
 
-        FxAssert.verifyThat("#target_floor",  LabeledMatchers.hasText("4"));
-    }*/
+        FxAssert.verifyThat("#Target_floor",  LabeledMatchers.hasText("4"));
+    }
 
     @Test
     void testServicesFloorsModel() throws RemoteException {
