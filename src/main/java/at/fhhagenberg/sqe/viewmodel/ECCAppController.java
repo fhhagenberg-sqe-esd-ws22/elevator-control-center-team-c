@@ -27,40 +27,63 @@ public class ECCAppController {
     private static final int STOPREQUEST = 1;
     private static final int TARGETFLOOR = 8;
     //Creating the mouse event handler
-    EventHandler<MouseEvent> eventHandler = this::CalculateManualTarget;
+    EventHandler<MouseEvent> eventHandler = this::calculateManualTarget;
 
-    private void CalculateManualTarget(MouseEvent e) {
+    private void calculateManualTarget(MouseEvent e) {
         var positionClicked = Character.getNumericValue(((Circle) e.getSource()).getId().charAt(((Circle) e.getSource()).getId().length() - 1));
         var currentPosition = Integer.parseInt(viewModel.getBuilding().getElevator(selectedElevator).getCurrentFloor().getValue());
 
         if (!autoMode && currentPosition != positionClicked
                 && Boolean.TRUE.equals(viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getOpenedProperty().getValue())) {
             {
-                viewModel.setTarget(selectedElevator, positionClicked);
-                var committedDirection = currentPosition < positionClicked ? IElevator.ELEVATOR_DIRECTION_UP : IElevator.ELEVATOR_DIRECTION_DOWN;
-                viewModel.setCommittedDirection(selectedElevator, committedDirection);
+                setDirectionAndTarget(currentPosition,positionClicked);
             }
         }
     }
 
+    private void setDirectionAndTarget(int currentPosition, int positionClicked)
+    {
+        viewModel.setTarget(selectedElevator, positionClicked);
+        var committedDirection = currentPosition < positionClicked ? IElevator.ELEVATOR_DIRECTION_UP : IElevator.ELEVATOR_DIRECTION_DOWN;
+        viewModel.setCommittedDirection(selectedElevator, committedDirection);
+    }
+
+    //NOSONAR must be public due to fxml
     public GridPane Board;
+    //NOSONAR must be public due to fxml
     public Polygon Elevator_upwards;
+    //NOSONAR must be public due to fxml
     public Polygon Elevator_downwards;
+    //NOSONAR must be public due to fxml
     public Label Speed;
+    //NOSONAR must be public due to fxml
     public Label Weight;
+    //NOSONAR must be public due to fxml
     public Label Position;
+    //NOSONAR must be public due to fxml
     public Label Elevator_count;
+    //NOSONAR must be public due to fxml
     public Label Floor_height;
+    //NOSONAR must be public due to fxml
     public Label Services_floors;
+    //NOSONAR must be public due to fxml
     public Rectangle Opening_closing_elevator;
+    //NOSONAR must be public due to fxml
     public Rectangle Open_elevator;
+    //NOSONAR must be public due to fxml
     public Line Closed_elevator;
+    //NOSONAR must be public due to fxml
     public Label Auto_mode_setting;
-    public ComboBox Elevator_selection;
+    //NOSONAR must be public due to fxml
+    public ComboBox<String> Elevator_selection;
+    //NOSONAR must be public due to fxml
     public Label Target_floor;
+    //NOSONAR must be public due to fxml
     public RadioButton Auto_mode_radio;
+    //NOSONAR must be public due to fxml
     public Label currentFloor = new Label();
-    public ECCViewModel viewModel;
+    private ECCViewModel viewModel;
+    //NOSONAR must be public due to fxml
     public StringProperty autoModeStringProp;
     private int selectedElevator = 0;
     public boolean autoMode = false;
@@ -236,7 +259,7 @@ public class ECCAppController {
     }
 
     public void elevator_selected() {
-        selectedElevator = Character.getNumericValue(Elevator_selection.getValue().toString().charAt(Elevator_selection.getValue().toString().length()-1));
+        selectedElevator = Character.getNumericValue(Elevator_selection.getValue().charAt(Elevator_selection.getValue().length()-1));
         setBindings();
     }
 

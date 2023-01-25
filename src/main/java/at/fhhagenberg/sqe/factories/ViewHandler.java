@@ -45,7 +45,7 @@ public class ViewHandler {
      * @param viewToOpen: View to be shown.
      * @throws Exception error at opening view
      */
-    public void openView(String viewToOpen) throws Exception {
+    public void openView(String viewToOpen) throws IOException {
 
         class OneShotTask implements Runnable {
             ViewHandler viewHandler;
@@ -60,7 +60,6 @@ public class ViewHandler {
                     loader.setLocation(getClass().getResource(viewToOpen));
                         root = loader.load();
 
-
                     if ("/fxml/ECCAppView.fxml".equals(viewToOpen)) {
                         ECCAppController view = loader.getController();
                         view.init(viewModelFactory.getEccViewModel());
@@ -70,7 +69,7 @@ public class ViewHandler {
                         view.init(viewModelFactory.getEccViewModel(), this.viewHandler);
                         stage.setTitle("ECC Connecting");
                     } else {
-                        // TODO error handling
+                        return;
                     }
 
                     scene = new Scene(root);
