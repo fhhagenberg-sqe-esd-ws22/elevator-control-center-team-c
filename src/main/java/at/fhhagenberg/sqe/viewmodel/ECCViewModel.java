@@ -59,7 +59,7 @@ public class ECCViewModel {
     /**
      * Interval trying to connect to via RMI.
      */
-    private final int connectingIntervalMillis = 500;
+    private static final int connectingIntervalMillis = 500;
 
     class InitMethod implements Runnable {
         @Override
