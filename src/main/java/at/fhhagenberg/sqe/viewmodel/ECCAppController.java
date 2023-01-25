@@ -48,45 +48,27 @@ public class ECCAppController {
         viewModel.setCommittedDirection(selectedElevator, committedDirection);
     }
 
-    //NOSONAR must be public due to fxml
-    public GridPane Board;
-    //NOSONAR must be public due to fxml
-    public Polygon Elevator_upwards;
-    //NOSONAR must be public due to fxml
-    public Polygon Elevator_downwards;
-    //NOSONAR must be public due to fxml
-    public Label Speed;
-    //NOSONAR must be public due to fxml
-    public Label Weight;
-    //NOSONAR must be public due to fxml
-    public Label Position;
-    //NOSONAR must be public due to fxml
-    public Label Elevator_count;
-    //NOSONAR must be public due to fxml
-    public Label Floor_height;
-    //NOSONAR must be public due to fxml
-    public Label Services_floors;
-    //NOSONAR must be public due to fxml
-    public Rectangle Opening_closing_elevator;
-    //NOSONAR must be public due to fxml
-    public Rectangle Open_elevator;
-    //NOSONAR must be public due to fxml
-    public Line Closed_elevator;
-    //NOSONAR must be public due to fxml
-    public Label Auto_mode_setting;
-    //NOSONAR must be public due to fxml
-    public ComboBox<String> Elevator_selection;
-    //NOSONAR must be public due to fxml
-    public Label Target_floor;
-    //NOSONAR must be public due to fxml
-    public RadioButton Auto_mode_radio;
-    //NOSONAR must be public due to fxml
-    public Label currentFloor = new Label();
-    private ECCViewModel viewModel;
-    //NOSONAR must be public due to fxml
-    public StringProperty autoModeStringProp;
-    private int selectedElevator = 0;
-    public boolean autoMode = false;
+    public GridPane Board;              //NOSONAR
+    public Polygon Elevator_upwards;    //NOSONAR
+    public Polygon Elevator_downwards;  //NOSONAR
+    public Label Speed;                 //NOSONAR
+    public Label Weight;                //NOSONAR
+    public Label Position;              //NOSONAR
+    public Label Elevator_count;        //NOSONAR
+    public Label Floor_height;          //NOSONAR
+    public Label Services_floors;       //NOSONAR
+    public Rectangle Opening_closing_elevator;  //NOSONAR
+    public Rectangle Open_elevator;     //NOSONAR
+    public Line Closed_elevator;        //NOSONAR
+    public Label Auto_mode_setting;     //NOSONAR
+    public ComboBox<String> Elevator_selection; //NOSONAR
+    public Label Target_floor;          //NOSONAR
+    public RadioButton Auto_mode_radio; //NOSONAR
+    public Label currentFloor = new Label();    //NOSONAR
+    private ECCViewModel viewModel;     //NOSONAR
+    public StringProperty autoModeStringProp;   //NOSONAR
+    private int selectedElevator = 0;   //NOSONAR
+    public boolean autoMode = false;    //NOSONAR
 
 
     public void init(ECCViewModel eccViewModel) {
