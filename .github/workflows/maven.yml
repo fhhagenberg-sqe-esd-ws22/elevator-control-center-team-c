@@ -29,7 +29,7 @@ jobs:
       - name: Setup Environment
         run: sudo apt-get update && sudo apt-get install libgl1-mesa-glx && sudo apt install -y at-spi2-core
       - name: Build with XVFB
-        run: xvfb-run --server-args="-screen 0, 800x600x8" mvn -Dprism.order=sw -B package --file pom.xml
+        run: xvfb-run --server-args="-screen 0, 1300x900x8" mvn -Dprism.order=sw -B package --file pom.xml
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
@@ -46,7 +46,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: xvfb-run --server-args="-screen 0, 800x600x8" mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=fhhagenberg-sqe-esd-ws22_elevator-control-center-team-c
+        run: xvfb-run --server-args="-screen 0, 1300x900x8" mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=fhhagenberg-sqe-esd-ws22_elevator-control-center-team-c
 
 
 #name: Java CI with Maven

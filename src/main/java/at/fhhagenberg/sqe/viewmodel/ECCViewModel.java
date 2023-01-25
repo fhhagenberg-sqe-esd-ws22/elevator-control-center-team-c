@@ -59,7 +59,7 @@ public class ECCViewModel {
     /**
      * Interval trying to connect to via RMI.
      */
-    private static final int connectingIntervalMillis = 500;
+    private static final int CONNECTING_INTERVAL_MILLIS = 500;
 
     class InitMethod implements Runnable {
         @Override
@@ -68,7 +68,7 @@ public class ECCViewModel {
             // do the RMI connection
             while (!createElevatorService()) {
                 try {
-                    Thread.sleep(connectingIntervalMillis);
+                    Thread.sleep(CONNECTING_INTERVAL_MILLIS);
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
@@ -79,7 +79,7 @@ public class ECCViewModel {
             int floorHeight = elevatorService.getFloorHeight();
             int floorNum = elevatorService.getFloorNum();
 
-            int maxPayload = 10;    // TODO find correct payload
+            int maxPayload = 5000;
 
             building.setFloorHeight(floorHeight);
 
@@ -148,8 +148,6 @@ public class ECCViewModel {
                     }
                 }
                 building.setFloorHeight(elevatorService.getFloorHeight());
-
-                //elevator.setAutomaticMode();  // TODO set the automatic mode
         }
     }
 

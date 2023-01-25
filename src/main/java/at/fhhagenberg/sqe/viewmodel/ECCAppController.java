@@ -35,9 +35,7 @@ public class ECCAppController {
 
         if (!autoMode && currentPosition != positionClicked
                 && Boolean.TRUE.equals(viewModel.getBuilding().getElevator(selectedElevator).getDoorStatus().getOpenedProperty().getValue())) {
-            {
-                setDirectionAndTarget(currentPosition,positionClicked);
-            }
+            setDirectionAndTarget(currentPosition,positionClicked);
         }
     }
 
@@ -86,7 +84,7 @@ public class ECCAppController {
         var rectangle = new Rectangle(100,100,Color.WHITE);
         rectangle.setStroke(Color.BLACK);
 
-        Elevator_selection.setItems(FXCollections.observableArrayList(CreateElevatorSelection(Integer.parseInt(viewModel.getBuilding().getElevatorNum().getValue()))));
+        Elevator_selection.setItems(FXCollections.observableArrayList(createElevatorSelection(Integer.parseInt(viewModel.getBuilding().getElevatorNum().getValue()))));
 
         Board.add(rectangle,0,viewModel.getBuilding().getFloorNum()/2,2,1);
 
@@ -101,7 +99,7 @@ public class ECCAppController {
         GridPane.setHalignment(currentFloor,HPos.CENTER);
     }
 
-    private String[] CreateElevatorSelection(int amount)
+    private String[] createElevatorSelection(int amount)
     {
         String[] selections = new String[amount];
         for(int i=0; i<amount; i++)
@@ -240,7 +238,7 @@ public class ECCAppController {
         Services_floors.textProperty().bind(viewModel.getBuilding().getElevator(selectedElevator).getServicedFloorStringProp());
     }
 
-    public void elevator_selected() {
+    public void elevatorSelected() {
         selectedElevator = Character.getNumericValue(Elevator_selection.getValue().charAt(Elevator_selection.getValue().length()-1));
         setBindings();
     }
