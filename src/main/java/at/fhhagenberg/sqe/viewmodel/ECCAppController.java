@@ -71,30 +71,46 @@ public class ECCAppController {
 
     public void init(ECCViewModel eccViewModel) {
         this.viewModel = eccViewModel;
+
+
         autoModeStringProp = new SimpleStringProperty("OFF");
-
-
         for(int i = 0; i < viewModel.getBuilding().getFloorNum(); i++)
         {
-            if(i<viewModel.getBuilding().getFloorNum()/2)
-                Board.add(createGridPane(i),0,i);
-            else
-                Board.add(createGridPane(i),1,i-4);
+            if(viewModel.getBuilding().getFloorNum()%2 == 0)
+            {
+                if(i<viewModel.getBuilding().getFloorNum()/2)
+                    Board.add(createGridPane(i),0,i);
+                else
+                    Board.add(createGridPane(i),1,i-viewModel.getBuilding().getFloorNum()/2);
+            }
+            else {
+                if(i<viewModel.getBuilding().getFloorNum()/2+1)
+                    Board.add(createGridPane(i),0,i);
+                else
+                    Board.add(createGridPane(i),1,i-(viewModel.getBuilding().getFloorNum()/2+1));
+            }
+
         }
         var rectangle = new Rectangle(100,100,Color.WHITE);
         rectangle.setStroke(Color.BLACK);
 
         Elevator_selection.setItems(FXCollections.observableArrayList(createElevatorSelection(Integer.parseInt(viewModel.getBuilding().getElevatorNum().getValue()))));
 
-        Board.add(rectangle,0,viewModel.getBuilding().getFloorNum()/2,2,1);
-
         GridPane.setValignment(rectangle,VPos.CENTER);
         GridPane.setHalignment(rectangle,HPos.CENTER);
 
         currentFloor.setStyle("-fx-font-size:50px;");
         currentFloor.setId("current_floor");
-        Board.add(currentFloor,0,viewModel.getBuilding().getFloorNum()/2,2,1);
 
+        if((viewModel.getBuilding().getFloorNum()/2)%2==0)
+        {
+            Board.add(rectangle,0,viewModel.getBuilding().getFloorNum()/2,2,1);
+            Board.add(currentFloor,0,viewModel.getBuilding().getFloorNum()/2,2,1);
+        }
+        else {
+            Board.add(rectangle,0,viewModel.getBuilding().getFloorNum()/2+1,2,1);
+            Board.add(currentFloor,0,viewModel.getBuilding().getFloorNum()/2+1,2,1);
+        }
         GridPane.setValignment(currentFloor,VPos.CENTER);
         GridPane.setHalignment(currentFloor,HPos.CENTER);
     }
@@ -200,6 +216,7 @@ public class ECCAppController {
         innerGrid.add(innerCircleThirdColum,2,0);
         GridPane.setMargin(innerGrid,new Insets(10,10,10,10));
 
+        innerGrid.setPrefHeight(150);
         return innerGrid;
     }
     /*
