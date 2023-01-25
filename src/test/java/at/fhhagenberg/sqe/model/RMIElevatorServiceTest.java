@@ -12,7 +12,7 @@ import java.rmi.RemoteException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class RMIElevatorServiceTest {
+class RMIElevatorServiceTest {
 
     private RMIElevatorService RmiElevatorService;
     private IElevatorMock elevatorMock;

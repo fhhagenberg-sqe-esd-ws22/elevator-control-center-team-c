@@ -33,9 +33,9 @@ public class ViewHandler {
     /**
      * Start the whole application.
      * @param stage: Used window.
-     * @throws Exception error at start
+     * @throws IOException error at start
      */
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws IOException {
         this.stage = stage;
         openView("/fxml/ConnectingView.fxml");
     }
@@ -43,9 +43,8 @@ public class ViewHandler {
     /**
      * Open/switch to a view.
      * @param viewToOpen: View to be shown.
-     * @throws Exception error at opening view
      */
-    public void openView(String viewToOpen) throws IOException {
+    public void openView(String viewToOpen) {
 
         class OneShotTask implements Runnable {
             ViewHandler viewHandler;
