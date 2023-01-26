@@ -1,6 +1,7 @@
 package at.fhhagenberg.sqe.viewmodel;
 
 import at.fhhagenberg.sqe.factories.ViewHandler;
+import javafx.animation.Animation;
 import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
@@ -39,7 +40,7 @@ public class ConnectingViewController {
         RotateTransition rotateTransition = new RotateTransition();
         rotateTransition.setNode(imgWaiting);
         rotateTransition.setDuration(Duration.millis(2000));
-        rotateTransition.setCycleCount(RotateTransition.INDEFINITE);
+        rotateTransition.setCycleCount(Animation.INDEFINITE);
         rotateTransition.setByAngle(360);
         rotateTransition.play();
         runAutoCheck();
