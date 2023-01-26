@@ -39,6 +39,7 @@ public class ConnectingViewController {
         RotateTransition rotateTransition = new RotateTransition();
         rotateTransition.setNode(imgWaiting);
         rotateTransition.setDuration(Duration.millis(2000));
+        rotateTransition.setCycleCount(RotateTransition.INDEFINITE);
         rotateTransition.setByAngle(360);
         rotateTransition.play();
         runAutoCheck();
