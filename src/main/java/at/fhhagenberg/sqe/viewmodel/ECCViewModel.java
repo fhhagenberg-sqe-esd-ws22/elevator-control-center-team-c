@@ -65,15 +65,6 @@ public class ECCViewModel {
         @Override
         public void run() {
 
-            // do the RMI connection
-            while (!createElevatorService()) {
-                try {
-                    Thread.sleep(CONNECTING_INTERVAL_MILLIS);
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                }
-            }
-
             // retrieve data
             int elevatorNum = elevatorService.getElevatorNum();
             int floorHeight = elevatorService.getFloorHeight();
@@ -110,6 +101,17 @@ public class ECCViewModel {
      * Initialize the structure of one building. Should be called only once.
      */
     public void init() {
+
+        // do the RMI connection
+        while (!createElevatorService()) {
+            try {
+                Thread.sleep(CONNECTING_INTERVAL_MILLIS);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        // do the initialization of the data structure
         Platform.runLater(new InitMethod());
     }
 
